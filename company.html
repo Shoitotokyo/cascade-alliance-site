@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company — Cascade Alliance</title>
+  <meta name="description" content="Corporate information for Cascade Alliance sp. z o.o., a company registered in Warsaw, Poland." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;450;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header" id="top">
+    <div class="container nav">
+      <a class="wordmark" href="index.html">Cascade Alliance</a>
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="about.html">About</a>
+        <a href="ventures.html">Ventures</a>
+        <a href="company.html" class="current">Company</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <p class="eyebrow accent" data-reveal>Company</p>
+        <h1 class="display" data-reveal data-delay="1" style="max-width: 16ch;">Corporate <em>information</em>.</h1>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container split">
+        <div data-reveal><p class="eyebrow accent">Legal entity</p></div>
+        <div data-reveal data-delay="1">
+          <dl class="info-table">
+            <div class="info-row"><dt>Legal name</dt><dd>Cascade Alliance sp. z o.o.</dd></div>
+            <div class="info-row"><dt>Form</dt><dd>Limited liability company (spółka z ograniczoną odpowiedzialnością)</dd></div>
+            <div class="info-row"><dt>Registered office</dt><dd>ul. Stefana Batorego 18/108, 02-591 Warsaw, Poland</dd></div>
+            <div class="info-row"><dt>KRS</dt><dd>0001170168</dd></div>
+            <div class="info-row"><dt>VAT / NIP</dt><dd>PL7011257404</dd></div>
+            <div class="info-row"><dt>Jurisdiction</dt><dd>Republic of Poland</dd></div>
+            <div class="info-row"><dt>Contact</dt><dd><a class="link" href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a></dd></div>
+          </dl>
+          <p style="margin-top: 2rem; font-size: 0.92rem; color: var(--ink-faint);">Cascade Alliance sp. z o.o. is a privately held company registered in Warsaw, Poland.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="container">
+        <p class="eyebrow" style="color: var(--ink-faint)" data-reveal>Get in touch</p>
+        <h2 class="h-section" data-reveal data-delay="1">Questions about the company?</h2>
+        <a class="btn" href="contact.html" data-reveal data-delay="2">Contact us <span class="arrow">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-brand">
+        <span class="wordmark">Cascade Alliance</span>
+        <p class="footer-tag">An independent company based in Warsaw, building and operating a portfolio of ventures.</p>
+      </div>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="about.html">About</a>
+        <a href="ventures.html">Ventures</a>
+        <a href="company.html">Company</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="footer-contact">
+        <p class="eyebrow" style="margin-bottom:0.6rem">Contact</p>
+        <a class="link" href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>
+      </div>
+    </div>
+    <div class="container footer-legal">
+      <p>Cascade Alliance sp. z o.o. · ul. Stefana Batorego 18/108, 02-591 Warsaw, Poland</p>
+      <p>KRS 0001170168 · VAT PL7011257404 · © <span id="year"></span> Cascade Alliance sp. z o.o.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
