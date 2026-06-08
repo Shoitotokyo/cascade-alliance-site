@@ -1,83 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contact — Cascade Alliance</title>
-  <meta name="description" content="Get in touch with Cascade Alliance sp. z o.o. in Warsaw, Poland." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;450;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header class="site-header" id="top">
-    <div class="container nav">
-      <a class="wordmark" href="index.html">Cascade Alliance</a>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
-      <nav class="nav-links" aria-label="Primary">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Contact | Cascade Alliance</title>
+    <meta name="description" content="Start a conversation about business, brand, digital products, AI, experiences, or growth.">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="cursor" aria-hidden="true"></div>
+    <header class="site-header is-solid" data-header>
+      <a class="brand" href="index.html" aria-label="Home"><span class="brand-mark"></span><span>Cascade Alliance</span></a>
+      <nav class="nav" aria-label="Primary">
         <a href="about.html">About</a>
-        <a href="ventures.html">Ventures</a>
-        <a href="company.html">Company</a>
-        <a href="contact.html" class="current">Contact</a>
+        <a href="approach.html">Approach</a>
+        <a href="projects.html">Projects</a>
+        <a href="journal.html">Journal</a>
+        <a href="site-map.html">Map</a>
       </nav>
-    </div>
-  </header>
+      <a class="header-cta" href="contact.html">Start a conversation</a>
+    </header>
 
-  <main>
-    <section class="hero">
-      <div class="container">
-        <p class="eyebrow accent" data-reveal>Contact</p>
-        <h1 class="display" data-reveal data-delay="1" style="max-width: 18ch;">Let's start a <em>conversation</em>.</h1>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container contact-grid">
-        <div data-reveal>
-          <p class="contact-big">Whether it's a partnership, a project, or simply an idea worth exploring — we'd love to hear from you.</p>
+    <main>
+      <section class="contact-page reveal-zone">
+        <img class="contact-bg contact-bg-mono" src="assets/contact-studio.png" alt="Evening studio entrance and workspace">
+        <img class="contact-bg contact-bg-color" src="assets/contact-studio.png" alt="">
+        <div class="contact-page-copy">
+          <p class="eyebrow">Contact</p>
+          <h1>Bring us a question, a plan, or a vague feeling.</h1>
+          <p>You do not need a perfect brief. Tell us what you are trying to move, what feels stuck, or what might be possible.</p>
         </div>
-        <div class="contact-list" data-reveal data-delay="1">
-          <div class="contact-item">
-            <p class="eyebrow accent">General &amp; partnerships</p>
-            <a class="link" href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>
-          </div>
-          <div class="contact-item">
-            <p class="eyebrow accent">Office</p>
-            <p>ul. Stefana Batorego 18/108<br />02-591 Warsaw, Poland</p>
-          </div>
-          <div class="contact-item">
-            <p class="eyebrow accent">Company</p>
-            <p>Cascade Alliance sp. z o.o.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <span class="wordmark">Cascade Alliance</span>
-        <p class="footer-tag">An independent company based in Warsaw, building and operating a portfolio of ventures.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="about.html">About</a>
-        <a href="ventures.html">Ventures</a>
-        <a href="company.html">Company</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="footer-contact">
-        <p class="eyebrow" style="margin-bottom:0.6rem">Contact</p>
-        <a class="link" href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>
-      </div>
-    </div>
-    <div class="container footer-legal">
-      <p>Cascade Alliance sp. z o.o. · ul. Stefana Batorego 18/108, 02-591 Warsaw, Poland</p>
-      <p>KRS 0001170168 · VAT PL7011257404 · © <span id="year"></span> Cascade Alliance sp. z o.o.</p>
-    </div>
-  </footer>
-
-  <script src="main.js"></script>
-</body>
+        <form class="contact-form">
+          <label><span>Name</span><input type="text" name="name" autocomplete="name"></label>
+          <label><span>Email</span><input type="email" name="email" autocomplete="email"></label>
+          <label>
+            <span>Topic</span>
+            <select name="topic">
+              <option>An undefined question</option>
+              <option>Business or brand</option>
+              <option>Website or app</option>
+              <option>AI adoption or operations</option>
+              <option>Physical or service experience</option>
+              <option>Marketing and growth</option>
+            </select>
+          </label>
+          <label><span>Message</span><textarea name="message" rows="7"></textarea></label>
+          <button type="button">Review message</button>
+        </form>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
 </html>

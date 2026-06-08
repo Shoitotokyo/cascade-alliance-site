@@ -1,143 +1,254 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cascade Alliance — An independent house of ventures</title>
-  <meta name="description" content="Cascade Alliance sp. z o.o. is an independent company based in Warsaw, Poland, building and operating a portfolio of brands, products, and digital experiences." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=Inter:wght@400;450;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header class="site-header" id="top">
-    <div class="container nav">
-      <a class="wordmark" href="index.html">Cascade Alliance</a>
-      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
-      <nav class="nav-links" aria-label="Primary">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ideas, Experiences, Growth | Cascade Alliance</title>
+    <meta
+      name="description"
+      content="An English-language company website for a studio that shapes ideas, experiences, and growth systems across business, digital products, AI, and brand ecosystems."
+    >
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="cursor" aria-hidden="true"></div>
+    <header class="site-header" data-header>
+      <a class="brand" href="index.html" aria-label="Home">
+        <span class="brand-mark"></span>
+        <span>Cascade Alliance</span>
+      </a>
+      <nav class="nav" aria-label="Primary">
         <a href="about.html">About</a>
-        <a href="ventures.html">Ventures</a>
-        <a href="company.html">Company</a>
-        <a href="contact.html">Contact</a>
+        <a href="approach.html">Approach</a>
+        <a href="projects.html">Projects</a>
+        <a href="journal.html">Journal</a>
+        <a href="site-map.html">Map</a>
       </nav>
-    </div>
-  </header>
+      <a class="header-cta" href="contact.html">Start a conversation</a>
+    </header>
 
-  <main>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <p class="eyebrow" data-reveal>Warsaw, Poland — Independent since 2024</p>
-        <h1 class="display" data-reveal data-delay="1">An alliance of <em>ideas</em>, brands &amp; craft.</h1>
-        <div class="hero-sub">
-          <p class="lede" data-reveal data-delay="2">Cascade Alliance builds and operates a portfolio of ventures — from brands and software to the spaces in between.</p>
-          <p class="hero-meta" data-reveal data-delay="3">
-            <span>Cascade Alliance sp. z o.o.</span>
-            <span>A privately held company</span>
+    <main id="top">
+      <section class="hero reveal-zone" aria-labelledby="hero-title">
+        <div class="hero-media">
+          <img class="hero-img hero-img-mono" src="assets/hero-workshop.png" alt="Workshop table with sketches, devices, and planning materials">
+          <img class="hero-img hero-img-color" src="assets/hero-workshop.png" alt="">
+          <div class="hero-noise"></div>
+        </div>
+        <div class="hero-content">
+          <p class="eyebrow">Business design / digital product / growth</p>
+          <h1 id="hero-title">
+            <span>Ideas,</span>
+            <span>Experiences,</span>
+            <span>Growth.</span>
+          </h1>
+          <p class="hero-copy">
+            We shape the outline of a business, design the experience around it, and build the systems that help it grow.
           </p>
         </div>
-      </div>
-    </section>
-
-    <!-- Statement -->
-    <section class="section statement">
-      <div class="container">
-        <hr class="rule" data-reveal />
-        <p class="big" data-reveal style="margin-top: clamp(2.5rem,5vw,4rem)">We back ideas worth building, and give them the structure to grow. <span class="soft">A small company with a wide horizon.</span></p>
-      </div>
-    </section>
-
-    <!-- Ventures -->
-    <section class="section section--band" id="ventures">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow accent" data-reveal>What we do</p>
-          <h2 class="h-section" data-reveal data-delay="1">A portfolio across disciplines.</h2>
+        <div class="hero-rail" aria-hidden="true">
+          <span>Observe</span>
+          <span>Define</span>
+          <span>Build</span>
+          <span>Grow</span>
         </div>
+        <a class="scroll-cue" href="#about" aria-label="Scroll to about">
+          <span></span>
+        </a>
+      </section>
 
-        <div class="ventures">
-          <article class="venture" data-reveal>
-            <div class="venture-num">01</div>
-            <h3 class="venture-name">Brands</h3>
-            <p class="venture-desc">Creating and operating consumer brands with a considered point of view.</p>
-          </article>
-          <article class="venture" data-reveal>
-            <div class="venture-num">02</div>
-            <h3 class="venture-name">Software &amp; Apps</h3>
-            <p class="venture-desc">Designing and developing mobile applications for everyday life.</p>
-          </article>
-          <article class="venture" data-reveal>
-            <div class="venture-num">03</div>
-            <h3 class="venture-name">Web &amp; Digital</h3>
-            <p class="venture-desc">Building websites and digital experiences for modern businesses.</p>
-          </article>
-          <article class="venture" data-reveal>
-            <div class="venture-num">04</div>
-            <h3 class="venture-name">Marketing</h3>
-            <p class="venture-desc">Supporting brands with growth, content, and creative direction.</p>
-          </article>
-          <article class="venture" data-reveal>
-            <div class="venture-num">05</div>
-            <h3 class="venture-name">Hospitality</h3>
-            <p class="venture-desc">Selective ventures in food and hospitality.</p>
-          </article>
+      <section class="statement" id="about">
+        <div class="section-index">01 / Statement</div>
+        <div class="statement-grid">
+          <h2>We build the conditions for business to move.</h2>
+          <div class="statement-copy">
+            <p>
+              We do not treat brand, product, web, AI, physical experience, and marketing as separate fragments.
+            </p>
+            <p>
+              We turn early ideas into usable experiences, then connect them to the operating rhythms that make growth possible.
+            </p>
+          </div>
         </div>
+      </section>
 
-        <p style="margin-top: clamp(2rem,4vw,3rem)" data-reveal>
-          <a class="link" href="ventures.html">Explore our ventures →</a>
-        </p>
-      </div>
-    </section>
-
-    <!-- Approach -->
-    <section class="section">
-      <div class="container split">
-        <div data-reveal>
-          <p class="eyebrow accent">Our approach</p>
+      <section class="lenses" aria-labelledby="lenses-title">
+        <div class="section-index">02 / Three Lenses</div>
+        <div class="section-heading">
+          <h2 id="lenses-title">Three lenses, one business experience.</h2>
+          <p>Instead of listing services, we frame the work through three lenses that move a business forward.</p>
         </div>
-        <div class="body" data-reveal data-delay="1">
-          <p style="font-family: var(--serif); font-size: clamp(1.4rem,1rem+1.6vw,2.1rem); line-height:1.3; letter-spacing:-0.01em; color: var(--ink);">
-            We stay deliberately small and independent — close to the work, free to move quickly, and patient enough to build things properly.
+        <div class="lens-grid">
+          <a class="lens-card" href="approach.html#ideas">
+            <figure>
+              <img src="assets/lens-ideas.png" alt="Hands arranging concept maps and brand sketches">
+            </figure>
+            <div>
+              <span>01</span>
+              <h3>Ideas</h3>
+              <p>We find the shape of a business inside observations, tensions, and possibilities that are not yet fully articulated.</p>
+            </div>
+          </a>
+          <a class="lens-card" href="approach.html#experiences">
+            <figure>
+              <img src="assets/lens-experiences.png" alt="A service counter and digital device used in experience design">
+            </figure>
+            <div>
+              <span>02</span>
+              <h3>Experiences</h3>
+              <p>We design the moments people touch, choose, remember, and return to across digital and physical channels.</p>
+            </div>
+          </a>
+          <a class="lens-card" href="approach.html#growth">
+            <figure>
+              <img src="assets/lens-growth.png" alt="Workspace with analytics screens for growth planning">
+            </figure>
+            <div>
+              <span>03</span>
+              <h3>Growth</h3>
+              <p>We keep building after launch, shaping tools, operations, and feedback loops that let the work continue.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="projects" id="projects" aria-labelledby="projects-title">
+        <div class="section-index">03 / Project Fragments</div>
+        <div class="projects-header">
+          <h2 id="projects-title">Fragments of work, not a list of services.</h2>
+          <p>A selective view into the kinds of systems we shape across brand, digital, AI, experience, and growth.</p>
+        </div>
+        <div class="project-rail" data-project-rail>
+          <a class="project-panel is-active" href="project-digital.html">
+            <img src="assets/project-digital.png" alt="Phone and web interface prototypes">
+            <div class="project-text">
+              <span>Digital Product</span>
+              <h3>Products that enter daily operations</h3>
+              <p>We design apps and web systems as interfaces for action, not as screens detached from the work.</p>
+            </div>
+          </a>
+          <a class="project-panel" href="project-brand.html">
+            <img src="assets/project-brand.png" alt="Brand materials, packaging studies, and printed samples">
+            <div class="project-text">
+              <span>Brand System</span>
+              <h3>Brands that begin with observation</h3>
+              <p>We align language, visual systems, products, environments, and delivery into one coherent experience.</p>
+            </div>
+          </a>
+          <a class="project-panel" href="project-ai.html">
+            <img src="assets/project-ai.png" alt="Abstract AI workflow planning diagram">
+            <div class="project-text">
+              <span>AI Workflow</span>
+              <h3>AI that changes the work, not just the tooling</h3>
+              <p>We help teams redesign workflows, decisions, and operating habits around useful automation.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="approach" id="approach" aria-labelledby="approach-title">
+        <div class="approach-media">
+          <img src="assets/process-workshop.png" alt="Team discussing diagrams and imagery on a workshop wall">
+        </div>
+        <div class="approach-copy">
+          <div class="section-index">04 / Approach</div>
+          <h2 id="approach-title">Observe. Define. Build. Grow.</h2>
+          <div class="steps">
+            <article>
+              <span>01</span>
+              <h3>Observe</h3>
+              <p>We study the current reality: customers, signals, numbers, rituals, and friction.</p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Define</h3>
+              <p>We narrow the question before deciding what should be changed or built.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Build</h3>
+              <p>We create the right form: brand, website, app, AI workflow, service environment, or operating system.</p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Grow</h3>
+              <p>We keep improving after launch through measurement, learning, and continued implementation.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="journal" id="journal" aria-labelledby="journal-title">
+        <div class="section-index">05 / Field Notes</div>
+        <div class="journal-layout">
+          <figure>
+            <img src="assets/journal-desk.png" alt="Desk with design books, notes, and printed editorial materials">
+          </figure>
+          <div>
+            <h2 id="journal-title">Thinking in public, quietly.</h2>
+            <div class="note-list">
+              <a href="journal.html#ai-operations" aria-label="Read AI should not end at tool selection">
+                <span>AI</span>
+                <strong>AI should not end at tool selection.</strong>
+              </a>
+              <a href="journal.html#connected-experiences" aria-label="Read physical and digital experiences belong together">
+                <span>Experience</span>
+                <strong>Physical and digital experiences belong together.</strong>
+              </a>
+              <a href="journal.html#brand-before-logo" aria-label="Read a brand is decided before the logo appears">
+                <span>Brand</span>
+                <strong>A brand is decided before the logo appears.</strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="contact reveal-zone" id="contact" aria-labelledby="contact-title">
+        <img class="contact-bg contact-bg-mono" src="assets/contact-studio.png" alt="Evening studio entrance and workspace">
+        <img class="contact-bg contact-bg-color" src="assets/contact-studio.png" alt="">
+        <div class="contact-content">
+          <p class="eyebrow">Start a conversation</p>
+          <h2 id="contact-title">Bring us a question, a plan, or a vague feeling.</h2>
+          <p>
+            You do not need a perfect brief. Bring us a direction, a constraint, a business question, or a half-formed feeling.
           </p>
-          <p style="margin-top: 1.75rem;">Each venture is run with the same intent: a clear idea, careful craft, and respect for the people it serves. We would rather do a few things well than many things loudly.</p>
+          <a class="contact-button" href="contact.html">Open the contact page</a>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- CTA -->
-    <section class="cta">
-      <div class="container">
-        <p class="eyebrow" style="color: var(--ink-faint)" data-reveal>Get in touch</p>
-        <h2 class="h-section" data-reveal data-delay="1">Have an idea, or a venture in mind?</h2>
-        <a class="btn" href="contact.html" data-reveal data-delay="2">Contact us <span class="arrow">→</span></a>
-      </div>
-    </section>
-  </main>
+    <aside class="contact-panel" data-contact-panel aria-hidden="true">
+      <button class="panel-close" type="button" data-close-contact aria-label="Close contact panel">×</button>
+      <p class="eyebrow">Contact</p>
+      <h2>Start before it is fully defined.</h2>
+      <form>
+        <label>
+          <span>Name</span>
+          <input type="text" name="name" autocomplete="name">
+        </label>
+        <label>
+          <span>Email</span>
+          <input type="email" name="email" autocomplete="email">
+        </label>
+        <label>
+          <span>Topic</span>
+          <select name="topic">
+            <option>An undefined question</option>
+            <option>Business or brand</option>
+            <option>Website or app</option>
+            <option>AI adoption or operations</option>
+            <option>Physical or service experience</option>
+            <option>Marketing and growth</option>
+          </select>
+        </label>
+        <label>
+          <span>Message</span>
+          <textarea name="message" rows="5"></textarea>
+        </label>
+        <button type="button">Review message</button>
+      </form>
+    </aside>
 
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div class="footer-brand">
-        <span class="wordmark">Cascade Alliance</span>
-        <p class="footer-tag">An independent company based in Warsaw, building and operating a portfolio of ventures.</p>
-      </div>
-      <nav class="footer-nav" aria-label="Footer">
-        <a href="about.html">About</a>
-        <a href="ventures.html">Ventures</a>
-        <a href="company.html">Company</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-      <div class="footer-contact">
-        <p class="eyebrow" style="margin-bottom:0.6rem">Contact</p>
-        <a class="link" href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>
-      </div>
-    </div>
-    <div class="container footer-legal">
-      <p>Cascade Alliance sp. z o.o. · ul. Stefana Batorego 18/108, 02-591 Warsaw, Poland</p>
-      <p>KRS 0001170168 · VAT PL7011257404 · © <span id="year"></span> Cascade Alliance sp. z o.o.</p>
-    </div>
-  </footer>
-
-  <script src="main.js"></script>
-</body>
+    <script src="script.js"></script>
+  </body>
 </html>
