@@ -31,9 +31,13 @@
           <p>You do not need a perfect brief. Tell us what you are trying to move, what feels stuck, or what might be possible.</p>
           <p class="contact-direct">Prefer email? Write to <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>.</p>
         </div>
-        <form class="contact-form">
-          <label><span>Name</span><input type="text" name="name" autocomplete="name"></label>
-          <label><span>Email</span><input type="email" name="email" autocomplete="email"></label>
+        <form class="contact-form" action="https://formsubmit.co/contact@cascade-alliance.com" method="POST">
+          <input type="hidden" name="_subject" value="New inquiry — cascade-alliance.com">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <label><span>Name</span><input type="text" name="name" autocomplete="name" required></label>
+          <label><span>Email</span><input type="email" name="email" autocomplete="email" required></label>
           <label>
             <span>Topic</span>
             <select name="topic">
@@ -45,8 +49,8 @@
               <option>Marketing and growth</option>
             </select>
           </label>
-          <label><span>Message</span><textarea name="message" rows="7"></textarea></label>
-          <button type="button">Review message</button>
+          <label><span>Message</span><textarea name="message" rows="7" required></textarea></label>
+          <button type="submit">Send message</button>
         </form>
       </section>
     </main>
