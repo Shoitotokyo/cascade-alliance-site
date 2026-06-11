@@ -270,7 +270,30 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 #buzz{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
 .bz{position:absolute;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--tint);opacity:0;white-space:nowrap;text-shadow:0 0 10px rgba(82,227,146,.5);will-change:transform,opacity}
 
-/* ---------- act 6 : the studio ---------- */
+/* ---------- act 6 : the promise (price disruption) ---------- */
+#valuestage{display:grid;gap:14px;width:100%;max-width:760px;margin-inline:auto}
+#valuewrap{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(8,9,13,.6);height:min(36vh,300px)}
+#value-canvas{display:block;width:100%;height:100%}
+.vc-axis{position:absolute;font-family:var(--mono);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.vc-x{bottom:8px;left:50%;transform:translateX(-50%)}
+.vc-tag{position:absolute;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:6px;background:rgba(8,9,13,.55)}
+.vc-q{top:12px;right:14px;color:#c3b0ff}
+.vc-i{top:31px;right:14px;color:var(--faint)}
+.vc-p{bottom:26px;right:14px;color:#9affc0}
+.vc-cross{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--mono);font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:rgba(10,11,16,.74);border:1px solid var(--line);border-radius:99px;padding:6px 14px;white-space:nowrap;opacity:0;transition:opacity .5s}
+.vc-cross.on{opacity:1}
+#value-compare{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.vcol{border:1px solid var(--line);border-radius:14px;padding:13px 16px;background:rgba(8,9,13,.6)}
+.vcol-us{border-color:rgba(169,140,255,.42);background:rgba(169,140,255,.07)}
+.vcol-h{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:9px}
+.vcol-us .vcol-h{color:var(--tint)}
+.vrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:5px 0;font-size:12px}
+.vrow span{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+.vrow b{font-weight:700;color:var(--ink);text-align:right}
+.vcol-them .vrow b{color:var(--dim)}
+.vcol-us #vu-price{color:var(--tint)}
+
+/* ---------- act 7 : the studio ---------- */
 #whostage .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:26px}
 #whostage .chip{border-color:var(--line);color:var(--dim);font-size:9.5px;padding:8px 16px}
 
@@ -548,8 +571,44 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   </div></div>
 </section>
 
-<!-- ═══════════ ACT 6 — THE STUDIO ═══════════ -->
-<section class="chapter" id="ch-who" data-ch="6">
+<!-- ═══════════ ACT 6 — THE PROMISE (price disruption) ═══════════ -->
+<section class="chapter" id="ch-value" data-ch="6">
+  <div class="pinwrap"><div class="stage solo" style="gap:24px">
+    <div class="copy" style="text-align:center;max-width:780px">
+      <div class="kicker reveal" style="justify-content:center">the promise — why we exist</div>
+      <h2 class="big reveal">Top-studio quality.<br>Without the top-studio <em>invoice</em>.</h2>
+      <p class="lede reveal" style="margin-inline:auto">The complex app, the website that actually works, a social presence that compounds — the things most owners get quoted into giving up on. Newer tools and hard-won experience let us build them <b>better than the expensive shops</b>, and price them where a small business can say yes. That gap, on purpose, is the whole company.</p>
+    </div>
+    <div id="valuestage">
+      <div id="valuewrap">
+        <canvas id="value-canvas"></canvas>
+        <div class="vc-axis vc-x">scope &amp; complexity →</div>
+        <div class="vc-tag vc-q">quality — ours</div>
+        <div class="vc-tag vc-i">quality — typical</div>
+        <div class="vc-tag vc-p">price — ours</div>
+        <div class="vc-cross" id="vc-cross">premium build · small-business price</div>
+      </div>
+      <div id="value-compare">
+        <div class="vcol vcol-them">
+          <div class="vcol-h">typical agency</div>
+          <div class="vrow"><span>price</span><b id="vt-price">$$$$</b></div>
+          <div class="vrow"><span>timeline</span><b>4–9 months</b></div>
+          <div class="vrow"><span>who builds it</span><b>juniors, mostly</b></div>
+        </div>
+        <div class="vcol vcol-us">
+          <div class="vcol-h">cascade alliance</div>
+          <div class="vrow"><span>price</span><b id="vu-price">$</b></div>
+          <div class="vrow"><span>first demo</span><b>~2 weeks</b></div>
+          <div class="vrow"><span>who builds it</span><b>seniors, only</b></div>
+        </div>
+      </div>
+      <div class="svc reveal" style="text-align:center;margin-top:0"><b>price disruption — not quality compromise</b> · complex software, finally within reach for small &amp; medium business</div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ═══════════ ACT 7 — THE STUDIO ═══════════ -->
+<section class="chapter" id="ch-who" data-ch="7">
   <div class="pinwrap"><div class="stage solo">
     <div class="copy" style="text-align:center;max-width:780px" id="whostage">
       <div class="kicker reveal" style="justify-content:center">interlude — the people behind the particles</div>
@@ -565,7 +624,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 </section>
 
 <!-- ═══════════ ACT 7 — YOUR TURN ═══════════ -->
-<section class="chapter" id="ch-console" data-ch="7">
+<section class="chapter" id="ch-console" data-ch="8">
   <div class="pinwrap"><div class="stage solo" style="gap:28px">
     <div class="copy" style="text-align:center;max-width:720px">
       <div class="kicker reveal" style="justify-content:center">final act — your turn</div>
@@ -587,7 +646,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 </section>
 
 <!-- ═══════════ ACT 8 — END ═══════════ -->
-<section class="chapter" id="ch-end" data-ch="8">
+<section class="chapter" id="ch-end" data-ch="9">
   <div class="pinwrap"><div id="endstage">
     <div id="end-n" class="reveal">Cascade Alliance</div>
     <p class="lede reveal" style="text-align:center">From nothing. To launched.</p>
@@ -945,6 +1004,13 @@ function buildShapes(){
   /* the idea — a tight core */
   SHAPES.core = fillN(() => [gauss()*9, gauss()*9, gauss()*9]);
 
+  /* the promise — five ascending bars (value rising) */
+  SHAPES.value = fillN(() => {
+    const bar = Math.floor(Math.random() * 5);
+    const bh = 34 + bar * 33;
+    return [-116 + bar * 56 + (Math.random()-.5)*38, -78 + Math.random()*bh, (Math.random()-.5)*30];
+  });
+
   /* the wordmark */
   SHAPES.word = from2D(samplePoints(1280, 300, 360, (x, w, h) => {
     const label = 'Cascade Alliance';
@@ -1290,6 +1356,7 @@ const CHAPTERS = [
   { sel: '#ch-ai',      label: 'ai',        shape: 'brain',   a: '#d3b4ff', b: '#8a5cff', tint: '#a87cff', rot: .3  },
   { sel: '#ch-brand',   label: 'brand',     shape: 'mark',    a: '#ffd49a', b: '#ff9a4d', tint: '#ffb35a', rot: .55 },
   { sel: '#ch-growth',  label: 'growth',    shape: 'growth',  a: '#9affc0', b: '#2fd77a', tint: '#52e392', rot: .1  },
+  { sel: '#ch-value',   label: 'the promise', shape: 'value', a: '#cdbcff', b: '#8a6cff', tint: '#a98cff', rot: .14 },
   { sel: '#ch-who',     label: 'studio',    shape: 'constel', a: '#bcc6ff', b: '#7d8cff', tint: '#96a3ff', rot: .22 },
   { sel: '#ch-console', label: 'your turn', shape: 'halo',    a: '#ffffff', b: '#9db4ff', tint: '#cdd9ff', rot: .35 },
   { sel: '#ch-end',     label: 'cascade',    shape: 'ring',    a: '#eef1f8', b: '#8fa3c8', tint: '#aebdde', rot: .07 }
@@ -1415,6 +1482,16 @@ function initScrollExperience(){
     tl.eventCallback('onUpdate', () => {
       if(DEMO.growthSet) DEMO.growthSet(clamp((tl.progress() - .12) / .8, 0, 1));
     });
+  }
+
+  /* ── act 6 · the promise — price disruption ── */
+  {
+    const tl = gsap.timeline({ scrollTrigger: pin('#ch-value', 300, .4) });
+    addReveals(tl, '#ch-value', .02);
+    tl.fromTo('#valuewrap', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: .14, ease: 'power2.out' }, .08);
+    tl.fromTo('#value-compare', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .12, ease: 'power2.out' }, .16);
+    tl.to({}, { duration: .9 });
+    tl.eventCallback('onUpdate', () => { if(DEMO.valueSet) DEMO.valueSet(clamp((tl.progress() - .14) / .8, 0, 1)); });
   }
 
   /* ── interlude · studio ── */
@@ -1978,6 +2055,55 @@ function hslHex(h, s, l){
   loop();
 })();
 
+/* ── act 6 · the promise — price falls, quality rises, they cross ──
+   Cross-point + price tiers update straight from progress (reversible);
+   the chart itself is drawn on a RAF canvas in the same dark aesthetic. */
+(function(){
+  const cv = $('#value-canvas'); if(!cv) return;
+  const cx = cv.getContext('2d');
+  let Wp = 0, Hp = 0, DPR2 = Math.min(devicePixelRatio || 1, 2);
+  function size(){ const r = cv.getBoundingClientRect(); if(r.width){ Wp = r.width; Hp = r.height; cv.width = Wp*DPR2; cv.height = Hp*DPR2; cx.setTransform(DPR2,0,0,DPR2,0,0); } }
+  addEventListener('resize', size);
+  const cross = $('#vc-cross'), vu = $('#vu-price');
+  let P = 0;
+  DEMO.valueSet = p => {
+    P = clamp(p, 0, 1);
+    cross.classList.toggle('on', P > .52);
+    vu.textContent = ['$$$$','$$$','$$','$'][Math.min(3, Math.floor(P / .26))];   /* ours drops to $ */
+  };
+  /* curves: quality(ours) rises past a flat "industry" line; price(ours) crashes */
+  const q  = f => .30 + Math.pow(f, .85) * .62;
+  const pr = f => .90 - Math.pow(f, 1.25) * .78;
+  let netVis = false;
+  if('IntersectionObserver' in window){ new IntersectionObserver(en => { netVis = en[0].isIntersecting; }).observe($('#valuestage')); }
+  else netVis = true;
+  function loop(){
+    requestAnimationFrame(loop);
+    if(document.hidden || !netVis) return;
+    if(!Wp) size();
+    if(!Wp) return;
+    cx.clearRect(0, 0, Wp, Hp);
+    const x0 = 18, x1 = Wp - 18, y0 = 22, y1 = Hp - 28;
+    const X = f => x0 + (x1 - x0) * f, Y = v => y1 - (y1 - y0) * v;
+    const stroke = (fn, col, w) => { cx.strokeStyle = col; cx.lineWidth = w; cx.beginPath(); let s = false; for(let i=0;i<=64;i++){ const f=i/64; if(f>P) break; const xx=X(f), yy=Y(fn(f)); if(!s){ cx.moveTo(xx,yy); s=true; } else cx.lineTo(xx,yy); } cx.stroke(); };
+    /* baseline */
+    cx.strokeStyle = 'rgba(255,255,255,.06)'; cx.lineWidth = 1; cx.beginPath(); cx.moveTo(x0, y1); cx.lineTo(x1, y1); cx.stroke();
+    /* industry quality (flat, dashed) — ours rises above it */
+    cx.setLineDash([4,5]); cx.strokeStyle = 'rgba(242,244,248,.26)'; cx.lineWidth = 1.5; cx.beginPath(); cx.moveTo(x0, Y(.6)); cx.lineTo(X(P), Y(.6)); cx.stroke(); cx.setLineDash([]);
+    /* price area (falling) */
+    cx.beginPath(); let s = false; for(let i=0;i<=64;i++){ const f=i/64; if(f>P) break; const xx=X(f), yy=Y(pr(f)); if(!s){ cx.moveTo(xx,yy); s=true; } else cx.lineTo(xx,yy); }
+    cx.lineTo(X(Math.min(P,1)), y1); cx.lineTo(X(0), y1); cx.closePath();
+    const g = cx.createLinearGradient(0, y0, 0, y1); g.addColorStop(0,'rgba(154,255,192,.26)'); g.addColorStop(1,'rgba(154,255,192,0)'); cx.fillStyle = g; cx.fill();
+    stroke(pr, 'rgba(154,255,192,.92)', 2);
+    stroke(q,  '#a98cff', 2.2);
+    /* heads */
+    if(P > 0){ cx.fillStyle = '#cdbcff'; cx.beginPath(); cx.arc(X(P), Y(q(P)), 3.5, 0, 6.29); cx.fill(); cx.fillStyle = '#bfffd9'; cx.beginPath(); cx.arc(X(P), Y(pr(P)), 3.5, 0, 6.29); cx.fill(); }
+    /* crossing guide */
+    if(P > .52){ cx.setLineDash([2,4]); cx.strokeStyle = 'rgba(255,255,255,.4)'; cx.lineWidth = 1; cx.beginPath(); cx.moveTo(X(.5), y0); cx.lineTo(X(.5), y1); cx.stroke(); cx.setLineDash([]); }
+  }
+  loop();
+})();
+
 /* ── final act · the blueprint console ── */
 (function(){
   const MAP = [
@@ -2034,7 +2160,7 @@ function hslHex(h, s, l){
     const n = Math.round(seg(p, .33, .9) * LINES2.length);
     if(n !== shownLines){
       lineEls.forEach((el, i) => { const on = i < n; el.style.opacity = on ? '1' : '0'; el.style.transform = on ? 'none' : 'translateY(7px)'; });
-      if(S.chapter === 7 && n > shownLines && performance.now() - lastTickC > 70){ AUDIO.tick(); lastTickC = performance.now(); }
+      if(S.chapter === 8 && n > shownLines && performance.now() - lastTickC > 70){ AUDIO.tick(); lastTickC = performance.now(); }
       shownLines = n;
     }
     status.textContent = s1 < 1 ? 'reading…' : n < LINES2.length ? 'sketching…' : 'done — humans next';
