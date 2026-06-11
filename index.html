@@ -399,6 +399,49 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   #grain,#spark-ring,#scrollhint i{animation:none}
   *{scroll-behavior:auto}
 }
+
+/* ---------- responsive — phones (refined for the new sections) ---------- */
+.t-min{display:none}
+@media (max-width:760px){
+  /* persistent chrome: compact wordmark + nav so all items fit beside the brand */
+  #wordmark{font-size:9.5px;letter-spacing:.1em}
+  #ui-right{right:12px;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+  .uibtn{font-size:8px;letter-spacing:.05em;padding:5px 0}
+  .t-full{display:none}.t-min{display:inline}
+  /* growth metrics — keep 3-up but tighter so $ figures don't clip */
+  #g-metrics{gap:8px}
+  .g-card{padding:11px;min-height:72px}
+  .g-val{font-size:15px}
+  .g-lab,.g-sub{font-size:7.5px;letter-spacing:.1em}
+  .g-spark{height:38px}
+  #net{height:30vh;height:30svh}
+  /* value (the promise) section */
+  #valuewrap{height:min(28vh,220px)}
+  .vc-tag{font-size:7.5px;padding:2px 5px}
+  .vc-q{top:10px;right:10px}.vc-i{top:27px;right:10px}.vc-p{bottom:24px;right:10px}
+  .vc-cross{font-size:8px;padding:5px 9px}
+  #value-compare{gap:8px}
+  .vcol{padding:11px 12px}
+  .vrow{font-size:11px;padding:4px 0}
+  .vrow span{font-size:8px}
+  /* demos */
+  #aigrid{gap:12px}
+  #review-demo,#idea-line{font-size:12px}
+  #brandgen-name{font-size:18px}
+  /* overlays — use the screen on phones */
+  .ovl-inner{padding:20px 17px;border-radius:16px;max-height:90svh}
+  .ov-grid{grid-template-columns:1fr}
+  .jpost p,.ovl-inner p.who{font-size:13.5px}
+  /* a touch more headroom under the chrome for pinned content */
+  .pinwrap{padding-top:max(62px,env(safe-area-inset-top))}
+}
+@media (max-width:380px){
+  #wordmark{font-size:9px;letter-spacing:.06em}
+  #ui-right{gap:8px}
+  .uibtn{font-size:7.5px}
+  .g-val{font-size:13px}
+  h2.big{font-size:clamp(26px,8vw,40px)}
+}
 </style>
 </head>
 <body class="locked">
@@ -412,7 +455,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   <button class="uibtn" id="btn-sound" aria-pressed="true">sound on</button>
   <button class="uibtn" id="btn-company">company</button>
   <button class="uibtn" id="btn-journal">journal</button>
-  <button class="uibtn" id="btn-plain">the plain version</button>
+  <button class="uibtn" id="btn-plain"><span class="t-full">the plain version</span><span class="t-min">plain</span></button>
   <button class="uibtn" id="btn-contact">contact</button>
 </nav>
 <nav class="chrome" id="dots" aria-label="chapters"></nav>
