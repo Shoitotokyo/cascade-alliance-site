@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Cascade Alliance — we build apps, brands, and growth</title>
+<title>Cascade Alliance — we build things out of nothing</title>
 <meta name="description" content="Cascade Alliance is a product studio for small and medium businesses. Apps, websites, AI, brand, growth — demonstrated live, in front of you, right now.">
-<meta property="og:title" content="Cascade Alliance — we build apps, brands, and growth">
+<meta property="og:title" content="Cascade Alliance — we build things out of nothing">
 <meta property="og:description" content="Don't read about what we build. Experience it.">
 <meta name="theme-color" content="#050507">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='10' fill='%23ffffff'/%3E%3Ccircle cx='32' cy='32' r='22' fill='none' stroke='%237daaff' stroke-width='2' opacity='.6'/%3E%3C/svg%3E">
 <style>
 /* ============================================================
    Cascade Alliance — design system
-   One file. No templates. Built from scratch.
+   One file. No templates. Built ex nihilo.
    ============================================================ */
 :root{
   --bg:#050507;
@@ -524,7 +524,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
     <div class="copy" style="text-align:center;max-width:780px" id="whostage">
       <div class="kicker reveal" style="justify-content:center">interlude — the people behind the particles</div>
       <h2 class="big reveal">A small senior studio.<br>No juniors on your invoice.</h2>
-      <p class="lede reveal" style="margin-inline:auto">Cascade Alliance is engineers, designers and strategists who got tired of 40-page decks. We work with small and medium businesses — where decisions are fast and ideas actually ship. Everything you just experienced was built the way we build for clients: from scratch.</p>
+      <p class="lede reveal" style="margin-inline:auto">Cascade Alliance is engineers, designers and strategists who got tired of 40-page decks. We work with small and medium businesses — where decisions are fast and ideas actually ship. Everything you just experienced was built the way we build for clients: from nothing.</p>
       <div class="row reveal">
         <span class="chip">design × engineering × intelligence</span>
         <span class="chip">remote · worldwide</span>
@@ -564,15 +564,14 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 <section class="chapter" id="ch-end" data-ch="8">
   <div class="pinwrap"><div id="endstage">
     <div id="end-n" class="reveal">Cascade Alliance</div>
-    <p class="lede reveal" style="text-align:center">From idea. To launched.</p>
+    <p class="lede reveal" style="text-align:center">From nothing. To launched.</p>
     <div class="reveal" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
       <a class="pill hot" href="mailto:contact@cascade-alliance.com?subject=Let%27s%20make%20something%20from%20nothing">start a project</a>
       <button class="pill ghost" id="btn-plain2">the plain version</button>
     </div>
     <div id="endfoot" class="reveal">
       contact@cascade-alliance.com · worldwide, remote<br>
-      © 2026 Cascade Alliance sp. z o.o. — this site began as one empty file. no templates were harmed.<br>
-      <span style="display:inline-block;margin-top:8px;font-size:11px;opacity:.55;letter-spacing:.02em">Cascade Alliance sp. z o.o. · ul. Stefana Batorego 18/108, 02-591 Warsaw, Poland · KRS 0001170168 · VAT PL7011257404</span>
+      © 2026 Cascade Alliance studio — this site began as one empty file. no templates were harmed.
     </div>
   </div></div>
 </section>
@@ -651,7 +650,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 </script>
 <script>
 /* ════════════════════════════════════════════════════════════
-   Cascade Alliance — one file, from scratch.
+   Cascade Alliance — one file, ex nihilo.
    part 1 · state, utilities, generative audio engine
    ════════════════════════════════════════════════════════════ */
 'use strict';
@@ -922,11 +921,9 @@ function buildShapes(){
 
   /* the wordmark */
   SHAPES.word = from2D(samplePoints(1280, 300, 360, (x, w, h) => {
-    var _wm = 'CASCADE ALLIANCE', _fs = 190;
-    x.font = '900 ' + _fs + 'px "Arial Black", Arial, sans-serif';
-    while (x.measureText(_wm).width > w * 0.92 && _fs > 24) { _fs -= 4; x.font = '900 ' + _fs + 'px "Arial Black", Arial, sans-serif'; }
+    x.font = '900 190px "Arial Black", Arial, sans-serif';
     x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.fillText(_wm, w/2, h/2 + 8);
+    x.fillText('Cascade Alliance', w/2, h/2 + 8);
   }), 8, 1.1);
 
   /* act 1 — a phone */
