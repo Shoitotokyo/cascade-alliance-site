@@ -388,6 +388,32 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 #cf-send[disabled]{opacity:.5;pointer-events:none}
 .cf-status{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--dim)}
 .cf-status.ok{color:#9affc0}.cf-status.err{color:#ff9a8a}
+/* work + legal doc overlays (shared list → article, like the journal) */
+.doc-article{display:none}
+.doc-back{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+.doc-back:hover{color:var(--ink)}
+.work-meta{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--tint);margin-top:8px}
+.shot-row{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 18px}
+.shot{position:relative;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#0b0d13;flex:none}
+.shot.app{width:94px;aspect-ratio:9/19}
+.shot.web{width:100%;max-width:440px;aspect-ratio:16/10}
+.shot::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,hsl(var(--h,210) 68% 24%),hsl(var(--h,210) 55% 9%))}
+.shot .ui{position:absolute;inset:14% 13% 14%;display:flex;flex-direction:column;gap:7px;z-index:1}
+.shot.web .ui{inset:32% 8% 12% 8%}
+.shot .ui i{display:block;height:6px;border-radius:4px;background:rgba(255,255,255,.2)}
+.shot .ui i.lg{height:19px;width:62%;border-radius:6px;background:hsl(var(--h,210) 85% 62% / .9);margin-bottom:3px}
+.shot .ui i.sm{width:78%}
+.shot .ui i.sm2{width:46%}
+.shot.web .bar{position:absolute;top:0;left:0;right:0;height:20px;background:rgba(255,255,255,.06);display:flex;align-items:center;gap:5px;padding:0 9px;z-index:2}
+.shot.web .bar b{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.28)}
+.work-facts{display:flex;flex-wrap:wrap;gap:10px 26px;margin:2px 0 16px}
+.work-facts>div{min-width:84px}
+.work-facts span{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin-bottom:3px}
+.work-facts b{font-size:13px;font-weight:700;color:var(--ink)}
+.legal-doc p{font-size:13.5px}
+.legal-doc .ov-legal{margin:6px 0 14px}
+.todo{color:#ffb35a;font-weight:600}
+@media(max-width:760px){ .shot.app{width:78px} }
 
 /* ---------- no-webgl fallback ---------- */
 body.no3d #tint{background:radial-gradient(100vmax 70vmax at 50% 45%,var(--tint-soft),transparent 62%),
@@ -524,8 +550,10 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 }
 /* phones — the language toggle adds a 6th nav item and Japanese copy wraps taller */
 @media (max-width:760px){
-  #ui-right{max-width:calc(100vw - 120px);flex-wrap:wrap;justify-content:flex-end;gap:7px;row-gap:4px}
-  .uibtn{font-size:7.5px;letter-spacing:.04em}
+  .wm-txt{display:none}   /* phones: brand mark is just the dot — the name lives in the hero + end card */
+  #wordmark b{font-size:13px}
+  #ui-right{max-width:calc(100vw - 52px);flex-wrap:wrap;justify-content:flex-end;gap:8px;row-gap:5px}
+  .uibtn{font-size:8px;letter-spacing:.05em}
   .lede{font-size:12px;line-height:1.48}
   h2.big{font-size:clamp(22px,6.2vw,30px)}
   #codepane pre{height:18vh;height:18svh}   /* render pane stays tall enough for the full bakery */
@@ -545,12 +573,14 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 <div id="grain"></div>
 
 <!-- persistent chrome -->
-<header class="chrome" id="wordmark"><b>●</b>&nbsp;Cascade Alliance</header>
+<header class="chrome" id="wordmark"><b>●</b><span class="wm-txt">&nbsp;Cascade Alliance</span></header>
 <nav class="chrome" id="ui-right">
   <button class="uibtn" id="btn-lang" aria-label="日本語に切り替え / switch language">日本語</button>
   <button class="uibtn" id="btn-sound" aria-pressed="true">sound on</button>
   <button class="uibtn" id="btn-company">company</button>
+  <button class="uibtn" id="btn-work">work</button>
   <button class="uibtn" id="btn-journal">journal</button>
+  <button class="uibtn" id="btn-legal">legal</button>
   <button class="uibtn" id="btn-plain"><span class="t-full">the plain version</span><span class="t-min">plain</span></button>
   <button class="uibtn" id="btn-contact">contact</button>
 </nav>
@@ -957,6 +987,148 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
         <p><b>Build (wk 3–6)</b> — the working product, with real data and real users. Senior hands, tight loops, nothing parked in a queue.</p>
         <p><b>Launch (wk 7+)</b> — ship it, measure it, make it spread, then keep improving what the numbers point to.</p>
         <p>The first demo lands in your hands about two weeks after kickoff. Fast isn't the opposite of good here — it's how we keep the price honest.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ WORK / SELECTED PROJECTS ═══════════ -->
+<div id="overlay-work" class="ovl" role="dialog" aria-modal="true" aria-label="Selected work">
+  <div class="ovl-inner">
+    <button class="ovl-close">close × (esc)</button>
+    <div class="doc-list">
+      <h3>Selected work</h3>
+      <div class="sub">a few things we've shipped — each with its real timeline and budget · sample portfolio</div>
+      <div class="ov-sec">
+        <button class="jcard" data-post="1"><span class="jdate">iOS · Android app</span><div class="jtitle">Punch — coffee loyalty</div><div class="jdek">A digital punch-card that turned regulars into a daily habit.</div><div class="work-meta">6 weeks · €6,800</div></button>
+        <button class="jcard" data-post="2" style="margin-top:12px"><span class="jdate">iOS · Android app</span><div class="jtitle">Reserve — barber booking</div><div class="jdek">Book, rebook and remind — no-shows down by a third.</div><div class="work-meta">5 weeks · €5,400</div></button>
+        <button class="jcard" data-post="3" style="margin-top:12px"><span class="jdate">iOS · Android app</span><div class="jtitle">Tally — market-stall POS</div><div class="jdek">Offline-first point of sale and stock for a weekend market.</div><div class="work-meta">7 weeks · €8,900</div></button>
+        <button class="jcard" data-post="4" style="margin-top:12px"><span class="jdate">iOS · Android app</span><div class="jtitle">Nestor — clinic appointments</div><div class="jdek">Patient booking, reminders and light records for a small clinic.</div><div class="work-meta">8 weeks · €9,200</div></button>
+        <button class="jcard" data-post="5" style="margin-top:12px"><span class="jdate">iOS · Android app</span><div class="jtitle">Cadence — habit & routine</div><div class="jdek">Gentle daily nudges and streaks, built to be calm not loud.</div><div class="work-meta">4 weeks · €3,900</div></button>
+        <button class="jcard" data-post="6" style="margin-top:12px"><span class="jdate">website</span><div class="jtitle">Daily Bread — bakery storefront</div><div class="jdek">Menu, pickup orders and a story, found by neighbours on Google.</div><div class="work-meta">3 weeks · €2,800</div></button>
+        <button class="jcard" data-post="7" style="margin-top:12px"><span class="jdate">website</span><div class="jtitle">Atlas Movers — site + instant quote</div><div class="jdek">A quote calculator that books jobs while the office sleeps.</div><div class="work-meta">3 weeks · €3,200</div></button>
+        <button class="jcard" data-post="8" style="margin-top:12px"><span class="jdate">website</span><div class="jtitle">Lumen — photographer portfolio</div><div class="jdek">A fast, quiet gallery that lets the work do the talking.</div><div class="work-meta">2 weeks · €1,900</div></button>
+        <button class="jcard" data-post="9" style="margin-top:12px"><span class="jdate">website</span><div class="jtitle">Harbor &amp; Co — law firm</div><div class="jdek">Practice areas, people and contact — calm, credible, bilingual.</div><div class="work-meta">4 weeks · €3,600</div></button>
+        <button class="jcard" data-post="10" style="margin-top:12px"><span class="jdate">website</span><div class="jtitle">Verde — restaurant &amp; orders</div><div class="jdek">Reservations and online ordering, in the restaurant's own voice.</div><div class="work-meta">3 weeks · €3,400</div></button>
+      </div>
+      <div class="note" style="margin-top:20px">These are sample projects shown as placeholders — swap with your real case studies anytime.</div>
+    </div>
+    <div class="doc-article">
+      <button class="doc-back">← all work</button>
+      <div class="doc-body"></div>
+      <div class="ov-sec"><button class="pill ghost" data-close>↩ return to the experience</button></div>
+    </div>
+    <div class="work-src" hidden>
+      <div id="work-1" class="jpost work-post"><h4>Punch — coffee loyalty</h4><span class="jdate">iOS · Android app</span>
+        <div class="shot-row"><div class="shot app" style="--h:26"><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div><div class="shot app" style="--h:30"><span class="ui"><i class="lg"></i><i></i><i class="sm"></i><i class="sm2"></i></span></div><div class="shot app" style="--h:18"><span class="ui"><i class="lg"></i><i class="sm2"></i><i class="sm"></i><i></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>6 weeks</b></div><div><span>Investment</span><b>€6,800</b></div><div><span>Stack</span><b>Swift · Kotlin · cloud sync</b></div></div>
+        <p>A neighbourhood café wanted the punch-card their regulars kept losing. We shipped a native iOS &amp; Android app: tap to stamp, unlock a free drink at eight, and a push when a reward is waiting. Loyalty sign-ups doubled in the first month.</p></div>
+      <div id="work-2" class="jpost work-post"><h4>Reserve — barber booking</h4><span class="jdate">iOS · Android app</span>
+        <div class="shot-row"><div class="shot app" style="--h:210"><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div><div class="shot app" style="--h:225"><span class="ui"><i class="lg"></i><i></i><i class="sm"></i><i class="sm2"></i></span></div><div class="shot app" style="--h:198"><span class="ui"><i class="lg"></i><i class="sm2"></i><i></i><i class="sm"></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>5 weeks</b></div><div><span>Investment</span><b>€5,400</b></div><div><span>Stack</span><b>React Native · calendar sync</b></div></div>
+        <p>Two chairs, a phone that never stopped ringing. The app lets clients book and rebook in seconds, sends a reminder the night before, and quietly fills cancellations from a waitlist. No-shows fell by about a third.</p></div>
+      <div id="work-3" class="jpost work-post"><h4>Tally — market-stall POS</h4><span class="jdate">iOS · Android app</span>
+        <div class="shot-row"><div class="shot app" style="--h:150"><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div><div class="shot app" style="--h:165"><span class="ui"><i class="lg"></i><i></i><i class="sm"></i><i class="sm2"></i></span></div><div class="shot app" style="--h:138"><span class="ui"><i class="lg"></i><i class="sm2"></i><i class="sm"></i><i></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>7 weeks</b></div><div><span>Investment</span><b>€8,900</b></div><div><span>Stack</span><b>Flutter · offline-first · Stripe</b></div></div>
+        <p>A weekend market needed a till that works where the signal doesn't. Tally takes payments offline, tracks stock per stall, and reconciles the moment it's back on Wi-Fi. Closing time went from an hour of counting to a single tap.</p></div>
+      <div id="work-4" class="jpost work-post"><h4>Nestor — clinic appointments</h4><span class="jdate">iOS · Android app</span>
+        <div class="shot-row"><div class="shot app" style="--h:265"><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div><div class="shot app" style="--h:250"><span class="ui"><i class="lg"></i><i></i><i class="sm"></i><i class="sm2"></i></span></div><div class="shot app" style="--h:278"><span class="ui"><i class="lg"></i><i class="sm2"></i><i></i><i class="sm"></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>8 weeks</b></div><div><span>Investment</span><b>€9,200</b></div><div><span>Stack</span><b>Swift · Kotlin · encrypted records</b></div></div>
+        <p>A private clinic was drowning in phone bookings. Patients now self-book, get reminders, and arrive with their forms already filled; staff see the day at a glance with light, encrypted records. Front-desk calls dropped by half.</p></div>
+      <div id="work-5" class="jpost work-post"><h4>Cadence — habit &amp; routine</h4><span class="jdate">iOS · Android app</span>
+        <div class="shot-row"><div class="shot app" style="--h:285"><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div><div class="shot app" style="--h:300"><span class="ui"><i class="lg"></i><i></i><i class="sm"></i><i class="sm2"></i></span></div><div class="shot app" style="--h:315"><span class="ui"><i class="lg"></i><i class="sm2"></i><i class="sm"></i><i></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>4 weeks</b></div><div><span>Investment</span><b>€3,900</b></div><div><span>Stack</span><b>SwiftUI · local-first · widgets</b></div></div>
+        <p>A calm habit tracker for people tired of loud ones. Streaks that forgive, gentle nudges, and a home-screen widget that's a glance, not a guilt trip. Local-first, so nothing leaves the phone.</p></div>
+      <div id="work-6" class="jpost work-post"><h4>Daily Bread — bakery storefront</h4><span class="jdate">website</span>
+        <div class="shot-row"><div class="shot web" style="--h:32"><span class="bar"><b></b><b></b><b></b></span><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>3 weeks</b></div><div><span>Investment</span><b>€2,800</b></div><div><span>Stack</span><b>static · pickup orders · SEO</b></div></div>
+        <p>A bakery with a queue but no website. We gave them a fast, beautiful storefront — menu, pickup orders, and the story behind the sourdough — and got it found by neighbours searching at 7am. Online pickups now cover the morning rush.</p></div>
+      <div id="work-7" class="jpost work-post"><h4>Atlas Movers — site + instant quote</h4><span class="jdate">website</span>
+        <div class="shot-row"><div class="shot web" style="--h:210"><span class="bar"><b></b><b></b><b></b></span><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>3 weeks</b></div><div><span>Investment</span><b>€3,200</b></div><div><span>Stack</span><b>web · quote engine · CRM hook</b></div></div>
+        <p>A moving company losing leads to slow email replies. Now an instant-quote calculator prices the job and books it on the spot, then drops it straight into their CRM — quotes that used to take a day close themselves overnight.</p></div>
+      <div id="work-8" class="jpost work-post"><h4>Lumen — photographer portfolio</h4><span class="jdate">website</span>
+        <div class="shot-row"><div class="shot web" style="--h:265"><span class="bar"><b></b><b></b><b></b></span><span class="ui"><i class="lg"></i><i class="sm2"></i><i class="sm"></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>2 weeks</b></div><div><span>Investment</span><b>€1,900</b></div><div><span>Stack</span><b>static · image pipeline · booking</b></div></div>
+        <p>A photographer whose old site buried the photos. We built a fast, quiet gallery that loads full-bleed in a blink and lets clients enquire without friction. The work finally does the talking.</p></div>
+      <div id="work-9" class="jpost work-post"><h4>Harbor &amp; Co — law firm</h4><span class="jdate">website</span>
+        <div class="shot-row"><div class="shot web" style="--h:215"><span class="bar"><b></b><b></b><b></b></span><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>4 weeks</b></div><div><span>Investment</span><b>€3,600</b></div><div><span>Stack</span><b>web · bilingual · CMS</b></div></div>
+        <p>A boutique firm that needed to look as solid online as it is in person. Clear practice areas, real people, easy contact — calm, credible and fully bilingual, with a CMS the office can update without us.</p></div>
+      <div id="work-10" class="jpost work-post"><h4>Verde — restaurant &amp; orders</h4><span class="jdate">website</span>
+        <div class="shot-row"><div class="shot web" style="--h:140"><span class="bar"><b></b><b></b><b></b></span><span class="ui"><i class="lg"></i><i class="sm"></i><i></i><i class="sm2"></i></span></div></div>
+        <div class="work-facts"><div><span>Timeline</span><b>3 weeks</b></div><div><span>Investment</span><b>€3,400</b></div><div><span>Stack</span><b>web · reservations · online ordering</b></div></div>
+        <p>A restaurant tired of paying a third of each order to a delivery app. Their own site now takes reservations and online orders in the restaurant's own voice — and keeps the margin where it belongs.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ LEGAL ═══════════ -->
+<div id="overlay-legal" class="ovl" role="dialog" aria-modal="true" aria-label="Legal">
+  <div class="ovl-inner">
+    <button class="ovl-close">close × (esc)</button>
+    <div class="doc-list">
+      <h3>Legal</h3>
+      <div class="sub">company details, privacy, cookies &amp; terms — for Cascade Alliance sp. z o.o.</div>
+      <div class="ov-sec">
+        <button class="jcard" data-post="1"><span class="jdate">imprint · art. 206 KSH</span><div class="jtitle">Company details</div><div class="jdek">Who operates this site, and the registration details EU/Polish law requires.</div></button>
+        <button class="jcard" data-post="2" style="margin-top:12px"><span class="jdate">RODO · GDPR</span><div class="jtitle">Privacy Policy</div><div class="jdek">What little data we handle, why, and your rights.</div></button>
+        <button class="jcard" data-post="3" style="margin-top:12px"><span class="jdate">ePrivacy</span><div class="jtitle">Cookie Policy</div><div class="jdek">Short version: no tracking cookies. Here's the detail.</div></button>
+        <button class="jcard" data-post="4" style="margin-top:12px"><span class="jdate">regulamin</span><div class="jtitle">Terms of Use</div><div class="jdek">The rules for using this website.</div></button>
+      </div>
+      <div class="note" style="margin-top:20px">Prepared from EU (e-Commerce Directive 2000/31/EC, GDPR, ePrivacy) and Polish (KSH, RODO) requirements. Please have a lawyer review, and fill the REGON and share-capital fields, before relying on these.</div>
+    </div>
+    <div class="doc-article">
+      <button class="doc-back">← all documents</button>
+      <div class="doc-body"></div>
+      <div class="ov-sec"><button class="pill ghost" data-close>↩ return to the experience</button></div>
+    </div>
+    <div class="legal-src" hidden>
+      <div id="legal-1" class="jpost legal-doc">
+        <h4>Company details</h4><span class="jdate">imprint · provider identification</span>
+        <p>This website is operated by:</p>
+        <div class="ov-legal">
+          <b>Cascade Alliance sp. z o.o.</b><br>
+          Registered office — ul. Stefana Batorego 18/108, 02-591 Warszawa, Poland<br>
+          Registry — District Court for the Capital City of Warsaw (Sąd Rejonowy dla m. st. Warszawy), National Court Register<br>
+          KRS <b>0001170168</b><br>
+          NIP / EU VAT <b>PL7011257404</b><br>
+          REGON <b class="todo">[to be added]</b><br>
+          Share capital <b class="todo">[PLN — to be added]</b>, paid in full<br>
+          Represented by — Sho Ito<br>
+          Email — <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a><br>
+          Worldwide, remote
+        </div>
+        <p>These details are published in line with Article 5 of the EU e-Commerce Directive (2000/31/EC) and Article 206 of the Polish Commercial Companies Code (Kodeks spółek handlowych), which require a sp. z o.o. to state its name, registered office, registry court and KRS number, NIP, REGON and share capital.</p>
+      </div>
+      <div id="legal-2" class="jpost legal-doc">
+        <h4>Privacy Policy</h4><span class="jdate">RODO / GDPR · effective 11 June 2026</span>
+        <p><b>Controller.</b> Cascade Alliance sp. z o.o., ul. Stefana Batorego 18/108, 02-591 Warszawa, Poland. For any privacy matter, contact <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>. We have not appointed a Data Protection Officer; your request reaches us directly.</p>
+        <p><b>What we collect, and why.</b> This is a static website that, by design, collects as little as possible.</p>
+        <p>• <b>Contact form &amp; email.</b> If you write to us, we process the name, email address and message you provide, solely to read and reply to your enquiry. Legal basis: Art. 6(1)(b) GDPR (steps taken at your request before any contract) and Art. 6(1)(f) (our legitimate interest in responding).<br>
+        • <b>No analytics, advertising or tracking.</b> We set no such cookies and run no third-party trackers.<br>
+        • <b>Language preference.</b> Your chosen language is stored locally in your browser and is never transmitted to us.</p>
+        <p><b>Recipients.</b> Messages are delivered through our form provider (FormSubmit, formsubmit.co) and our email provider (Google Workspace). These providers process the data only to deliver your message and may store it outside the European Economic Area; where they do, transfers rely on appropriate safeguards such as the European Commission's Standard Contractual Clauses or an adequacy decision.</p>
+        <p><b>Retention.</b> We keep enquiry correspondence only as long as needed to handle your request and to keep reasonable business records, then delete it.</p>
+        <p><b>Your rights.</b> Under the GDPR you may request access to, rectification or erasure of your data, restriction of or objection to processing, and data portability, and you may withdraw consent at any time. Write to <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>.</p>
+        <p><b>Complaints.</b> You may lodge a complaint with the Polish supervisory authority — the President of the Personal Data Protection Office (Prezes Urzędu Ochrony Danych Osobowych, UODO), ul. Stawki 2, 00-193 Warszawa — at <a href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a>.</p>
+        <p><b>No automated decision-making.</b> We do not make decisions about you by automated means or profile you.</p>
+      </div>
+      <div id="legal-3" class="jpost legal-doc">
+        <h4>Cookie Policy</h4><span class="jdate">ePrivacy · effective 11 June 2026</span>
+        <p><b>The short version: this site uses no tracking, analytics or advertising cookies.</b></p>
+        <p>The only thing we store on your device is a single entry in your browser's local storage that remembers your language choice (English or 日本語). It is strictly functional, stays on your device, and is never used to identify or track you.</p>
+        <p>Because nothing non-essential is stored, no consent banner is required under the EU ePrivacy Directive and the guidance of the Polish authority (UODO).</p>
+        <p>The animation libraries this site uses (Three.js, GSAP) are embedded directly in the page, so there are no external requests and no third-party cookies. Clearing your browser's storage removes the saved language preference.</p>
+      </div>
+      <div id="legal-4" class="jpost legal-doc">
+        <h4>Terms of Use</h4><span class="jdate">regulamin · effective 11 June 2026</span>
+        <p><b>1. Scope.</b> These terms govern your use of this website, operated by Cascade Alliance sp. z o.o. The site is informational; it does not sell goods or services online.</p>
+        <p><b>2. Intellectual property.</b> The site — its code, text, design and animations — belongs to Cascade Alliance sp. z o.o. and may not be copied or reused without our written permission. The embedded open-source libraries (Three.js, MIT; GSAP, GreenSock standard license) remain under their own licenses.</p>
+        <p><b>3. Engagements.</b> Nothing on this site is an offer or a contract. Any project we take on is governed by a separate written agreement covering scope, price and timeline.</p>
+        <p><b>4. No warranty &amp; liability.</b> The site is provided "as is", without warranty. To the extent permitted by law, we are not liable for indirect or consequential damages arising from its use. Nothing here limits liability that cannot be limited under mandatory law.</p>
+        <p><b>5. Governing law.</b> These terms are governed by Polish law. Disputes fall to the courts competent for our registered seat, without prejudice to any mandatory consumer protections you may enjoy.</p>
+        <p><b>6. Contact.</b> <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>.</p>
       </div>
     </div>
   </div>
@@ -2475,7 +2647,7 @@ function hslHex(h, s, l){
   const overlays = $$('.ovl');
   const closeAll = () => overlays.forEach(o => o.classList.remove('open'));
   const openOv = id => { const o = $(id); if(!o) return; closeAll(); o.classList.add('open'); AUDIO.click(); };
-  const TRIG = { '#btn-plain':'#overlay', '#btn-plain2':'#overlay', '#btn-company':'#overlay-company', '#btn-journal':'#overlay-journal', '#btn-contact':'#overlay-contact' };
+  const TRIG = { '#btn-plain':'#overlay', '#btn-plain2':'#overlay', '#btn-company':'#overlay-company', '#btn-journal':'#overlay-journal', '#btn-work':'#overlay-work', '#btn-legal':'#overlay-legal', '#btn-contact':'#overlay-contact' };
   Object.keys(TRIG).forEach(btn => { const b = $(btn); if(b) b.addEventListener('click', () => openOv(TRIG[btn])); });
   $$('[data-open]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); openOv(b.dataset.open); }));
   $$('.ovl-close, [data-close]').forEach(b => b.addEventListener('click', closeAll));
@@ -2492,6 +2664,25 @@ function hslHex(h, s, l){
   const jBack = $('#journal-back'); if(jBack) jBack.addEventListener('click', () => { showList(); AUDIO.click(); });
   const jBtn = $('#btn-journal'); if(jBtn) jBtn.addEventListener('click', showList);
   showList();
+
+  /* work + legal — same list → article pattern, scoped per overlay */
+  function wireDocs(ovId, prefix){
+    const ov = $(ovId); if(!ov) return null;
+    const list = ov.querySelector('.doc-list'), article = ov.querySelector('.doc-article'),
+          body = ov.querySelector('.doc-body'), back = ov.querySelector('.doc-back');
+    const show = () => { if(article) article.style.display = 'none'; if(list) list.style.display = 'block'; };
+    $$(ovId + ' .doc-list .jcard').forEach(card => card.addEventListener('click', () => {
+      const src = $('#' + prefix + card.dataset.post);
+      if(src && body){ body.innerHTML = src.innerHTML; list.style.display = 'none'; article.style.display = 'block';
+        const inner = ov.querySelector('.ovl-inner'); if(inner) inner.scrollTop = 0; AUDIO.click(); }
+    }));
+    if(back) back.addEventListener('click', () => { show(); AUDIO.click(); });
+    return show;
+  }
+  const showWork = wireDocs('#overlay-work', 'work-'), showLegal = wireDocs('#overlay-legal', 'legal-');
+  const wBtn = $('#btn-work'); if(wBtn && showWork) wBtn.addEventListener('click', showWork);
+  const lBtn = $('#btn-legal'); if(lBtn && showLegal) lBtn.addEventListener('click', showLegal);
+  if(showWork) showWork(); if(showLegal) showLegal();
 
   addEventListener('keydown', e => {
     if(e.target && e.target.matches && e.target.matches('input, textarea')) return;
@@ -2625,18 +2816,94 @@ const I18N_S = {
   '#post-1':'<h4>売り込む代わりに、ウェブサイトを作って見せる</h4><span class="jdate">フィールドノート</span><p>多くのスタジオは提案書を送ります。私たちは、動くアプリを組み上げ、コードからサイトを書き、レビューを読んで返信し、目の前で会社をブランディングする — そんな<b>ライブの宇宙</b>をあなたのブラウザに届けました。</p><p>これは意図的です。「得意です」とは誰でも言える。難しいのは証明で、それだけがあなたの時間に値します。仕事が自動で動いて見せても響かないなら、スライドで響くはずがありません。</p><p>だからこのサイト全体をポートフォリオだと思ってください。スクロールしてきたすべては、クライアントへの仕事と同じ — 空のファイルから、数多く世に出してきた人間の手で — 作りました。</p>',
   '#post-2':'<h4>価格破壊は、エンジニアリングの問題だ</h4><span class="jdate">価格について</span><p>安いはたいてい「質が落ちる」を意味します。私たちはそれをプロセスの失敗だと考えます。自然の法則ではありません。制作会社の値札の大半は<b>間接費・アカウントマネージャー・若手の手戻り</b>で、実際の制作ではありません。</p><p>そこを削ぎ落とす。シニアが手を動かし、繰り返しの8割はモダンなフレームワークとAIに任せ、培ったパターンを再利用する。残るのは価値を生む部分だけ — それは見積もりのほんの一部のコストで済みます。</p><p>一言で言えば：<b>高価格帯のスタジオの品質を、中小企業が「やろう」と言える価格で</b> — 手を抜くのではなく、もともと払う価値のなかった部分を取り除くことで。</p>',
   '#post-3':'<h4>中小企業が最初に作るべきもの</h4><span class="jdate">経営者へ</span><p>一度に全部ではありません。多くの場合いちばん速いのは、<b>毎日の手間を消す、あるいは今こぼしている売上を拾う、たった一つの切れ味のいいもの</b> — 予約フロー、注文ページ、同じ質問に百回答える自動化。</p><p>それを出し、稼がせ、積み上げる。絞った最初の一手が次の資金を生み、需要のありかを正確に教えてくれます。一発勝負のローンチは、2週間で分かることを証明するために予算を燃やしがちです。</p><p>プロジェクトを設計するとき、最初の問いは「何が作れるか」ではなく「明らかに価値のある最小のものは何か」。そして、それを一級品にします。</p>',
-  '#post-4':'<h4>手に取れるものまで、2週間</h4><span class="jdate">仕事の進め方</span><p><b>SHAPE（1〜2週）</b> — 触って反応できるクリック可能なプロトタイプ。本物の画面、本物の流れ、ダミー文字なし。本番コードを1行書く前に、正しいか分かります。</p><p><b>BUILD（3〜6週）</b> — 実データ・実ユーザーで動くプロダクト。シニアの手、短いループ、キューで眠るものはなし。</p><p><b>LAUNCH（7週〜）</b> — 出し、測り、広げる。そして数字が示す方向へ改善を続けます。</p><p>最初のデモは、キックオフから約2週間であなたの手に。ここでは「速い」は「良い」の対義語ではありません — 価格を正直に保つための方法です。</p>'
+  '#post-4':'<h4>手に取れるものまで、2週間</h4><span class="jdate">仕事の進め方</span><p><b>SHAPE（1〜2週）</b> — 触って反応できるクリック可能なプロトタイプ。本物の画面、本物の流れ、ダミー文字なし。本番コードを1行書く前に、正しいか分かります。</p><p><b>BUILD（3〜6週）</b> — 実データ・実ユーザーで動くプロダクト。シニアの手、短いループ、キューで眠るものはなし。</p><p><b>LAUNCH（7週〜）</b> — 出し、測り、広げる。そして数字が示す方向へ改善を続けます。</p><p>最初のデモは、キックオフから約2週間であなたの手に。ここでは「速い」は「良い」の対義語ではありません — 価格を正直に保つための方法です。</p>',
+  '#btn-work':'実績', '#btn-legal':'法務',
+  '#legal-1':'<h4>会社情報</h4><span class="jdate">事業者識別情報</span><p>本ウェブサイトの運営者：</p><div class="ov-legal"><b>Cascade Alliance sp. z o.o.</b><br>登記上の所在地 — ul. Stefana Batorego 18/108, 02-591 Warszawa, Poland<br>登記裁判所 — ワルシャワ首都地方裁判所（Sąd Rejonowy dla m. st. Warszawy）／ 国家裁判所登記簿（KRS）<br>KRS <b>0001170168</b><br>NIP／EU VAT <b>PL7011257404</b><br>REGON <b class="todo">[要記入]</b><br>資本金（kapitał zakładowy） <b class="todo">[PLN — 要記入]</b>（全額払込済）<br>代表 — Sho Ito<br>メール — <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a><br>世界中・リモート</div><p>これらの情報は、EU電子商取引指令（2000/31/EC）第5条およびポーランド会社法（Kodeks spółek handlowych）第206条に基づき掲載しています。同条は sp. z o.o. に対し、商号・登記上の所在地・登記裁判所とKRS番号・NIP・REGON・資本金の表示を義務づけています。</p>',
+  '#legal-2':'<h4>プライバシーポリシー</h4><span class="jdate">RODO / GDPR · 2026年6月11日施行</span><p><b>管理者。</b> Cascade Alliance sp. z o.o.（ul. Stefana Batorego 18/108, 02-591 Warszawa, Poland）。プライバシーに関するお問い合わせは <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a> まで。データ保護責任者（DPO）は選任しておらず、ご連絡は直接当社に届きます。</p><p><b>取得する情報とその目的。</b> 本サイトは静的サイトであり、設計上、取得する情報を最小限にしています。</p><p>• <b>問い合わせフォーム／メール。</b> ご連絡いただいた場合、入力されたお名前・メールアドレス・本文を、お問い合わせへの対応のみを目的として取り扱います。法的根拠：GDPR第6条1項(b)（ご依頼に基づく契約前の手続き）および同(f)（返信に関する当社の正当な利益）。<br>• <b>解析・広告・トラッキングなし。</b> これらのCookieは設置せず、第三者トラッカーも使用しません。<br>• <b>言語設定。</b> 選択した言語はブラウザ内にのみ保存され、当社に送信されることはありません。</p><p><b>取扱委託先。</b> メッセージは、フォーム提供事業者（FormSubmit, formsubmit.co）および当社のメール提供事業者（Google Workspace）を通じて届きます。これらの事業者はメッセージ送達の目的でのみ処理し、欧州経済領域（EEA）外で保存される場合があります。その際の移転は、欧州委員会の標準契約条項（SCC）や十分性認定など、適切な保護措置に基づきます。</p><p><b>保存期間。</b> お問い合わせの記録は、ご依頼への対応と合理的な業務記録に必要な期間のみ保存し、その後削除します。</p><p><b>あなたの権利。</b> GDPRに基づき、データへのアクセス・訂正・削除、処理の制限・異議、データポータビリティを求めることができ、いつでも同意を撤回できます。<a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a> までご連絡ください。</p><p><b>苦情申立て。</b> ポーランドの監督機関 — 個人データ保護局長官（Prezes Urzędu Ochrony Danych Osobowych, UODO）, ul. Stawki 2, 00-193 Warszawa — に苦情を申し立てることができます（<a href="https://uodo.gov.pl" target="_blank" rel="noopener">uodo.gov.pl</a>）。</p><p><b>自動意思決定なし。</b> 自動的手段による意思決定やプロファイリングは行いません。</p>',
+  '#legal-3':'<h4>Cookieポリシー</h4><span class="jdate">ePrivacy · 2026年6月11日施行</span><p><b>要点：本サイトはトラッキング・解析・広告のCookieを一切使用しません。</b></p><p>あなたの端末に保存するのは、ブラウザのローカルストレージにある言語設定（English または 日本語）1項目のみです。これは純粋に機能的なもので、端末内に留まり、あなたを識別・追跡する目的には決して使いません。</p><p>非必須のものを何も保存しないため、EU ePrivacy指令およびポーランド監督機関（UODO）のガイダンス上、同意バナーは不要です。</p><p>本サイトが使うアニメーションライブラリ（Three.js, GSAP）はページに直接埋め込まれており、外部リクエストも第三者Cookieもありません。ブラウザのストレージを消去すると、保存された言語設定も削除されます。</p>',
+  '#legal-4':'<h4>利用規約</h4><span class="jdate">regulamin · 2026年6月11日施行</span><p><b>1. 適用範囲。</b> 本規約は、Cascade Alliance sp. z o.o. が運営する本ウェブサイトの利用に適用されます。本サイトは情報提供を目的とし、オンラインでの物品・サービスの販売は行いません。</p><p><b>2. 知的財産。</b> 本サイト（コード・テキスト・デザイン・アニメーション）は Cascade Alliance sp. z o.o. に帰属し、書面による許可なく複製・再利用することはできません。埋め込みのオープンソースライブラリ（Three.js, MITライセンス／GSAP, GreenSock標準ライセンス）は各自のライセンスに従います。</p><p><b>3. 業務委託。</b> 本サイト上のいかなる記載も、申込みや契約ではありません。実際のプロジェクトは、範囲・価格・期間を定める別途の書面契約に基づきます。</p><p><b>4. 無保証・責任。</b> 本サイトは「現状有姿」で提供され、保証はありません。法律で認められる範囲で、利用に起因する間接的・派生的損害について当社は責任を負いません。強行法規で制限できない責任を制限するものではありません。</p><p><b>5. 準拠法。</b> 本規約はポーランド法に準拠します。紛争は当社の登記上の所在地を管轄する裁判所が管轄します。消費者として有する強行法規上の権利を妨げるものではありません。</p><p><b>6. 連絡先。</b> <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a>。</p>'
 };
 
 /* text-keyed (repeated identical labels across overlays) */
-const I18N_TSEL = '.ov-sec h5, .ovl-close, [data-close], .ov-contactrow .note, .cf-field span';
+const I18N_TSEL = '.ov-sec h5, .ovl-close, [data-close], .ov-contactrow .note, .cf-field span, .doc-list h3, .doc-list .sub, .doc-back, .doc-list .note, .jcard .jdate, .jcard .jtitle, .jcard .jdek, .work-meta, .work-post h4, .work-post .jdate, .work-post p, .work-facts span, .work-facts b';
 const I18N_T = {
   'what we do':'事業内容', 'who we are':'私たちについて', 'what we believe':'私たちの信念',
   'the company':'会社概要', 'contact':'お問い合わせ',
   'close × (esc)':'閉じる × (esc)', '↩ return to the experience':'↩ 体験に戻る',
   'humans reply within 24 hours · worldwide, remote':'担当者が24時間以内に返信 · 世界中・リモート',
   'humans reply within 24 hours':'担当者が24時間以内に返信します',
-  'your name':'お名前', 'your email':'メールアドレス', 'what do you want to build?':'何をつくりたいですか？'
+  'your name':'お名前', 'your email':'メールアドレス', 'what do you want to build?':'何をつくりたいですか？',
+  /* journal cards */
+  'We build the website instead of pitching it':'売り込む代わりに、ウェブサイトを作って見せる',
+  'Why every claim here is a working demo, not a bullet point.':'ここでの主張はすべて、箇条書きではなく動くデモであるという話。',
+  'field notes':'フィールドノート',
+  'Price disruption is an engineering problem':'価格破壊は、エンジニアリングの問題だ',
+  'How newer tools and senior-only teams beat agency quality at a fraction of the cost.':'新しいツールとシニアだけのチームが、制作会社の品質をわずかな費用で超える方法。',
+  'on pricing':'価格について',
+  'What a small business should build first':'中小企業が最初に作るべきもの',
+  'The one sharp thing that earns its keep before anything else.':'何よりも先に元を取る、たった一つの切れ味のいいもの。',
+  'for owners':'経営者へ',
+  'Two weeks to something you can hold':'手に取れるものまで、2週間',
+  'Shape, build, launch — and why the first demo comes fast.':'Shape・Build・Launch — そして最初のデモが速い理由。',
+  'how we work':'仕事の進め方',
+  /* work + legal doc chrome */
+  'Selected work':'実績',
+  "a few things we've shipped — each with its real timeline and budget · sample portfolio":'これまで世に出したものの一部 — 各案件に実際の期間と費用つき · サンプルポートフォリオ',
+  '← all work':'← 実績一覧',
+  'These are sample projects shown as placeholders — swap with your real case studies anytime.':'これらはプレースホルダーのサンプル案件です — いつでも実際の事例に差し替えられます。',
+  'Legal':'法務',
+  'company details, privacy, cookies & terms — for Cascade Alliance sp. z o.o.':'会社情報・プライバシー・Cookie・利用規約 — Cascade Alliance sp. z o.o.',
+  '← all documents':'← 文書一覧',
+  'Prepared from EU (e-Commerce Directive 2000/31/EC, GDPR, ePrivacy) and Polish (KSH, RODO) requirements. Please have a lawyer review, and fill the REGON and share-capital fields, before relying on these.':'EU（電子商取引指令2000/31/EC・GDPR・ePrivacy）およびポーランド（KSH・RODO）の要件に基づき作成しています。ご利用前に弁護士の確認を受け、REGONと資本金の欄をご記入ください。',
+  /* categories + fact labels + durations */
+  'iOS · Android app':'iOS・Android アプリ', 'website':'ウェブサイト',
+  'imprint · art. 206 KSH':'会社情報 · 会社法206条', 'RODO · GDPR':'RODO · GDPR', 'ePrivacy':'ePrivacy', 'regulamin':'利用規約',
+  'Timeline':'期間', 'Investment':'費用', 'Stack':'構成',
+  '2 weeks':'2週間', '3 weeks':'3週間', '4 weeks':'4週間', '5 weeks':'5週間', '6 weeks':'6週間', '7 weeks':'7週間', '8 weeks':'8週間',
+  /* legal card titles + deks */
+  'Company details':'会社情報', 'Privacy Policy':'プライバシーポリシー', 'Cookie Policy':'Cookieポリシー', 'Terms of Use':'利用規約',
+  'Who operates this site, and the registration details EU/Polish law requires.':'このサイトの運営者と、EU・ポーランド法が求める登記情報。',
+  'What little data we handle, why, and your rights.':'当社が扱うわずかなデータ、その理由、そしてあなたの権利。',
+  "Short version: no tracking cookies. Here's the detail.":'要点：トラッキングCookieなし。詳細はこちら。',
+  'The rules for using this website.':'本ウェブサイトの利用ルール。',
+  /* work card titles (also detail h4) */
+  'Punch — coffee loyalty':'Punch — コーヒーのロイヤルティ',
+  'Reserve — barber booking':'Reserve — 理髪店の予約',
+  'Tally — market-stall POS':'Tally — 露店向けPOS',
+  'Nestor — clinic appointments':'Nestor — クリニック予約',
+  'Cadence — habit & routine':'Cadence — 習慣＆ルーティン',
+  'Daily Bread — bakery storefront':'Daily Bread — パン屋のサイト',
+  'Atlas Movers — site + instant quote':'Atlas Movers — サイト＋即時見積',
+  'Lumen — photographer portfolio':'Lumen — 写真家のポートフォリオ',
+  'Harbor & Co — law firm':'Harbor & Co — 法律事務所',
+  'Verde — restaurant & orders':'Verde — レストラン＆注文',
+  /* work card deks */
+  'A digital punch-card that turned regulars into a daily habit.':'常連客を毎日の習慣に変えた、デジタルのスタンプカード。',
+  'Book, rebook and remind — no-shows down by a third.':'予約・再予約・リマインド — 無断キャンセルが3分の1減。',
+  'Offline-first point of sale and stock for a weekend market.':'週末マーケット向けの、オフライン優先のPOSと在庫管理。',
+  'Patient booking, reminders and light records for a small clinic.':'小さなクリニックのための、患者予約・リマインド・簡易カルテ。',
+  'Gentle daily nudges and streaks, built to be calm not loud.':'穏やかな毎日のリマインドと連続記録 — うるさくなく、静かに。',
+  'Menu, pickup orders and a story, found by neighbours on Google.':'メニュー・受け取り注文・物語を、Googleでご近所に見つけてもらう。',
+  'A quote calculator that books jobs while the office sleeps.':'オフィスが眠る間も仕事を受注する、見積計算機。',
+  'A fast, quiet gallery that lets the work do the talking.':'作品に語らせる、速くて静かなギャラリー。',
+  'Practice areas, people and contact — calm, credible, bilingual.':'取扱分野・メンバー・連絡先 — 落ち着いて、信頼でき、二言語対応。',
+  "Reservations and online ordering, in the restaurant's own voice.":'予約とオンライン注文を、お店自身の言葉で。',
+  /* work card meta (timeline · cost) */
+  '6 weeks · €6,800':'6週間 · €6,800', '5 weeks · €5,400':'5週間 · €5,400', '7 weeks · €8,900':'7週間 · €8,900',
+  '8 weeks · €9,200':'8週間 · €9,200', '4 weeks · €3,900':'4週間 · €3,900', '3 weeks · €2,800':'3週間 · €2,800',
+  '3 weeks · €3,200':'3週間 · €3,200', '2 weeks · €1,900':'2週間 · €1,900', '4 weeks · €3,600':'4週間 · €3,600',
+  '3 weeks · €3,400':'3週間 · €3,400',
+  /* work detail descriptions */
+  'A neighbourhood café wanted the punch-card their regulars kept losing. We shipped a native iOS & Android app: tap to stamp, unlock a free drink at eight, and a push when a reward is waiting. Loyalty sign-ups doubled in the first month.':'ご近所のカフェは、常連がいつも失くすスタンプカードを求めていました。タップでスタンプ、8個で無料ドリンク、特典が待っているとプッシュ通知 — そんなiOS・Androidネイティブアプリを納品。初月でロイヤルティ登録が2倍に。',
+  'Two chairs, a phone that never stopped ringing. The app lets clients book and rebook in seconds, sends a reminder the night before, and quietly fills cancellations from a waitlist. No-shows fell by about a third.':'椅子2台、鳴り止まない電話。アプリで数秒で予約・再予約でき、前夜にリマインドを送り、キャンセルはキャンセル待ちから静かに補充。無断キャンセルが約3分の1減りました。',
+  "A weekend market needed a till that works where the signal doesn't. Tally takes payments offline, tracks stock per stall, and reconciles the moment it's back on Wi-Fi. Closing time went from an hour of counting to a single tap.":'週末マーケットには、電波の届かない場所でも動くレジが必要でした。Tallyはオフラインで決済し、露店ごとに在庫を管理し、Wi-Fiが戻った瞬間に同期。閉店作業が1時間の集計からワンタップに。',
+  'A private clinic was drowning in phone bookings. Patients now self-book, get reminders, and arrive with their forms already filled; staff see the day at a glance with light, encrypted records. Front-desk calls dropped by half.':'個人クリニックは電話予約に追われていました。今では患者が自分で予約し、リマインドを受け取り、記入済みで来院。スタッフは軽量・暗号化のカルテで一日を一目で把握。受付の電話は半減しました。',
+  "A calm habit tracker for people tired of loud ones. Streaks that forgive, gentle nudges, and a home-screen widget that's a glance, not a guilt trip. Local-first, so nothing leaves the phone.":'うるさい習慣アプリに疲れた人のための、穏やかなトラッカー。途切れても許す連続記録、優しいリマインド、罪悪感ではなく一目で分かるホーム画面ウィジェット。ローカル優先で、何も端末から出ません。',
+  'A bakery with a queue but no website. We gave them a fast, beautiful storefront — menu, pickup orders, and the story behind the sourdough — and got it found by neighbours searching at 7am. Online pickups now cover the morning rush.':'行列はあるのにサイトがないパン屋。速くて美しい店舗サイト — メニュー・受け取り注文・サワードウの物語 — を用意し、朝7時に検索するご近所に見つけてもらいました。今では受け取り注文が朝の混雑をさばいています。',
+  'A moving company losing leads to slow email replies. Now an instant-quote calculator prices the job and books it on the spot, then drops it straight into their CRM — quotes that used to take a day close themselves overnight.':'返信の遅さで見込み客を逃していた引越し会社。今では即時見積計算機がその場で価格を出して受注し、そのままCRMへ。1日かかっていた見積が、夜のうちに自分で決まります。',
+  'A photographer whose old site buried the photos. We built a fast, quiet gallery that loads full-bleed in a blink and lets clients enquire without friction. The work finally does the talking.':'古いサイトが写真を埋もれさせていた写真家。全画面で一瞬で読み込む、速くて静かなギャラリーを構築し、迷いなく問い合わせできるように。ようやく作品が語り始めました。',
+  'A boutique firm that needed to look as solid online as it is in person. Clear practice areas, real people, easy contact — calm, credible and fully bilingual, with a CMS the office can update without us.':'オンラインでも対面と同じく堅実に見せたいブティック法律事務所。明確な取扱分野、実在のメンバー、簡単な連絡先 — 落ち着いて信頼でき、完全二言語対応。オフィスが自分で更新できるCMS付き。',
+  'A restaurant tired of paying a third of each order to a delivery app. Their own site now takes reservations and online orders in the restaurant\'s own voice — and keeps the margin where it belongs.':'注文ごとに3分の1をデリバリーアプリに払うのに疲れたレストラン。自社サイトが、お店自身の言葉で予約とオンライン注文を受け、利益を本来あるべき場所に残します。'
 };
 
 /* dynamic strings used by the live demos (read at render time) */
