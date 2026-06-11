@@ -487,6 +487,41 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   /* contact form: stack the name/email row */
   #contact-form .cf-row{grid-template-columns:1fr}
 }
+/* phones: keep each demo's INNER content fully visible (no internal clipping) */
+@media (max-width:760px){
+  /* ACT1 — fit the whole loyalty app inside a compact phone; it still assembles on scroll */
+  #phone{width:min(166px,46vw)}
+  #scr-status{padding:8px 12px 2px;font-size:7.5px}
+  #scr-head{padding:7px 12px 3px}
+  #scr-head .hi{font-size:8px}
+  #scr-head .nm{font-size:14px}
+  #scr-card{margin:5px 10px;padding:8px 11px;border-radius:13px}
+  #scr-card .lab{font-size:7px}
+  #scr-card .val{font-size:14px}
+  #stampzone{margin:4px 10px;padding:8px 10px 9px;border-radius:13px}
+  #stampzone .lab{font-size:7px}
+  #stamps{grid-template-columns:repeat(8,1fr);gap:4px;margin-top:7px}
+  #freebanner{margin:7px 10px 0;padding:6px;font-size:9.5px}
+  #scr-tab{display:none}  /* drop the decorative bottom tab bar so the app fits the small screen */
+  /* ACT2 — render the whole bakery site */
+  #renderpane .canvas{height:25vh;height:25svh}
+  #bakery{padding:7% 5% 0}
+  #bk-name{font-size:18px}
+  #bk-sub{font-size:9.5px;margin-top:4px}
+  #bk-menu{gap:6px;margin-top:6%}
+  #bk-menu .bcard{padding:6px 8px;font-size:9.5px}
+  #bk-cta{margin-top:6%;padding:8px 16px;font-size:10.5px}
+  /* ACT3 — drop the secondary "observer" on phones so the review → reply shows in full */
+  #observer{display:none}
+  #review-h{font-size:8px}
+  #review-demo{font-size:11px;min-height:46px;padding:9px 11px}
+  #reply{font-size:11.5px;min-height:46px}
+  /* ACT6 value — a touch shorter */
+  #valuewrap{height:20vh}
+  /* Final console — tighter blueprint */
+  #blueprint{font-size:9px;line-height:1.58}
+  #idea-line{font-size:12px}
+}
 @media (max-width:380px){
   #wordmark{font-size:9px;letter-spacing:.06em}
   #ui-right{gap:8px}
