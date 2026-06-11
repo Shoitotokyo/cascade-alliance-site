@@ -330,15 +330,15 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 #endfoot a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line)}
 #endfoot a:hover{color:var(--ink)}
 
-/* ---------- the plain version (overlay) ---------- */
-#overlay{position:fixed;inset:0;z-index:60;background:rgba(4,5,8,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+/* ---------- overlays (the plain version · company · journal) ---------- */
+.ovl{position:fixed;inset:0;z-index:60;background:rgba(4,5,8,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .45s var(--ease)}
-#overlay.open{opacity:1;pointer-events:auto}
-#ov-inner{width:min(880px,92vw);max-height:88vh;max-height:88svh;overflow:auto;padding:clamp(22px,4vw,44px);
-  border:1px solid var(--line);border-radius:20px;background:rgba(9,10,15,.9);transform:translateY(18px);transition:transform .45s var(--ease)}
-#overlay.open #ov-inner{transform:none}
-#ov-inner h3{font-size:clamp(24px,3.4vw,38px);font-weight:800;letter-spacing:-.02em}
-#ov-inner .sub{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-top:8px}
+.ovl.open{opacity:1;pointer-events:auto}
+.ovl-inner{width:min(880px,92vw);max-height:88vh;max-height:88svh;overflow:auto;padding:clamp(22px,4vw,44px);
+  border:1px solid var(--line);border-radius:20px;background:rgba(9,10,15,.92);transform:translateY(18px);transition:transform .45s var(--ease)}
+.ovl.open .ovl-inner{transform:none}
+.ovl-inner h3{font-size:clamp(24px,3.4vw,38px);font-weight:800;letter-spacing:-.02em}
+.ovl-inner .sub{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);margin-top:8px}
 .ov-sec{margin-top:28px}
 .ov-sec h5{font-family:var(--mono);font-size:9.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--tint);margin-bottom:14px}
 .ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
@@ -346,10 +346,27 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 .ov-item b{display:block;font-size:14px;font-weight:700;margin-bottom:4px}
 .ov-item span{font-size:12px;color:var(--dim);line-height:1.55;display:block}
 .ov-item.sec b::after{content:" ·";color:var(--faint)}
-#ov-inner p.who{font-size:14px;color:var(--dim);line-height:1.75;max-width:62ch}
-#ov-contactrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-#ov-close{position:sticky;top:0;float:right;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--dim);padding:8px 0 8px 16px;background:transparent}
-#ov-close:hover{color:var(--ink)}
+.ovl-inner p.who{font-size:14px;color:var(--dim);line-height:1.75;max-width:62ch}
+.ov-contactrow{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.ovl-close{position:sticky;top:0;float:right;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--dim);padding:8px 0 8px 16px;background:transparent}
+.ovl-close:hover{color:var(--ink)}
+/* company legal block */
+.ov-legal{font-family:var(--mono);font-size:11.5px;letter-spacing:.03em;color:var(--dim);line-height:2}
+.ov-legal b{color:var(--ink);font-weight:600}
+/* journal */
+#journal-list{display:grid;gap:12px}
+.jcard{display:block;text-align:left;width:100%;border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:rgba(255,255,255,.015);transition:border-color .3s,background .3s,transform .3s;cursor:pointer}
+.jcard:hover{border-color:var(--tint);background:rgba(255,255,255,.04);transform:translateY(-2px)}
+.jcard .jdate{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--tint)}
+.jcard .jtitle{font-size:17px;font-weight:700;margin:7px 0 5px;letter-spacing:-.01em;color:var(--ink)}
+.jcard .jdek{font-size:12.5px;color:var(--dim);line-height:1.55}
+#journal-article{display:none}
+#journal-back{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:18px}
+#journal-back:hover{color:var(--ink)}
+.jpost h4{font-size:clamp(20px,3vw,28px);font-weight:800;letter-spacing:-.02em;margin-bottom:6px;line-height:1.1}
+.jpost .jdate{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--tint);display:block;margin-bottom:18px}
+.jpost p{font-size:14px;color:var(--dim);line-height:1.82;margin-bottom:14px;max-width:64ch}
+.jpost p b{color:var(--ink);font-weight:600}
 
 /* ---------- no-webgl fallback ---------- */
 body.no3d #tint{background:radial-gradient(100vmax 70vmax at 50% 45%,var(--tint-soft),transparent 62%),
@@ -393,6 +410,8 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 <header class="chrome" id="wordmark"><b>●</b>&nbsp;Cascade Alliance</header>
 <nav class="chrome" id="ui-right">
   <button class="uibtn" id="btn-sound" aria-pressed="true">sound on</button>
+  <button class="uibtn" id="btn-company">company</button>
+  <button class="uibtn" id="btn-journal">journal</button>
   <button class="uibtn" id="btn-plain">the plain version</button>
   <button class="uibtn" id="btn-contact">contact</button>
 </nav>
@@ -662,9 +681,9 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 </section>
 
 <!-- ═══════════ THE PLAIN VERSION ═══════════ -->
-<div id="overlay" role="dialog" aria-modal="true" aria-label="The plain version">
-  <div id="ov-inner">
-    <button id="ov-close">close × (esc)</button>
+<div id="overlay" class="ovl" role="dialog" aria-modal="true" aria-label="The plain version">
+  <div class="ovl-inner">
+    <button class="ovl-close">close × (esc)</button>
     <h3>The plain version.</h3>
     <div class="sub">for people in a hurry — the entire company on one screen</div>
     <div class="ov-sec">
@@ -684,12 +703,123 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
     </div>
     <div class="ov-sec">
       <h5>contact</h5>
-      <div id="ov-contactrow">
+      <div class="ov-contactrow">
         <a class="pill hot" href="mailto:contact@cascade-alliance.com?subject=Project%20inquiry">contact@cascade-alliance.com</a>
         <span class="note">humans reply within 24 hours · worldwide, remote</span>
       </div>
     </div>
-    <div class="ov-sec"><button class="pill ghost" id="ov-return">↩ return to the experience</button></div>
+    <div class="ov-sec"><button class="pill ghost" id="ov-return" data-close>↩ return to the experience</button></div>
+  </div>
+</div>
+
+<!-- ═══════════ COMPANY ═══════════ -->
+<div id="overlay-company" class="ovl" role="dialog" aria-modal="true" aria-label="Company information">
+  <div class="ovl-inner">
+    <button class="ovl-close">close × (esc)</button>
+    <h3>Cascade Alliance</h3>
+    <div class="sub">company information</div>
+    <div class="ov-sec">
+      <h5>what we believe</h5>
+      <p class="who">Most small and medium businesses get quoted out of the software they actually need — the real app, the website that converts, a social presence that compounds. We exist to close that gap. Newer tools and senior, experienced hands let us build to a standard that beats the expensive shops, and price it where a small business can say yes. Premium work, market-breaking price — on purpose.</p>
+    </div>
+    <div class="ov-sec">
+      <h5>what we do</h5>
+      <div class="ov-grid">
+        <div class="ov-item"><b>App development</b><span>iOS &amp; Android products, from first sketch to the app stores.</span></div>
+        <div class="ov-item"><b>Website development</b><span>Fast, beautiful sites built to convert and be found.</span></div>
+        <div class="ov-item"><b>AI consulting &amp; integration</b><span>Copilots, automation and decision tools that pay off.</span></div>
+        <div class="ov-item"><b>Brand development</b><span>Naming, logos and identity systems.</span></div>
+        <div class="ov-item"><b>Marketing support</b><span>Launches, campaigns and content that stick.</span></div>
+        <div class="ov-item"><b>Social media support</b><span>Channel systems that keep working after we leave.</span></div>
+      </div>
+    </div>
+    <div class="ov-sec">
+      <h5>the company</h5>
+      <div class="ov-legal">
+        <b>Cascade Alliance sp. z o.o.</b><br>
+        Founded &amp; led by Sho Ito<br>
+        Registered office — ul. Stefana Batorego 18/108, 02-591 Warsaw, Poland<br>
+        KRS <b>0001170168</b> &nbsp;·&nbsp; VAT (EU) <b>PL7011257404</b><br>
+        Worldwide, remote
+      </div>
+    </div>
+    <div class="ov-sec">
+      <h5>contact</h5>
+      <div class="ov-contactrow">
+        <a class="pill hot" href="mailto:contact@cascade-alliance.com?subject=Hello%20Cascade%20Alliance">contact@cascade-alliance.com</a>
+        <span class="note">humans reply within 24 hours</span>
+      </div>
+    </div>
+    <div class="ov-sec"><button class="pill ghost" data-close>↩ return to the experience</button></div>
+  </div>
+</div>
+
+<!-- ═══════════ JOURNAL ═══════════ -->
+<div id="overlay-journal" class="ovl" role="dialog" aria-modal="true" aria-label="Journal">
+  <div class="ovl-inner">
+    <button class="ovl-close">close × (esc)</button>
+    <div id="journal-list">
+      <h3>Journal</h3>
+      <div class="sub">notes from the studio — building, pricing, shipping</div>
+      <div class="ov-sec">
+        <button class="jcard" data-post="1">
+          <span class="jdate">field notes</span>
+          <div class="jtitle">We build the website instead of pitching it</div>
+          <div class="jdek">Why every claim here is a working demo, not a bullet point.</div>
+        </button>
+        <button class="jcard" data-post="2" style="margin-top:12px">
+          <span class="jdate">on pricing</span>
+          <div class="jtitle">Price disruption is an engineering problem</div>
+          <div class="jdek">How newer tools and senior-only teams beat agency quality at a fraction of the cost.</div>
+        </button>
+        <button class="jcard" data-post="3" style="margin-top:12px">
+          <span class="jdate">for owners</span>
+          <div class="jtitle">What a small business should build first</div>
+          <div class="jdek">The one sharp thing that earns its keep before anything else.</div>
+        </button>
+        <button class="jcard" data-post="4" style="margin-top:12px">
+          <span class="jdate">how we work</span>
+          <div class="jtitle">Two weeks to something you can hold</div>
+          <div class="jdek">Shape, build, launch — and why the first demo comes fast.</div>
+        </button>
+      </div>
+    </div>
+    <div id="journal-article">
+      <button id="journal-back">← all posts</button>
+      <div id="journal-article-body"></div>
+      <div class="ov-sec"><button class="pill ghost" data-close>↩ return to the experience</button></div>
+    </div>
+    <div id="journal-posts" hidden>
+      <div id="post-1" class="jpost">
+        <h4>We build the website instead of pitching it</h4>
+        <span class="jdate">field notes</span>
+        <p>Most studios send a deck. We sent you a universe that assembles a working app, writes a website from code, reads a review and answers it, and brands a company in front of you — <b>live, in your browser</b>.</p>
+        <p>It's deliberate. Anyone can claim they're good; proof is harder, and it's the only thing worth your time. If a self-running demonstration of the work doesn't convince you, a slide certainly won't.</p>
+        <p>So treat this whole site as the portfolio. Everything you scrolled through was made the way we make things for clients: from a blank file, by people who've shipped a lot of them.</p>
+      </div>
+      <div id="post-2" class="jpost">
+        <h4>Price disruption is an engineering problem</h4>
+        <span class="jdate">on pricing</span>
+        <p>Cheap usually means worse. We think that's a failure of process, not a law of nature. The agency price tag is mostly <b>overhead, account managers and junior rework</b> — not the actual building.</p>
+        <p>Strip those away. Put senior people on the tools, lean on modern frameworks and AI for the repetitive 80%, and reuse hard-won patterns instead of reinventing them. What's left is the part that creates value — and it costs a fraction of what you were quoted.</p>
+        <p>That's the company in one line: <b>the quality of the expensive shops, at a price a small business can say yes to</b> — not by cutting corners, but by removing the parts that were never worth paying for.</p>
+      </div>
+      <div id="post-3" class="jpost">
+        <h4>What a small business should build first</h4>
+        <span class="jdate">for owners</span>
+        <p>Not everything at once. The fastest path is usually <b>one sharp thing that removes a daily headache or captures a sale you're currently losing</b> — a booking flow, an order page, an automation that answers the same question for the hundredth time.</p>
+        <p>Ship that, let it earn, then compound. A focused first build pays for the next one and shows you exactly where the demand is. Big-bang launches mostly burn budget proving things you could have learned in two weeks.</p>
+        <p>When we scope a project, the first question isn't "what could we build" — it's "what's the smallest thing that's clearly worth it." Then we make that excellent.</p>
+      </div>
+      <div id="post-4" class="jpost">
+        <h4>Two weeks to something you can hold</h4>
+        <span class="jdate">how we work</span>
+        <p><b>Shape (wk 1–2)</b> — a clickable prototype you can react to. Real screens, real flow, no lorem ipsum. You'll know if it's right before a line of production code exists.</p>
+        <p><b>Build (wk 3–6)</b> — the working product, with real data and real users. Senior hands, tight loops, nothing parked in a queue.</p>
+        <p><b>Launch (wk 7+)</b> — ship it, measure it, make it spread, then keep improving what the numbers point to.</p>
+        <p>The first demo lands in your hands about two weeks after kickoff. Fast isn't the opposite of good here — it's how we keep the price honest.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -2170,20 +2300,35 @@ function hslHex(h, s, l){
   };
 })();
 
-/* ── the plain version ── */
+/* ── overlays: the plain version · company · journal ── */
 (function(){
-  const ov = $('#overlay');
-  const open = () => { ov.classList.add('open'); AUDIO.click(); };
-  const close = () => { ov.classList.remove('open'); };
-  ['#btn-plain', '#btn-plain2'].forEach(s => { const b = $(s); if(b) b.addEventListener('click', open); });
-  $('#ov-close').addEventListener('click', close);
-  $('#ov-return').addEventListener('click', close);
-  ov.addEventListener('click', e => { if(e.target === ov) close(); });
+  const overlays = $$('.ovl');
+  const closeAll = () => overlays.forEach(o => o.classList.remove('open'));
+  const openOv = id => { const o = $(id); if(!o) return; closeAll(); o.classList.add('open'); AUDIO.click(); };
+  const TRIG = { '#btn-plain':'#overlay', '#btn-plain2':'#overlay', '#btn-company':'#overlay-company', '#btn-journal':'#overlay-journal' };
+  Object.keys(TRIG).forEach(btn => { const b = $(btn); if(b) b.addEventListener('click', () => openOv(TRIG[btn])); });
+  $$('.ovl-close, [data-close]').forEach(b => b.addEventListener('click', closeAll));
+  overlays.forEach(o => o.addEventListener('click', e => { if(e.target === o) closeAll(); }));
+
+  /* journal: list <-> article (a working, in-overlay blog) */
+  const jList = $('#journal-list'), jArticle = $('#journal-article'), jBody = $('#journal-article-body');
+  const showList = () => { if(jArticle) jArticle.style.display = 'none'; if(jList) jList.style.display = 'block'; };
+  $$('#journal-list .jcard').forEach(card => card.addEventListener('click', () => {
+    const src = $('#post-' + card.dataset.post);
+    if(src && jBody){ jBody.innerHTML = src.innerHTML; jList.style.display = 'none'; jArticle.style.display = 'block';
+      const inner = $('#overlay-journal .ovl-inner'); if(inner) inner.scrollTop = 0; AUDIO.click(); }
+  }));
+  const jBack = $('#journal-back'); if(jBack) jBack.addEventListener('click', () => { showList(); AUDIO.click(); });
+  const jBtn = $('#btn-journal'); if(jBtn) jBtn.addEventListener('click', showList);
+  showList();
+
   addEventListener('keydown', e => {
     if(e.target && e.target.matches && e.target.matches('input, textarea')) return;
-    if(e.key === 'Escape') close();
-    if(e.key === 'm' || e.key === 'M') $('#btn-sound').click();
-    if(e.key === 'p' || e.key === 'P' || e.key === '?') ov.classList.contains('open') ? close() : open();
+    if(e.key === 'Escape') closeAll();
+    else if(e.key === 'm' || e.key === 'M') $('#btn-sound').click();
+    else if(e.key === 'p' || e.key === 'P') $('#overlay').classList.contains('open') ? closeAll() : openOv('#overlay');
+    else if(e.key === 'j' || e.key === 'J') $('#overlay-journal').classList.contains('open') ? closeAll() : openOv('#overlay-journal');
+    else if(e.key === 'c' || e.key === 'C') $('#overlay-company').classList.contains('open') ? closeAll() : openOv('#overlay-company');
   });
 })();
 
