@@ -114,10 +114,20 @@ body.ignited .chrome{opacity:1;pointer-events:auto}
 #tagline{position:absolute;top:calc(50% + 96px);left:50%;transform:translateX(-50%);text-align:center;width:min(92vw,700px);opacity:0}
 #tagline .t1{font-size:clamp(15px,2.4vw,21px);font-weight:300;letter-spacing:.02em;color:var(--ink)}
 #tagline .t2{margin-top:14px;font-family:var(--mono);font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--dim)}
-#scrollhint{position:absolute;bottom:max(26px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);opacity:0;transition:opacity 1s}
+#scrollhint{position:absolute;bottom:max(22px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);opacity:0;transition:opacity 1s;
+  display:flex;flex-direction:column;align-items:center;gap:9px}
 #scrollhint.show{opacity:1}
-#scrollhint i{display:block;width:1px;height:44px;margin:0 auto;background:linear-gradient(var(--ink),transparent);animation:fall 1.8s var(--ease) infinite}
-@keyframes fall{0%{transform:scaleY(0);transform-origin:top}45%{transform:scaleY(1);transform-origin:top}55%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+/* a bright dot falls down a faint track, then two chevrons pulse downward — reads as "scroll" with no words */
+#scrollhint .sh-track{position:relative;width:1px;height:38px;background:linear-gradient(var(--line),transparent)}
+#scrollhint .sh-dot{position:absolute;left:50%;top:0;width:3px;height:3px;border-radius:50%;background:var(--ink);
+  transform:translateX(-50%);box-shadow:0 0 9px var(--tint);animation:shdrop 1.7s var(--ease) infinite}
+@keyframes shdrop{0%{top:-2px;opacity:0}16%{opacity:1}72%{opacity:1}100%{top:36px;opacity:0}}
+#scrollhint .sh-chev{position:relative;width:11px;height:11px}
+#scrollhint .sh-chev::before,#scrollhint .sh-chev::after{content:"";position:absolute;left:50%;width:8px;height:8px;
+  border-right:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);transform:translateX(-50%) rotate(45deg);animation:shchev 1.7s var(--ease) infinite}
+#scrollhint .sh-chev::before{top:0;opacity:.5}
+#scrollhint .sh-chev::after{top:5px;opacity:.85;animation-delay:.18s}
+@keyframes shchev{0%,100%{opacity:.2}50%{opacity:.85}}
 
 /* ---------- chapter scaffolding ---------- */
 .chapter{position:relative;z-index:2}
@@ -367,6 +377,17 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 .jpost .jdate{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--tint);display:block;margin-bottom:18px}
 .jpost p{font-size:14px;color:var(--dim);line-height:1.82;margin-bottom:14px;max-width:64ch}
 .jpost p b{color:var(--ink);font-weight:600}
+/* contact form */
+#contact-form .cf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cf-field{display:block;margin-bottom:14px}
+.cf-field>span{display:block;font-family:var(--mono);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.cf-field input,.cf-field textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;
+  font-family:var(--sans);font-size:14px;padding:11px 13px;color:var(--ink);line-height:1.5;resize:vertical}
+.cf-field input:focus,.cf-field textarea:focus{outline:none;border-color:var(--tint);background:rgba(255,255,255,.06)}
+.cf-foot{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:4px}
+#cf-send[disabled]{opacity:.5;pointer-events:none}
+.cf-status{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--dim)}
+.cf-status.ok{color:#9affc0}.cf-status.err{color:#ff9a8a}
 
 /* ---------- no-webgl fallback ---------- */
 body.no3d #tint{background:radial-gradient(100vmax 70vmax at 50% 45%,var(--tint-soft),transparent 62%),
@@ -396,7 +417,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   #net{height:34vh;height:34svh}
 }
 @media (prefers-reduced-motion:reduce){
-  #grain,#spark-ring,#scrollhint i{animation:none}
+  #grain,#spark-ring,#scrollhint .sh-dot,#scrollhint .sh-chev::before,#scrollhint .sh-chev::after{animation:none}
   *{scroll-behavior:auto}
 }
 
@@ -435,6 +456,37 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   /* a touch more headroom under the chrome for pinned content */
   .pinwrap{padding-top:max(62px,env(safe-area-inset-top))}
 }
+/* phones: lift text off the particle field + make every chapter fit one screen */
+@media (max-width:760px){
+  /* (a) readability — let the 3D field recede and float the copy above it */
+  #gl{opacity:.58}
+  .kicker,h2.big,.lede,#whostage .chip{text-shadow:0 1px 14px rgba(4,5,8,.95),0 0 34px rgba(4,5,8,.6)}
+  /* tighter type leaves room for the demo */
+  h2.big{font-size:clamp(23px,6.6vw,33px);line-height:1.07}
+  .lede{font-size:12.5px;line-height:1.52;margin-top:12px;max-width:100%}
+  .kicker{margin-bottom:11px}
+  /* (b) hide secondary blurbs so the DEMO is never the thing that gets cut */
+  .svc,#brand-note,#phonehint,#webps,#nethint,#applog{display:none}
+  .stage{gap:16px}
+  .pinwrap{padding-top:max(56px,env(safe-area-inset-top));padding-bottom:12px}
+  /* act 1 — phone smaller (the log is hidden, so the phone is the demo) */
+  #phone{width:min(158px,42vw)}
+  /* act 2 — shorter code/render panes */
+  #codepane pre{height:21vh;height:21svh}
+  #renderpane .canvas{height:22vh;height:22svh}
+  /* act 3 — ai compact */
+  #observer,#reviewbox{padding:12px 13px}
+  #obslines{min-height:auto}#review-demo{min-height:54px}
+  /* act 5 — growth network shorter */
+  #net{height:25vh;height:25svh}
+  /* act 6 — value chart shorter */
+  #valuewrap{height:23vh}
+  /* console blueprint a touch tighter */
+  #blueprint{font-size:10px;line-height:1.8}
+  #consolebody{padding:16px}
+  /* contact form: stack the name/email row */
+  #contact-form .cf-row{grid-template-columns:1fr}
+}
 @media (max-width:380px){
   #wordmark{font-size:9px;letter-spacing:.06em}
   #ui-right{gap:8px}
@@ -470,7 +522,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
     <div class="t1">We turn nothing into launched products.</div>
     <div class="t2">apps · websites · ai · brand · growth — demonstrated, not described</div>
   </div>
-  <div id="scrollhint"><i></i></div>
+  <div id="scrollhint" aria-hidden="true"><span class="sh-track"><span class="sh-dot"></span></span><span class="sh-chev"></span></div>
 </section>
 
 <!-- ═══════════ ACT 1 — APPS ═══════════ -->
@@ -713,7 +765,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
     <div id="end-n" class="reveal">Cascade Alliance</div>
     <p class="lede reveal" style="text-align:center">From nothing. To launched.</p>
     <div class="reveal" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
-      <a class="pill hot" href="mailto:contact@cascade-alliance.com?subject=Let%27s%20make%20something%20from%20nothing">start a project</a>
+      <a class="pill hot" href="mailto:contact@cascade-alliance.com?subject=Let%27s%20make%20something%20from%20nothing" data-open="#overlay-contact">start a project</a>
       <button class="pill ghost" id="btn-plain2">the plain version</button>
     </div>
     <div id="endfoot" class="reveal">
@@ -863,6 +915,29 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
         <p>The first demo lands in your hands about two weeks after kickoff. Fast isn't the opposite of good here — it's how we keep the price honest.</p>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<div id="overlay-contact" class="ovl" role="dialog" aria-modal="true" aria-label="Contact">
+  <div class="ovl-inner">
+    <button class="ovl-close">close × (esc)</button>
+    <h3>Start a project</h3>
+    <div class="sub">tell us what you want to build — a human replies within 24h</div>
+    <form id="contact-form" class="ov-sec" novalidate>
+      <div class="cf-row">
+        <label class="cf-field"><span>your name</span><input type="text" name="name" autocomplete="name" required></label>
+        <label class="cf-field"><span>your email</span><input type="email" name="email" autocomplete="email" required></label>
+      </div>
+      <label class="cf-field"><span>what do you want to build?</span><textarea name="message" rows="5" required></textarea></label>
+      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+      <div class="cf-foot">
+        <button type="submit" class="pill hot" id="cf-send">send message</button>
+        <span class="cf-status" id="cf-status"></span>
+      </div>
+      <div class="note" style="margin-top:14px">or email us directly at <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a> · worldwide, remote</div>
+    </form>
+    <div class="ov-sec"><button class="pill ghost" data-close>↩ return to the experience</button></div>
   </div>
 </div>
 
@@ -1780,10 +1855,7 @@ $('#btn-sound').addEventListener('click', function(){
   this.textContent = on ? 'sound on' : 'sound off';
   AUDIO.mute(on); if(on) AUDIO.click();
 });
-$('#btn-contact').addEventListener('click', () => {
-  AUDIO.click();
-  $('#ch-console').scrollIntoView({ behavior: RM ? 'auto' : 'smooth' });
-});
+/* #btn-contact now opens the contact form overlay (wired in the overlay controller below) */
 $('#wordmark').addEventListener('click', () => { location.hash = ''; scrollTo({ top: 0, behavior: 'smooth' }); });
 
 /* ════════════════════════════════════════════════════════════
@@ -2348,8 +2420,9 @@ function hslHex(h, s, l){
   const overlays = $$('.ovl');
   const closeAll = () => overlays.forEach(o => o.classList.remove('open'));
   const openOv = id => { const o = $(id); if(!o) return; closeAll(); o.classList.add('open'); AUDIO.click(); };
-  const TRIG = { '#btn-plain':'#overlay', '#btn-plain2':'#overlay', '#btn-company':'#overlay-company', '#btn-journal':'#overlay-journal' };
+  const TRIG = { '#btn-plain':'#overlay', '#btn-plain2':'#overlay', '#btn-company':'#overlay-company', '#btn-journal':'#overlay-journal', '#btn-contact':'#overlay-contact' };
   Object.keys(TRIG).forEach(btn => { const b = $(btn); if(b) b.addEventListener('click', () => openOv(TRIG[btn])); });
+  $$('[data-open]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); openOv(b.dataset.open); }));
   $$('.ovl-close, [data-close]').forEach(b => b.addEventListener('click', closeAll));
   overlays.forEach(o => o.addEventListener('click', e => { if(e.target === o) closeAll(); }));
 
@@ -2373,6 +2446,34 @@ function hslHex(h, s, l){
     else if(e.key === 'j' || e.key === 'J') $('#overlay-journal').classList.contains('open') ? closeAll() : openOv('#overlay-journal');
     else if(e.key === 'c' || e.key === 'C') $('#overlay-company').classList.contains('open') ? closeAll() : openOv('#overlay-company');
   });
+
+  /* contact form → FormSubmit (AJAX) → contact@cascade-alliance.com → info@ */
+  const cform = $('#contact-form');
+  if(cform){
+    const cstatus = $('#cf-status'), csend = $('#cf-send');
+    cform.addEventListener('submit', ev => {
+      ev.preventDefault();
+      const honey = cform.querySelector('[name="_honey"]');
+      if(honey && honey.value) return;                       /* bot trap */
+      const name = cform.querySelector('[name="name"]').value.trim();
+      const email = cform.querySelector('[name="email"]').value.trim();
+      const message = cform.querySelector('[name="message"]').value.trim();
+      if(!name || !email || email.indexOf('@') < 1 || !message){
+        cstatus.textContent = 'please fill in every field'; cstatus.className = 'cf-status err'; return;
+      }
+      csend.disabled = true; cstatus.textContent = 'sending…'; cstatus.className = 'cf-status';
+      if(AUDIO.riser) AUDIO.riser();
+      fetch('https://formsubmit.co/ajax/625eb25717f8b3d68578bed4b445ab36', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ name, email, message, _subject: 'New project inquiry — cascade-alliance.com', _template: 'table' })
+      })
+        .then(r => r.json())
+        .then(() => { cstatus.textContent = '✓ sent — we’ll reply within 24 hours'; cstatus.className = 'cf-status ok'; cform.reset(); if(AUDIO.chime) AUDIO.chime(); })
+        .catch(() => { cstatus.innerHTML = 'couldn’t send — email <a href="mailto:contact@cascade-alliance.com" style="color:var(--tint)">contact@cascade-alliance.com</a>'; cstatus.className = 'cf-status err'; })
+        .finally(() => { csend.disabled = false; });
+    });
+  }
 })();
 
 /* ── lights on ── */
