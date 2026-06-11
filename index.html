@@ -522,6 +522,14 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   #blueprint{font-size:9px;line-height:1.58}
   #idea-line{font-size:12px}
 }
+/* phones — the language toggle adds a 6th nav item and Japanese copy wraps taller */
+@media (max-width:760px){
+  #ui-right{max-width:calc(100vw - 120px);flex-wrap:wrap;justify-content:flex-end;gap:7px;row-gap:4px}
+  .uibtn{font-size:7.5px;letter-spacing:.04em}
+  .lede{font-size:12px;line-height:1.48}
+  h2.big{font-size:clamp(22px,6.2vw,30px)}
+  #codepane pre{height:18vh;height:18svh}   /* render pane stays tall enough for the full bakery */
+}
 @media (max-width:380px){
   #wordmark{font-size:9px;letter-spacing:.06em}
   #ui-right{gap:8px}
@@ -539,6 +547,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 <!-- persistent chrome -->
 <header class="chrome" id="wordmark"><b>●</b>&nbsp;Cascade Alliance</header>
 <nav class="chrome" id="ui-right">
+  <button class="uibtn" id="btn-lang" aria-label="日本語に切り替え / switch language">日本語</button>
   <button class="uibtn" id="btn-sound" aria-pressed="true">sound on</button>
   <button class="uibtn" id="btn-company">company</button>
   <button class="uibtn" id="btn-journal">journal</button>
@@ -1029,6 +1038,9 @@ const lerp = (a, b, t) => a + (b - a) * t;
 const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
 const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const MOBILE = matchMedia('(pointer: coarse)').matches || innerWidth < 760;
+/* i18n state — declared early so the live demos can register re-localizers as they load */
+window.LANG = 'en';
+window.__reloc = [];
 
 /* seeded random */
 function mulberry32(seed){
@@ -1808,10 +1820,11 @@ let bootReady = false;
 
 function runBoot(){
   const lines = $('#bootlines');
+  const BL = window.I18N_DYN ? window.I18N_DYN[window.LANG].boot : BOOT_LINES;
   let i = 0;
   (function next(){
-    if(i < BOOT_LINES.length){
-      typeInto(lines, BOOT_LINES[i], RM ? 8 : 34, () => setTimeout(next, window.__skipBoot ? 60 : (i === BOOT_LINES.length ? 200 : 760)));
+    if(i < BL.length){
+      typeInto(lines, BL[i], RM ? 8 : 34, () => setTimeout(next, window.__skipBoot ? 60 : (i === BL.length ? 200 : 760)));
       i++;
     } else {
       bootReady = true;
@@ -1878,16 +1891,16 @@ function ignite(){
     document.body.classList.remove('locked');
     ScrollTrigger.refresh();
     $('#scrollhint').classList.add('show');
-    toast('something from nothing · scroll — we’ll build the rest', 4200);
+    toast(window.I18N_DYN[window.LANG].toastScroll, 4200);
   }, RM ? 600 : 1900);
-  setTimeout(() => toast('sound M · plain version P · this site is the portfolio', 4600), 7200);
+  setTimeout(() => toast(window.I18N_DYN[window.LANG].toastKeys, 4600), 7200);
 }
 
 /* chrome wiring */
 $('#btn-sound').addEventListener('click', function(){
   const on = this.getAttribute('aria-pressed') !== 'true';
   this.setAttribute('aria-pressed', on);
-  this.textContent = on ? 'sound on' : 'sound off';
+  this.textContent = window.LANG === 'ja' ? (on ? 'サウンド ON' : 'サウンド OFF') : (on ? 'sound on' : 'sound off');
   AUDIO.mute(on); if(on) AUDIO.click();
 });
 /* #btn-contact now opens the contact form overlay (wired in the overlay controller below) */
@@ -2011,14 +2024,15 @@ $('#wordmark').addEventListener('click', () => { location.hash = ''; scrollTo({ 
   const box = $('#obslines');
   function lines(){
     const b = S.behavior;
+    const D = window.I18N_DYN[window.LANG].obs;
     const secs = Math.round((performance.now() - b.t0) / 1000);
     const out = [];
-    out.push(`time here: <b>${secs}s</b> — ${secs > 150 ? 'invested. we like that' : secs > 60 ? 'curious' : 'moving quick'}`);
-    out.push(`cursor travelled: <b>${Math.round(b.moved / 1000)}k px</b> — ${b.moved > 30000 ? 'an explorer' : 'efficient'}`);
-    out.push(`interactions: <b>${b.clicks}</b> — ${b.clicks > 14 ? 'hands-on. builder energy' : 'watching first, touching later'}`);
-    if(b.holdMs) out.push(`you held the first idea for <b>${(b.holdMs / 1000).toFixed(1)}s</b> — ${b.holdMs > 900 ? 'patient' : 'eager'}`);
-    if(b.stamps) out.push(`loyalty stamps tapped: <b>${b.stamps}</b> — verdict: coffee person`);
-    out.push(`<span class="priv">— all of this stays in your browser. imagine it watching your business instead.</span>`);
+    out.push(D.time(secs, secs > 150 ? D.timeV[0] : secs > 60 ? D.timeV[1] : D.timeV[2]));
+    out.push(D.moved(Math.round(b.moved / 1000), b.moved > 30000 ? D.movedV[0] : D.movedV[1]));
+    out.push(D.clicks(b.clicks, b.clicks > 14 ? D.clicksV[0] : D.clicksV[1]));
+    if(b.holdMs) out.push(D.hold((b.holdMs / 1000).toFixed(1), b.holdMs > 900 ? D.holdV[0] : D.holdV[1]));
+    if(b.stamps) out.push(D.stamps(b.stamps));
+    out.push(D.priv);
     return out;
   }
   let started = false;
@@ -2038,6 +2052,7 @@ $('#wordmark').addEventListener('click', () => { location.hash = ''; scrollTo({ 
       setTimeout(next, RM ? 120 : 850);
     })();
   };
+  window.__reloc.push(() => { if(started && S.chapter === 3) box.innerHTML = lines().join('<br>'); });
 
   /* sentiment engine — tiny, honest, local */
   const POS = ['love','loved','great','amazing','friendly','fresh','fast','delicious','perfect','best','wonderful','kind','clean','cozy','recommend','awesome','tasty','helpful','beautiful','quick','favorite','lovely','warm','excellent','happy'];
@@ -2068,25 +2083,26 @@ $('#wordmark').addEventListener('click', () => { location.hash = ''; scrollTo({ 
         reviewEl = $('#review-text'), rvCaret = $('#review-caret');
   /* a real-feeling, curated review the page reads, scores and answers as you scroll.
      Every frame is a pure function of progress p, so it plays and rewinds with scroll. */
-  const REVIEW = 'Waited almost 20 minutes for a flat white and it came lukewarm — but the staff were so warm and kind about it that I’ll still be back.';
-  const REPLY  = 'You’re right about the wait, and we’re sorry — lukewarm isn’t our standard. Thank you for being so kind about it. Your next flat white is on us: just show this note. We’ve already put a second machine on the morning rush.';
   const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
-  let lastTick3 = 0;
+  let lastTick3 = 0, _aiP = 0;
   DEMO.aiSet = function(p){
+    _aiP = p;
+    const D = window.I18N_DYN[window.LANG];
+    const REVIEW = D.aiReview, REPLY = D.aiReply;
     /* phase 1 — the review types itself in */
     const s1 = seg(p, 0, .46);
-    const rc = Math.round(s1 * REVIEW.length);
-    reviewEl.textContent = REVIEW.slice(0, rc);
+    reviewEl.textContent = REVIEW.slice(0, Math.round(s1 * REVIEW.length));
     rvCaret.classList.toggle('on', s1 > 0 && s1 < 1);
     /* phase 2 — it judges (needle sweeps to a curated, mixed verdict) */
     const s2 = seg(p, .46, .6);
     needle.style.left = lerp(50, 39, s2) + '%';
-    verdict.textContent = s1 < 1 ? '—' : s2 < .5 ? 'analysing…' : 'needs care';
+    verdict.textContent = s1 < 1 ? D.verdict.dash : s2 < .5 ? D.verdict.run : D.verdict.out;
     /* phase 3 — it writes back, politely */
     const s3 = seg(p, .62, 1);
     replyEl.textContent = REPLY.slice(0, Math.round(s3 * REPLY.length));
     if(S.chapter === 3 && ((s1 > 0 && s1 < 1) || (s3 > 0 && s3 < 1)) && performance.now() - lastTick3 > 55){ AUDIO.tick(); lastTick3 = performance.now(); }
   };
+  window.__reloc.push(() => DEMO.aiSet(_aiP));
 })();
 
 /* ════════════════════════════════════════════════════════════
@@ -2188,7 +2204,7 @@ function hslHex(h, s, l){
       const nm = $('#bc-name');
       nm.textContent = name;
       nm.style.fontFamily = font.f; nm.style.fontWeight = font.w; nm.style.letterSpacing = font.sp;
-      $('#bc-tag').textContent = TAGS[Math.floor(rnd() * TAGS.length)];
+      const BT = window.I18N_DYN[window.LANG].brandTags; $('#bc-tag').textContent = BT[Math.floor(rnd() * BT.length)];
       $('#bc-tag').style.fontFamily = font.f;
       const ch1 = $('#chip1'), ch2 = $('#chip2');
       ch1.textContent = c1.toUpperCase(); ch1.style.background = c1;
@@ -2214,6 +2230,7 @@ function hslHex(h, s, l){
     bcaret.classList.toggle('on', nc < name.length);
     if(idx !== curIdx){ curIdx = idx; genFor(name); }
   };
+  window.__reloc.push(() => { if(curIdx >= 0) genFor(NAMES_B[curIdx]); });
 })();
 
 /* ── act 5 · growth — word of mouth + revenue + social buzz ──
@@ -2257,7 +2274,7 @@ function hslHex(h, s, l){
     if(bubbles.length > (MOBILE?9:16)) return;
     const el = document.createElement('div');
     el.className = 'bz';
-    el.textContent = BUZZ[(rnd()*BUZZ.length)|0];
+    const BZ = window.I18N_DYN[window.LANG].gBuzz; el.textContent = BZ[(rnd()*BZ.length)|0];
     el.style.left = (10 + rnd()*78) + '%';
     el.style.bottom = (6 + rnd()*34) + '%';
     buzzWrap.appendChild(el);
@@ -2299,9 +2316,9 @@ function hslHex(h, s, l){
     /* ---- metrics: pure functions of P ---- */
     reachEl.textContent = fmt(Math.pow(shown, 2.16) * 1.7);
     revEl.textContent   = '$' + fmt(Math.pow(P, 2.0) * 248000);
-    revSub.textContent  = STAGES[Math.min(3, Math.floor(P*3.999))];
+    revSub.textContent  = window.I18N_DYN[window.LANG].gStages[Math.min(3, Math.floor(P*3.999))];
     folEl.textContent   = fmt(Math.pow(P, 1.7) * 128000);
-    folSub.textContent  = '+' + fmt(Math.pow(P, 2.4) * 4200) + ' / day';
+    folSub.textContent  = window.I18N_DYN[window.LANG].gPerDay(fmt(Math.pow(P, 2.4) * 4200));
     engEl.textContent   = fmt(Math.pow(P, 1.9) * 940000);
 
     /* ---- revenue sparkline, drawn up to P ---- */
@@ -2399,55 +2416,58 @@ function hslHex(h, s, l){
 
   function plan(idea){
     const low = ' ' + idea.toLowerCase() + ' ';
-    let builds = MAP.filter(m => m.k.test(low)).map(m => m.v);
-    if(!builds.length) builds = ['a mobile app (iOS + Android)', 'a fast public website'];
-    if(builds.length === 1) builds.push('a fast public website' === builds[0] ? 'a brand identity people remember' : 'a fast public website');
+    let idxs = MAP.map((m, i) => m.k.test(low) ? i : -1).filter(i => i >= 0);
+    if(!idxs.length) idxs = [0, 1];
+    if(idxs.length === 1) idxs.push(idxs[0] === 1 ? 3 : 1);
     const h = hashStr(idea);
     return {
       code: 'PROJECT ' + NAMES[h % NAMES.length] + '-' + String(h % 89 + 10),
       id: (h % 0xffff).toString(16).toUpperCase().padStart(4, '0'),
-      builds
+      idxs
     };
   }
 
-  const IDEA = 'people should be able to book my barbershop from their phone — and never miss an appointment again';
-  const P0 = plan(IDEA);
-  const LINES2 = [
-    `<span class="hl">BLUEPRINT №${P0.id}</span> — sketched live, as you read`,
-    `read         <b>“${IDEA}”</b>`,
-    `we’d build   <b>${P0.builds.join('</b> + <b>')}</b>`,
-    `phase 01     <b>SHAPE</b> — a clickable prototype you can react to <span class="hl">wk 1–2</span>`,
-    `phase 02     <b>BUILD</b> — working product, real data, real users <span class="hl">wk 3–6</span>`,
-    `phase 03     <b>LAUNCH</b> — ship it, measure it, make it spread <span class="hl">wk 7+</span>`,
-    `team         design × engineering × intelligence`,
-    `first demo   in your hands ~2 weeks after kickoff`,
-    `status       <span class="ok">WAITING FOR A HUMAN — that’s the button below</span>`
-  ];
-  bp.classList.add('show');
-  bp.innerHTML = LINES2.map(l => '<div class="bp-line">' + l + '</div>').join('');
-  const lineEls = $$('#blueprint .bp-line');
-  lineEls.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(7px)'; el.style.transition = 'opacity .26s var(--ease), transform .26s var(--ease)'; });
-  $('#bp-send').href = 'mailto:contact@cascade-alliance.com?subject=' + encodeURIComponent(P0.code + ' — make it real') +
-    '&body=' + encodeURIComponent('Hi Cascade Alliance,\n\nYour studio engine sketched this on the site:\n\n' + P0.code + '\nBuild: ' + P0.builds.join(' + ') + '\n\nLet’s talk.\n');
+  /* build indices from (English) keywords; labels render per language. Lazy-init so we
+     never read the i18n dictionary before it is defined at load. */
+  let P0 = null, lineEls = [];
+  function buildLines(){
+    const D = window.I18N_DYN[window.LANG];
+    return D.bpLines(P0.id, P0.idxs.map(i => D.bpBuilds[i]), D.ideaText);
+  }
+  function renderBlueprint(){
+    if(!P0){
+      P0 = plan('people should be able to book my barbershop from their phone — and never miss an appointment again');
+      $('#bp-send').href = 'mailto:contact@cascade-alliance.com?subject=' + encodeURIComponent(P0.code + ' — make it real') +
+        '&body=' + encodeURIComponent('Hi Cascade Alliance,\n\n' + P0.code + '\n\nLet’s talk.\n');
+    }
+    bp.classList.add('show');
+    bp.innerHTML = buildLines().map(l => '<div class="bp-line">' + l + '</div>').join('');
+    lineEls = $$('#blueprint .bp-line');
+    lineEls.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(7px)'; el.style.transition = 'opacity .26s var(--ease), transform .26s var(--ease)'; });
+  }
 
   /* scroll-driven: the sentence types itself, then the blueprint draws line by line */
   const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
-  let shownLines = -1, lastTickC = 0;
+  let shownLines = -1, lastTickC = 0, _cP = 0;
   DEMO.consoleSet = function(p){
+    _cP = p;
+    if(!P0) renderBlueprint();
+    const D = window.I18N_DYN[window.LANG], idea = D.ideaText;
     const s1 = seg(p, 0, .3);
-    ideaEl.textContent = IDEA.slice(0, Math.round(s1 * IDEA.length));
+    ideaEl.textContent = idea.slice(0, Math.round(s1 * idea.length));
     icaret.classList.toggle('on', s1 > 0 && s1 < 1);
-    const n = Math.round(seg(p, .33, .9) * LINES2.length);
+    const n = Math.round(seg(p, .33, .9) * lineEls.length);
+    lineEls.forEach((el, i) => { const on = i < n; el.style.opacity = on ? '1' : '0'; el.style.transform = on ? 'none' : 'translateY(7px)'; });
     if(n !== shownLines){
-      lineEls.forEach((el, i) => { const on = i < n; el.style.opacity = on ? '1' : '0'; el.style.transform = on ? 'none' : 'translateY(7px)'; });
       if(S.chapter === 8 && n > shownLines && performance.now() - lastTickC > 70){ AUDIO.tick(); lastTickC = performance.now(); }
       shownLines = n;
     }
-    status.textContent = s1 < 1 ? 'reading…' : n < LINES2.length ? 'sketching…' : 'done — humans next';
+    status.textContent = s1 < 1 ? D.cStatus.read : n < lineEls.length ? D.cStatus.sketch : D.cStatus.done;
     const cta = p > .9;
     actions.classList.toggle('show', cta);
     actions.style.display = cta ? 'flex' : 'none';
   };
+  window.__reloc.push(() => { renderBlueprint(); shownLines = -1; DEMO.consoleSet(_cP); });
 })();
 
 /* ── overlays: the plain version · company · journal ── */
@@ -2511,7 +2531,212 @@ function hslHex(h, s, l){
   }
 })();
 
+/* ════════════════════════════════════════════════════════════
+   i18n — English ⇄ 日本語 (nav toggle). EN is cached from the DOM;
+   only Japanese lives in the dictionaries. No markup is duplicated.
+   ════════════════════════════════════════════════════════════ */
+/* window.LANG and window.__reloc are initialized near the top of the script. */
+
+/* selector → Japanese (innerHTML). Each selector's English is cached on load. */
+const I18N_S = {
+  '#btn-company':'会社情報', '#btn-journal':'ジャーナル', '#btn-contact':'お問い合わせ',
+  '#btn-plain':'<span class="t-full">テキスト版</span><span class="t-min">テキスト</span>',
+  '#spark-label':'アイデアを — 長押し',
+  '#tagline .t1':'何もないところから、世に出る製品へ。',
+  '#tagline .t2':'アプリ・ウェブ・AI・ブランド・グロース — 語らず、実演する',
+  /* act 1 — apps */
+  '#ch-apps .kicker':'ACT 01 — アプリ開発',
+  '#ch-apps h2.big':'つくるのは<em>アプリ</em>。<br>このページが、いま自らを組み立てている。',
+  '#ch-apps .lede':'他社の実績スクショではありません。スクロールする間に、動くプロダクトを組み上げました。このページの中で、どうぞ触ってみてください。',
+  '#applog':'<li>インターフェースを生成中…</li><li>状態とデータを配線中…</li><li>ジェスチャーを接続中…</li><li>ピクセルを磨き中…</li><li>出荷。</li>',
+  '#ch-apps .svc':'<b>アプリ開発</b> — iOS・Android・クロスプラットフォーム<br>人々のポケットに居場所を持つべきビジネスのために',
+  '#scr-head .hi':'おはようございます', '#scr-card .lab':'残高', '#scr-card .val':'無料ドリンク 3杯',
+  '#freebanner':'無料コーヒー 解放！', '#phonehint':'スタンプを押してみて — 本当に動きます', '#livebadge':'ライブ',
+  '#stampzone .lab span:first-child':'スタンプカード',
+  /* act 2 — web (code + bakery stay English by design; copy is localized) */
+  '#ch-web .kicker':'ACT 02 — ウェブ制作',
+  '#ch-web h2.big':'<em>ウェブサイト</em>が生まれる瞬間を。',
+  '#ch-web .lede':'左：コードが自らをタイプしていく。右：街角のパン屋が、インターネット上に居場所を得る — スクロールに合わせて、リアルタイムで。',
+  '#codepane .panehead':'<span class="lights"><i></i><i></i><i></i></span>index.html — 書き込み中…',
+  '#renderpane .panehead':'<span class="lights"><i></i><i></i><i></i></span>dailybread.com — 描画中',
+  '#webps':'<b>追伸</b> — いま見ているこのサイトも、最初は空のファイル1枚から。<span style="color:var(--dim)">ウェブ制作 — 速く、美しく、Googleに見つかる。</span>',
+  /* act 3 — ai */
+  '#ch-ai .kicker':'ACT 03 — AIコンサルティング＆実装',
+  '#ch-ai h2.big':'ソフトウェアに、<em>考える</em>力を。',
+  '#ch-ai .lede':'いつかの話ではありません。いま、小さな知能がこのページに棲んでいます。あなたを観察し、あなたのお店ならこう返すという形で、顧客に応対します。',
+  '#ch-ai .svc':'<b>AIコンサルティング＆実装</b> — コパイロット・自動化・意思決定<br>AIが本当に効く場所を見極め、事業に組み込みます',
+  '#observer h4':'このページが見抜いたあなた',
+  '#review-h':'本物のカスタマーレビュー — 読み、評価し、返信する',
+  '.rv-lab':'受信したレビュー', '#reply .tag':'返信ドラフト · ブラウザ内でその場生成',
+  /* act 4 — brand (generated names stay English) */
+  '#ch-brand .kicker':'ACT 04 — ブランド開発',
+  '#ch-brand h2.big':'名前を入れる。<br><em>ブランド</em>が生まれる。',
+  '#ch-brand .lede':'マーク、配色、トーン — 一瞬で目の前に生成されます。これがほんの数ミリ秒。数週間かければ何ができるか、想像してみてください。',
+  '#ch-brand .svc':'<b>ブランド開発</b> — ネーミング・ロゴ・アイデンティティ設計',
+  '.bg-lab':'アイデンティティを生成中', '#bc-name':'あなたの会社', '#bc-tag':'細部に気づく人へ',
+  '#brand-note span':'ここに映るマーク・配色・トーンはすべてその場で生成 — 数百ピクセルごとに新しいアイデンティティが生まれます',
+  /* act 5 — growth */
+  '#ch-growth .kicker':'ACT 05 — マーケティング＆SNS',
+  '#ch-growth h2.big':'そして、<em>広がって</em>いく。',
+  '#ch-growth .lede':'1人が2人に伝える。2人が4人に。ローンチ設計、コンテンツの仕組み、SNSチャンネル — つくったものが、ちゃんと見られる。スクロールを続けて：これがあなたの口コミです。',
+  '#g-metrics .g-card:nth-of-type(1) .g-lab':'月間売上',
+  '#g-metrics .g-card:nth-of-type(2) .g-lab':'フォロワー',
+  '#g-metrics .g-card:nth-of-type(3) .g-lab':'エンゲージ',
+  '#g-metrics .g-card:nth-of-type(3) .g-sub':'いいね · シェア · 保存',
+  '#nethint':'口コミ · スクロールを続けて',
+  '#ch-growth .svc':'<b>マーケティング支援</b> · ローンチ、キャンペーン、コンテンツ &nbsp;—&nbsp; <b>SNS運用支援</b> · 回り続ける仕組み',
+  /* act 6 — the promise */
+  '#ch-value .kicker':'ザ・プロミス — 私たちが存在する理由',
+  '#ch-value h2.big':'トップスタジオの品質を。<br>トップスタジオの<em>請求書</em>なしで。',
+  '#ch-value .lede':'複雑なアプリ、本当に機能するウェブサイト、積み上がるSNS — 多くの経営者が見積もりを前に諦めるもの。新しいツールと積み上げた経験で、<b>高価格帯のスタジオより高い品質</b>を実現し、中小企業が「やろう」と言える価格で届ける。その差を、意図してつくる — それがこの会社のすべてです。',
+  '.vc-q':'品質 — 私たち', '.vc-i':'品質 — 一般的な相場', '.vc-p':'価格 — 私たち', '.vc-x':'規模・複雑さ →',
+  '#vc-cross':'高級な作り · 中小企業の価格',
+  '.vcol-them':'<div class="vcol-h">一般的な制作会社</div><div class="vrow"><span>価格</span><b id="vt-price">$$$$</b></div><div class="vrow"><span>期間</span><b>4〜9ヶ月</b></div><div class="vrow"><span>担当</span><b>ほぼ若手</b></div>',
+  '.vcol-us':'<div class="vcol-h">Cascade Alliance</div><div class="vrow"><span>価格</span><b id="vu-price">$</b></div><div class="vrow"><span>初回デモ</span><b>約2週間</b></div><div class="vrow"><span>担当</span><b>シニアのみ</b></div>',
+  '#ch-value .svc':'<b>価格破壊 — 品質の妥協ではなく</b> · 複雑なソフトウェアを、ついに中小企業の手に',
+  /* interlude — studio */
+  '#ch-who .kicker':'インタールード — 粒子の向こうにいる人たち',
+  '#ch-who h2.big':'少数精鋭のシニアスタジオ。<br>請求書に新人の分は載りません。',
+  '#ch-who .lede':'Cascade Alliance は、40ページの提案書に飽きたエンジニア・デザイナー・ストラテジストの集まりです。意思決定が速く、アイデアが実際に世に出る中小企業と組みます。ここで体験したすべては、クライアントへの仕事と同じやり方 — 何もないところから — つくりました。',
+  '#ch-who .row':'<span class="chip">デザイン × エンジニアリング × インテリジェンス</span><span class="chip">リモート · 世界中</span><span class="chip">最初のデモは約2週間</span>',
+  /* final — console */
+  '#ch-console .kicker':'ファイナルACT — あなたの番',
+  '#ch-console h2.big':'ここまでのすべては<br><em>一文</em>から始まりました。',
+  '#ch-console .lede':'あなたの一文を。スタジオエンジンが構築プランを描き — そこから人間が引き継ぎます。',
+  '#bp-send':'人間に送る',
+  '#ch-console .alt':'または <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a> まで — 24時間以内に返信します',
+  /* end */
+  '#ch-end .lede':'何もないところから。世に出るまで。',
+  '#ch-end .pill.hot':'プロジェクトを始める', '#btn-plain2':'テキスト版を見る',
+  '#endfoot':'contact@cascade-alliance.com · 世界中・リモート<br>© 2026 Cascade Alliance — このサイトは空のファイル1枚から始まりました。テンプレートは一切使っていません。',
+  /* overlays — titles/subs */
+  '#overlay h3':'テキスト版。', '#overlay .sub':'急いでいる人へ — 会社のすべてを1画面で',
+  '#overlay-company .sub':'会社情報',
+  '#overlay-journal #journal-list h3':'ジャーナル', '#journal-list .sub':'スタジオからのノート — つくる、値づける、届ける',
+  '#overlay-contact h3':'プロジェクトを始める', '#overlay-contact .sub':'つくりたいものを教えてください — 24時間以内に担当者が返信します',
+  '#journal-back':'← 記事一覧',
+  /* overlays — the two services grids (identical in plain + company) */
+  '.ov-grid':'<div class="ov-item"><b>アプリ開発</b><span>iOS・Android アプリを、最初のスケッチからストア公開まで。</span></div><div class="ov-item"><b>ウェブ制作</b><span>速く美しく、成果につながり、検索で見つかるサイト。</span></div><div class="ov-item"><b>AIコンサル＆実装</b><span>本当に効くコパイロット・自動化・意思決定ツール。</span></div><div class="ov-item"><b>ブランド開発</b><span>ネーミング、ロゴ、アイデンティティ設計。</span></div><div class="ov-item"><b>マーケティング支援</b><span>記憶に残るローンチ・キャンペーン・コンテンツ。</span></div><div class="ov-item"><b>SNS運用支援</b><span>離れた後も回り続けるチャンネルの仕組み。</span></div>',
+  '#overlay .who':'Cascade Alliance は、中小企業のためのシニア・プロダクトスタジオです。デジタルなプロダクトと仕組みを、つくり、世に出し、磨き、伸ばす — 「得意です」と言う代わりに、このサイトそのものを証明として作りました。あなたが見たすべて（自ら組み上がるアプリ、コードから生まれるサイト、ページ内のAI、ライブで動くブランド生成）は、語ったのではなく、実演したものです。',
+  '#overlay-company .who':'多くの中小企業は、本当に必要なソフトウェア — ちゃんとしたアプリ、成果につながるサイト、積み上がるSNS — を、見積もりを前に諦めています。私たちはその差を埋めるために存在します。新しいツールと、経験を積んだシニアの手で、高価格帯のスタジオを超える品質をつくり、中小企業が「やろう」と言える価格で届ける。高級な仕事を、市場を壊す価格で — 意図して、です。',
+  '#contact-form .note':'または <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a> まで直接どうぞ · 世界中・リモート',
+  '#cf-send':'送信する',
+  /* journal posts (full) */
+  '#post-1':'<h4>売り込む代わりに、ウェブサイトを作って見せる</h4><span class="jdate">フィールドノート</span><p>多くのスタジオは提案書を送ります。私たちは、動くアプリを組み上げ、コードからサイトを書き、レビューを読んで返信し、目の前で会社をブランディングする — そんな<b>ライブの宇宙</b>をあなたのブラウザに届けました。</p><p>これは意図的です。「得意です」とは誰でも言える。難しいのは証明で、それだけがあなたの時間に値します。仕事が自動で動いて見せても響かないなら、スライドで響くはずがありません。</p><p>だからこのサイト全体をポートフォリオだと思ってください。スクロールしてきたすべては、クライアントへの仕事と同じ — 空のファイルから、数多く世に出してきた人間の手で — 作りました。</p>',
+  '#post-2':'<h4>価格破壊は、エンジニアリングの問題だ</h4><span class="jdate">価格について</span><p>安いはたいてい「質が落ちる」を意味します。私たちはそれをプロセスの失敗だと考えます。自然の法則ではありません。制作会社の値札の大半は<b>間接費・アカウントマネージャー・若手の手戻り</b>で、実際の制作ではありません。</p><p>そこを削ぎ落とす。シニアが手を動かし、繰り返しの8割はモダンなフレームワークとAIに任せ、培ったパターンを再利用する。残るのは価値を生む部分だけ — それは見積もりのほんの一部のコストで済みます。</p><p>一言で言えば：<b>高価格帯のスタジオの品質を、中小企業が「やろう」と言える価格で</b> — 手を抜くのではなく、もともと払う価値のなかった部分を取り除くことで。</p>',
+  '#post-3':'<h4>中小企業が最初に作るべきもの</h4><span class="jdate">経営者へ</span><p>一度に全部ではありません。多くの場合いちばん速いのは、<b>毎日の手間を消す、あるいは今こぼしている売上を拾う、たった一つの切れ味のいいもの</b> — 予約フロー、注文ページ、同じ質問に百回答える自動化。</p><p>それを出し、稼がせ、積み上げる。絞った最初の一手が次の資金を生み、需要のありかを正確に教えてくれます。一発勝負のローンチは、2週間で分かることを証明するために予算を燃やしがちです。</p><p>プロジェクトを設計するとき、最初の問いは「何が作れるか」ではなく「明らかに価値のある最小のものは何か」。そして、それを一級品にします。</p>',
+  '#post-4':'<h4>手に取れるものまで、2週間</h4><span class="jdate">仕事の進め方</span><p><b>SHAPE（1〜2週）</b> — 触って反応できるクリック可能なプロトタイプ。本物の画面、本物の流れ、ダミー文字なし。本番コードを1行書く前に、正しいか分かります。</p><p><b>BUILD（3〜6週）</b> — 実データ・実ユーザーで動くプロダクト。シニアの手、短いループ、キューで眠るものはなし。</p><p><b>LAUNCH（7週〜）</b> — 出し、測り、広げる。そして数字が示す方向へ改善を続けます。</p><p>最初のデモは、キックオフから約2週間であなたの手に。ここでは「速い」は「良い」の対義語ではありません — 価格を正直に保つための方法です。</p>'
+};
+
+/* text-keyed (repeated identical labels across overlays) */
+const I18N_TSEL = '.ov-sec h5, .ovl-close, [data-close], .ov-contactrow .note, .cf-field span';
+const I18N_T = {
+  'what we do':'事業内容', 'who we are':'私たちについて', 'what we believe':'私たちの信念',
+  'the company':'会社概要', 'contact':'お問い合わせ',
+  'close × (esc)':'閉じる × (esc)', '↩ return to the experience':'↩ 体験に戻る',
+  'humans reply within 24 hours · worldwide, remote':'担当者が24時間以内に返信 · 世界中・リモート',
+  'humans reply within 24 hours':'担当者が24時間以内に返信します',
+  'your name':'お名前', 'your email':'メールアドレス', 'what do you want to build?':'何をつくりたいですか？'
+};
+
+/* dynamic strings used by the live demos (read at render time) */
+window.I18N_DYN = {
+  en:{
+    boot:['at first there is nothing.','no app. no website. no name.','then — an idea.'],
+    verdict:{dash:'—',run:'analysing…',out:'needs care'},
+    aiReview:'Waited almost 20 minutes for a flat white and it came lukewarm — but the staff were so warm and kind about it that I’ll still be back.',
+    aiReply:'You’re right about the wait, and we’re sorry — lukewarm isn’t our standard. Thank you for being so kind about it. Your next flat white is on us: just show this note. We’ve already put a second machine on the morning rush.',
+    brandTags:['for people who notice','made properly','small team, sharp edges','est. today','quietly excellent','the neighborhood favorite','built to last','no nonsense since now'],
+    gStages:['launch','traction','word of mouth','going viral'],
+    gBuzz:['+1 ♥','↗ shared','+1 follow','saved ★','reposted','+1 ♥','↗','+1 ♥','viral ↗'],
+    gPerDay:n=>'+'+n+' / day',
+    ideaText:'people should be able to book my barbershop from their phone — and never miss an appointment again',
+    bpBuilds:['a mobile app (iOS + Android)','a fast public website','an AI layer doing the boring work','a brand identity people remember','a launch & growth engine'],
+    bpLines:(id,builds,idea)=>[
+      `<span class="hl">BLUEPRINT №${id}</span> — sketched live, as you read`,
+      `read         <b>“${idea}”</b>`,
+      `we’d build   <b>${builds.join('</b> + <b>')}</b>`,
+      `phase 01     <b>SHAPE</b> — a clickable prototype you can react to <span class="hl">wk 1–2</span>`,
+      `phase 02     <b>BUILD</b> — working product, real data, real users <span class="hl">wk 3–6</span>`,
+      `phase 03     <b>LAUNCH</b> — ship it, measure it, make it spread <span class="hl">wk 7+</span>`,
+      `team         design × engineering × intelligence`,
+      `first demo   in your hands ~2 weeks after kickoff`,
+      `status       <span class="ok">WAITING FOR A HUMAN — that’s the button below</span>`
+    ],
+    cStatus:{read:'reading…',sketch:'sketching…',done:'done — humans next'},
+    obs:{
+      time:(s,v)=>`time here: <b>${s}s</b> — ${v}`, timeV:[ 'invested. we like that','curious','moving quick' ],
+      moved:(k,v)=>`cursor travelled: <b>${k}k px</b> — ${v}`, movedV:['an explorer','efficient'],
+      clicks:(c,v)=>`interactions: <b>${c}</b> — ${v}`, clicksV:['hands-on. builder energy','watching first, touching later'],
+      hold:(s,v)=>`you held the first idea for <b>${s}s</b> — ${v}`, holdV:['patient','eager'],
+      stamps:c=>`loyalty stamps tapped: <b>${c}</b> — verdict: coffee person`,
+      priv:'<span class="priv">— all of this stays in your browser. imagine it watching your business instead.</span>'
+    },
+    toastScroll:'something from nothing · scroll — we’ll build the rest',
+    toastKeys:'sound M · plain version P · this site is the portfolio'
+  },
+  ja:{
+    boot:['はじめに、何もない。','アプリも、サイトも、名前もない。','そして — アイデアが生まれる。'],
+    verdict:{dash:'—',run:'解析中…',out:'要フォロー'},
+    aiReview:'フラットホワイトを20分近く待って、出てきたらぬるかった — でもスタッフがとても温かく親切に対応してくれたので、それでもまた来ます。',
+    aiReply:'お待たせした件、ぬるかった件、本当に申し訳ありません — それは私たちの基準ではありません。温かいお言葉をありがとうございます。次のフラットホワイトは私たちから：このメッセージをお見せください。朝のピークにはもう一台マシンを増やしました。',
+    brandTags:['細部に気づく人へ','きちんと作られた','少人数、鋭い切れ味','本日創業','静かに卓越','ご近所の人気者','長く使えるように','無駄のなさ、今日から'],
+    gStages:['ローンチ','手応え','口コミ','バズ拡散'],
+    gBuzz:['+1 ♥','↗ シェア','+1 フォロー','保存 ★','リポスト','+1 ♥','↗','+1 ♥','バズ ↗'],
+    gPerDay:n=>'+'+n+' / 日',
+    ideaText:'スマホから自分の理髪店を予約できて、予約をもう二度と取り逃さないようにしたい',
+    bpBuilds:['モバイルアプリ（iOS + Android）','速い公開ウェブサイト','面倒を肩代わりするAIレイヤー','記憶に残るブランド','ローンチ＆グロースの仕組み'],
+    bpLines:(id,builds,idea)=>[
+      `<span class="hl">ブループリント №${id}</span> — 読んでいる今、その場で設計`,
+      `読み取り     <b>「${idea}」</b>`,
+      `つくるもの   <b>${builds.join('</b> + <b>')}</b>`,
+      `フェーズ01   <b>SHAPE</b> — 触って反応できるプロトタイプ <span class="hl">1〜2週</span>`,
+      `フェーズ02   <b>BUILD</b> — 実データ・実ユーザーで動く製品 <span class="hl">3〜6週</span>`,
+      `フェーズ03   <b>LAUNCH</b> — 出し、測り、広げる <span class="hl">7週〜</span>`,
+      `チーム       デザイン × エンジニアリング × インテリジェンス`,
+      `初回デモ     キックオフから約2週間であなたの手に`,
+      `ステータス   <span class="ok">人間の出番待ち — 下のボタンです</span>`
+    ],
+    cStatus:{read:'読み取り中…',sketch:'設計中…',done:'完了 — 次は人間'},
+    obs:{
+      time:(s,v)=>`滞在時間: <b>${s}秒</b> — ${v}`, timeV:['本気ですね。いいです','興味津々','テンポよく'],
+      moved:(k,v)=>`カーソル移動: <b>${k}k px</b> — ${v}`, movedV:['探検家タイプ','無駄がない'],
+      clicks:(c,v)=>`操作回数: <b>${c}</b> — ${v}`, clicksV:['手を動かす。作る人の気配','まず見て、後で触る派'],
+      hold:(s,v)=>`最初のアイデアを <b>${s}秒</b> 長押し — ${v}`, holdV:['辛抱強い','せっかち'],
+      stamps:c=>`押したスタンプ: <b>${c}</b> — 判定：コーヒー党`,
+      priv:'<span class="priv">— これらはすべてブラウザ内に留まります。これがあなたの事業を見ていたら、と想像してください。</span>'
+    },
+    toastScroll:'何もないところから · スクロールを — 続きは私たちが作ります',
+    toastKeys:'サウンド M · テキスト版 P · このサイト自体がポートフォリオ'
+  }
+};
+
+/* cache English originals once */
+function i18nCache(){
+  Object.keys(I18N_S).forEach(sel=>{ $$(sel).forEach(el=>{ if(el.__en==null) el.__en=el.innerHTML; }); });
+  $$(I18N_TSEL).forEach(el=>{ if(el.__en==null) el.__en=el.innerHTML; });
+}
+function setLang(lang){
+  window.LANG = (lang==='ja')?'ja':'en';
+  const ja = window.LANG==='ja';
+  document.documentElement.lang = window.LANG;
+  Object.keys(I18N_S).forEach(sel=>{ $$(sel).forEach(el=>{ el.innerHTML = ja ? I18N_S[sel] : el.__en; }); });
+  $$(I18N_TSEL).forEach(el=>{ const k=(el.__en||'').trim(); el.innerHTML = ja ? (I18N_T[k]!=null?I18N_T[k]:el.__en) : el.__en; });
+  /* #reach: keep the live <b id="reachnum"> counter, swap only the label text node */
+  const reach=$('#reach'); if(reach && reach.firstChild) reach.firstChild.textContent = ja?'リーチした人数':'people reached';
+  /* sound button reflects state + language */
+  const sb=$('#btn-sound'); if(sb){ const on=sb.getAttribute('aria-pressed')==='true'; sb.textContent = ja?(on?'サウンド ON':'サウンド OFF'):(on?'sound on':'sound off'); }
+  /* lang button shows the OTHER language */
+  const lb=$('#btn-lang'); if(lb){ lb.textContent = ja?'EN':'日本語'; lb.setAttribute('aria-pressed', ja); }
+  /* let live demos re-render in the new language */
+  window.__reloc.forEach(fn=>{ try{ fn(); }catch(e){} });
+  try{ localStorage.setItem('ca-lang', window.LANG); }catch(e){}
+}
+$('#btn-lang').addEventListener('click', () => { AUDIO.click(); setLang(window.LANG==='ja'?'en':'ja'); });
+
 /* ── lights on ── */
+i18nCache();
+try{ setLang(localStorage.getItem('ca-lang') === 'ja' ? 'ja' : 'en'); }catch(e){}
 buildDots();
 igniteSetup();
 runBoot();
