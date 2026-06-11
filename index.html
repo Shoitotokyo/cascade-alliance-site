@@ -218,9 +218,12 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 #obslines b{color:var(--tint);font-weight:600}
 #obslines .priv{color:var(--faint);font-size:9.5px;letter-spacing:.08em}
 #reviewbox{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:rgba(8,9,13,.7)}
-#review-in{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;
-  font-family:var(--mono);font-size:12px;padding:12px;color:var(--ink);resize:none;height:64px;line-height:1.55}
-#review-in:focus{border-color:var(--tint);outline:none}
+#review-demo{position:relative;width:100%;min-height:66px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;
+  font-family:var(--mono);font-size:12px;padding:11px 12px;color:var(--ink);line-height:1.6}
+#review-demo .rv-lab{display:block;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+#review-text{color:rgba(242,244,248,.92)}
+#review-caret{display:inline-block;width:7px;height:13px;background:var(--tint);vertical-align:-2px;margin-left:1px;animation:blink .9s steps(1) infinite;opacity:0}
+#review-caret.on{opacity:1}
 #review-row{display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap}
 #meter{flex:1;min-width:120px;height:4px;border-radius:4px;background:linear-gradient(90deg,#ff6e7a,rgba(255,255,255,.18),#9dffb0);position:relative}
 #needle{position:absolute;top:50%;left:50%;width:11px;height:11px;border-radius:50%;background:#fff;
@@ -231,10 +234,11 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 
 /* ---------- act 4 : the identity machine ---------- */
 #brandlab{display:grid;gap:16px}
-#brandform{display:flex;gap:10px;flex-wrap:wrap}
-#brand-in{flex:1;min-width:180px;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.3);
-  font-size:clamp(18px,2.4vw,26px);font-weight:700;letter-spacing:-.01em;padding:8px 2px;color:var(--ink)}
-#brand-in:focus{outline:none;border-color:var(--tint)}
+#brandgen-row{display:flex;align-items:baseline;gap:12px;border-bottom:1px solid rgba(255,255,255,.18);padding:6px 2px 11px;min-height:40px}
+#brandgen-row .bg-lab{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--faint);flex:none}
+#brandgen-name{font-size:clamp(18px,2.4vw,26px);font-weight:800;letter-spacing:-.01em;color:var(--ink)}
+#brandgen-caret{display:inline-block;width:8px;height:17px;background:var(--tint);align-self:center;animation:blink .9s steps(1) infinite;opacity:0}
+#brandgen-caret.on{opacity:1}
 #brandcard{border-radius:18px;padding:clamp(20px,3vw,34px);background:#F4F1EA;color:#101113;display:grid;
   grid-template-columns:auto 1fr;gap:clamp(16px,3vw,30px);align-items:center;
   box-shadow:0 30px 80px -30px rgba(0,0,0,.8);transition:transform .5s var(--ease)}
@@ -250,12 +254,21 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 #brand-note{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 
 /* ---------- act 5 : growth ---------- */
-#growthstage{display:grid;gap:14px;width:100%}
+#growthstage{display:grid;gap:12px;width:100%}
+#g-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.g-card{position:relative;border:1px solid var(--line);border-radius:14px;background:rgba(8,9,13,.6);padding:13px 15px;overflow:hidden;min-height:84px}
+.g-card>.g-lab,.g-card>.g-val,.g-card>.g-sub{position:relative;z-index:1}
+.g-lab{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.g-val{font-size:clamp(19px,2.8vw,30px);font-weight:800;letter-spacing:-.02em;margin-top:6px;color:var(--ink);font-variant-numeric:tabular-nums;line-height:1}
+.g-sub{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--tint);margin-top:5px;text-transform:uppercase}
+.g-spark{position:absolute;left:0;bottom:0;width:100%;height:46px;opacity:.65;pointer-events:none;z-index:0}
 #netwrap{position:relative;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(8,9,13,.6)}
-#net{display:block;width:100%;height:min(44vh,380px);cursor:crosshair}
-#reach{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase}
-#reach b{display:block;font-size:clamp(22px,3vw,34px);letter-spacing:0;color:var(--ink);font-family:var(--sans);font-weight:800;margin-top:2px}
-#nethint{position:absolute;bottom:12px;right:16px;font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase}
+#net{display:block;width:100%;height:min(38vh,320px)}
+#reach{position:absolute;top:14px;left:16px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;z-index:2}
+#reach b{display:block;font-size:clamp(22px,3vw,34px);letter-spacing:0;color:var(--ink);font-family:var(--sans);font-weight:800;margin-top:2px;font-variant-numeric:tabular-nums}
+#nethint{position:absolute;bottom:12px;right:16px;font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;z-index:2}
+#buzz{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.bz{position:absolute;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--tint);opacity:0;white-space:nowrap;text-shadow:0 0 10px rgba(82,227,146,.5);will-change:transform,opacity}
 
 /* ---------- act 6 : the studio ---------- */
 #whostage .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:26px}
@@ -266,11 +279,13 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);overflow:hidden;box-shadow:0 40px 120px -40px rgba(0,0,0,.9)}
 #console .panehead{justify-content:space-between}
 #consolebody{padding:clamp(18px,3vw,30px)}
-#ideaform{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
-#idea-in{flex:1;min-width:220px;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,.3);
-  font-family:var(--mono);font-size:clamp(13px,1.6vw,16px);padding:10px 2px;color:var(--ink);line-height:1.5}
-#idea-in:focus{outline:none;border-color:var(--tint)}
-#idea-in::placeholder,#brand-in::placeholder,#review-in::placeholder{color:var(--faint)}
+#idea-line{display:flex;align-items:baseline;gap:8px;font-family:var(--mono);font-size:clamp(13px,1.6vw,16px);
+  border-bottom:1px solid rgba(255,255,255,.22);padding:10px 2px;color:var(--ink);line-height:1.55;min-height:42px}
+#idea-line .prompt{color:var(--tint);font-weight:700;flex:none}
+#idea-text{color:var(--ink)}
+#idea-caret{display:inline-block;width:8px;height:15px;background:var(--tint);align-self:center;animation:blink .9s steps(1) infinite;opacity:0}
+#idea-caret.on{opacity:1}
+#blueprint .bp-line{will-change:opacity,transform}
 #blueprint{margin-top:22px;font-family:var(--mono);font-size:clamp(10.5px,1.25vw,12.5px);line-height:2.05;color:var(--dim);
   white-space:pre-wrap;min-height:40px;display:none}
 #blueprint b{color:var(--ink);font-weight:600}
@@ -455,14 +470,13 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
         <div id="obslines"><span class="priv">observing…</span></div>
       </div>
       <div id="reviewbox">
-        <h4 id="review-h">give it a customer review — watch it respond</h4>
-        <textarea id="review-in" rows="2" placeholder="e.g. waited 20 minutes and my coffee was cold, but staff were lovely"></textarea>
+        <h4 id="review-h">a real customer review — read, judged, answered</h4>
+        <div id="review-demo"><span class="rv-lab">incoming review</span><span id="review-text"></span><span id="review-caret"></span></div>
         <div id="review-row">
-          <button class="pill" id="review-go" style="padding:10px 18px">analyze</button>
           <div id="meter"><div id="needle"></div></div>
           <div id="verdict">—</div>
         </div>
-        <div id="reply"><span class="tag">drafted reply · generated in your browser</span><span id="replytext">It reads. It judges. It writes back — politely.</span></div>
+        <div id="reply"><span class="tag">drafted reply · written live, in your browser</span><span id="replytext"></span></div>
       </div>
     </div>
   </div></div>
@@ -478,10 +492,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
       <div class="svc reveal"><b>brand development</b> — naming · logos · identity systems</div>
     </div>
     <div class="demo" id="brandlab">
-      <div id="brandform">
-        <input id="brand-in" maxlength="18" placeholder="your company" autocomplete="off" spellcheck="false">
-        <button class="pill ghost" id="brand-again" style="padding:11px 18px">another direction</button>
-      </div>
+      <div id="brandgen-row"><span class="bg-lab">generating identity</span><span id="brandgen-name"></span><span id="brandgen-caret"></span></div>
       <div id="brandcard">
         <div id="markwrap"><canvas id="mark" width="240" height="240"></canvas></div>
         <div>
@@ -494,7 +505,7 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
           </div>
         </div>
       </div>
-      <div id="brand-note" class="note"><span>every identity on this screen is generated live — none of it existed a second ago</span></div>
+      <div id="brand-note" class="note"><span>every mark, palette and voice here is generated live — a fresh identity every few hundred pixels you scroll</span></div>
     </div>
   </div></div>
 </section>
@@ -508,10 +519,29 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
       <p class="lede reveal" style="margin-inline:auto">One customer tells two. Two tell four. Launch plans, content systems, social channels — what we build for you gets seen. Keep scrolling: this is your word of mouth.</p>
     </div>
     <div id="growthstage">
+      <div id="g-metrics">
+        <div class="g-card">
+          <div class="g-lab">monthly revenue</div>
+          <div class="g-val" id="g-rev">$0</div>
+          <div class="g-sub" id="g-revsub">launch</div>
+          <canvas id="g-spark" class="g-spark"></canvas>
+        </div>
+        <div class="g-card">
+          <div class="g-lab">followers</div>
+          <div class="g-val" id="g-fol">0</div>
+          <div class="g-sub" id="g-folsub">+0 / day</div>
+        </div>
+        <div class="g-card">
+          <div class="g-lab">engagements</div>
+          <div class="g-val" id="g-eng">0</div>
+          <div class="g-sub">likes · shares · saves</div>
+        </div>
+      </div>
       <div id="netwrap">
         <canvas id="net"></canvas>
         <div id="reach">people reached<b id="reachnum">1</b></div>
-        <div id="nethint">tap anywhere to boost</div>
+        <div id="nethint">word of mouth · keep scrolling</div>
+        <div id="buzz" aria-hidden="true"></div>
       </div>
       <div class="svc reveal" style="text-align:center;margin-top:0"><b>marketing support</b> · launches, campaigns, content &nbsp;—&nbsp; <b>social media support</b> · systems that keep working</div>
     </div>
@@ -545,14 +575,10 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
     <div id="console" class="reveal">
       <div class="panehead"><span>cascade / studio-engine</span><span id="console-status">ready</span></div>
       <div id="consolebody">
-        <div id="ideaform">
-          <input id="idea-in" placeholder="e.g. people should be able to book my barbershop from their phone" autocomplete="off" spellcheck="false">
-          <button class="pill hot" id="idea-go">make it real</button>
-        </div>
+        <div id="idea-line"><span class="prompt">&gt;</span><span id="idea-text"></span><span id="idea-caret"></span></div>
         <div id="blueprint"></div>
         <div id="bp-actions">
-          <a class="pill hot" id="bp-send" href="#">send blueprint to a human</a>
-          <button class="pill ghost" id="bp-copy">copy</button>
+          <a class="pill hot" id="bp-send" href="mailto:contact@cascade-alliance.com?subject=Let%27s%20make%20it%20real">send this to a human</a>
           <span class="alt">or simply write to <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a> — we reply within 24h</span>
         </div>
       </div>
@@ -921,9 +947,13 @@ function buildShapes(){
 
   /* the wordmark */
   SHAPES.word = from2D(samplePoints(1280, 300, 360, (x, w, h) => {
-    x.font = '900 190px "Arial Black", Arial, sans-serif';
+    const label = 'Cascade Alliance';
+    let fs = 190;
+    x.font = '900 ' + fs + 'px "Arial Black", Arial, sans-serif';
+    /* auto-fit: shrink until the whole name sits inside the canvas (no clipped edges) */
+    while(x.measureText(label).width > w * 0.9 && fs > 20){ fs -= 3; x.font = '900 ' + fs + 'px "Arial Black", Arial, sans-serif'; }
     x.textAlign = 'center'; x.textBaseline = 'middle';
-    x.fillText('Cascade Alliance', w/2, h/2 + 8);
+    x.fillText(label, w/2, h/2 + 8);
   }), 8, 1.1);
 
   /* act 1 — a phone */
@@ -1282,7 +1312,6 @@ function setChapter(i){
   if(!S.visited.has(i)){
     S.visited.add(i);
     if(i === 3 && DEMO.observerStart) DEMO.observerStart();
-    if(i === 4 && DEMO.brandInit) DEMO.brandInit();
   }
 }
 
@@ -1358,21 +1387,23 @@ function initScrollExperience(){
 
   /* ── act 3 · ai ── */
   {
-    const tl = gsap.timeline({ scrollTrigger: pin('#ch-ai', 200) });
+    const tl = gsap.timeline({ scrollTrigger: pin('#ch-ai', 320) });
     addReveals(tl, '#ch-ai', .02);
-    tl.fromTo('#observer', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: .16, ease: 'power2.out' }, .1);
-    tl.fromTo('#reviewbox', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: .16, ease: 'power2.out' }, .2);
-    tl.to({}, { duration: .5 });
+    tl.fromTo('#observer', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: .14, ease: 'power2.out' }, .06);
+    tl.fromTo('#reviewbox', { y: 70, opacity: 0 }, { y: 0, opacity: 1, duration: .14, ease: 'power2.out' }, .14);
+    tl.to({}, { duration: 1 });
+    tl.eventCallback('onUpdate', () => { if(DEMO.aiSet) DEMO.aiSet(clamp((tl.progress() - .22) / .74, 0, 1)); });
   }
 
   /* ── act 4 · brand ── */
   {
-    const tl = gsap.timeline({ scrollTrigger: pin('#ch-brand', 200) });
+    const tl = gsap.timeline({ scrollTrigger: pin('#ch-brand', 340) });
     addReveals(tl, '#ch-brand', .02);
-    tl.fromTo('#brandform', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .14 }, .12);
-    tl.fromTo('#brandcard', { y: 80, opacity: 0, rotateX: 14 }, { y: 0, opacity: 1, rotateX: 0, duration: .2, ease: 'power2.out' }, .2);
-    tl.fromTo('#brand-note', { opacity: 0 }, { opacity: 1, duration: .1 }, .4);
-    tl.to({}, { duration: .5 });
+    tl.fromTo('#brandgen-row', { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: .12 }, .08);
+    tl.fromTo('#brandcard', { y: 80, opacity: 0, rotateX: 14 }, { y: 0, opacity: 1, rotateX: 0, duration: .16, ease: 'power2.out' }, .16);
+    tl.fromTo('#brand-note', { opacity: 0 }, { opacity: 1, duration: .1 }, .3);
+    tl.to({}, { duration: 1 });
+    tl.eventCallback('onUpdate', () => { if(DEMO.brandSet) DEMO.brandSet(clamp((tl.progress() - .2) / .76, 0, 1)); });
   }
 
   /* ── act 5 · growth — the network spreads ── */
@@ -1395,9 +1426,10 @@ function initScrollExperience(){
 
   /* ── final act · console ── */
   {
-    const tl = gsap.timeline({ scrollTrigger: pin('#ch-console', 180) });
+    const tl = gsap.timeline({ scrollTrigger: pin('#ch-console', 320) });
     addReveals(tl, '#ch-console', .04);
-    tl.to({}, { duration: .6 });
+    tl.to({}, { duration: 1 });
+    tl.eventCallback('onUpdate', () => { if(DEMO.consoleSet) DEMO.consoleSet(clamp((tl.progress() - .14) / .82, 0, 1)); });
   }
 
   /* ── end ── */
@@ -1675,26 +1707,29 @@ $('#wordmark').addEventListener('click', () => { location.hash = ''; scrollTo({ 
     if(score > -3)  return `You're right, and we're sorry about ${topic} — that's not the standard we hold. Your next visit is covered; show this reply at the counter. We'll do better.`;
     return `That's well below our bar and we apologize. The owner will reach out about ${topic} personally today — and your next order is on the house.`;
   }
-  const needle = $('#needle'), verdict = $('#verdict'), replyEl = $('#replytext');
-  $('#review-go').addEventListener('click', () => {
-    let text = $('#review-in').value.trim();
-    if(!text){ text = $('#review-in').placeholder.replace(/^e\.g\.\s*/, ''); $('#review-in').value = text; }
-    AUDIO.click();
-    const { score, topic } = analyze(text);
-    const pct = clamp(50 + score * 13, 8, 92);
-    needle.style.left = pct + '%';
-    verdict.textContent = score > 1.5 ? 'glowing' : score > 0 ? 'positive' : score === 0 ? 'neutral' : score > -3 ? 'needs care' : 'fire alarm';
-    const r = reply(Math.round(score), topic);
-    replyEl.textContent = '';
-    let i = 0;
-    (function type(){
-      if(i <= r.length){
-        replyEl.textContent = r.slice(0, i++);
-        if(i % 4 === 0) AUDIO.tick();
-        setTimeout(type, RM ? 2 : 14);
-      } else if(score > 0) AUDIO.chime();
-    })();
-  });
+  const needle = $('#needle'), verdict = $('#verdict'), replyEl = $('#replytext'),
+        reviewEl = $('#review-text'), rvCaret = $('#review-caret');
+  /* a real-feeling, curated review the page reads, scores and answers as you scroll.
+     Every frame is a pure function of progress p, so it plays and rewinds with scroll. */
+  const REVIEW = 'Waited almost 20 minutes for a flat white and it came lukewarm — but the staff were so warm and kind about it that I’ll still be back.';
+  const REPLY  = 'You’re right about the wait, and we’re sorry — lukewarm isn’t our standard. Thank you for being so kind about it. Your next flat white is on us: just show this note. We’ve already put a second machine on the morning rush.';
+  const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
+  let lastTick3 = 0;
+  DEMO.aiSet = function(p){
+    /* phase 1 — the review types itself in */
+    const s1 = seg(p, 0, .46);
+    const rc = Math.round(s1 * REVIEW.length);
+    reviewEl.textContent = REVIEW.slice(0, rc);
+    rvCaret.classList.toggle('on', s1 > 0 && s1 < 1);
+    /* phase 2 — it judges (needle sweeps to a curated, mixed verdict) */
+    const s2 = seg(p, .46, .6);
+    needle.style.left = lerp(50, 39, s2) + '%';
+    verdict.textContent = s1 < 1 ? '—' : s2 < .5 ? 'analysing…' : 'needs care';
+    /* phase 3 — it writes back, politely */
+    const s3 = seg(p, .62, 1);
+    replyEl.textContent = REPLY.slice(0, Math.round(s3 * REPLY.length));
+    if(S.chapter === 3 && ((s1 > 0 && s1 < 1) || (s3 > 0 && s3 < 1)) && performance.now() - lastTick3 > 55){ AUDIO.tick(); lastTick3 = performance.now(); }
+  };
 })();
 
 /* ════════════════════════════════════════════════════════════
@@ -1783,9 +1818,8 @@ function hslHex(h, s, l){
     }
   }
 
-  function gen(){
-    const name = ($('#brand-in').value.trim() || 'Your Company');
-    const h = hashStr(name.toLowerCase() + '·' + salt);
+  function genFor(name){
+    const h = hashStr(name.toLowerCase());
     const rnd = mulberry32(h);
     const hue = h % 360;
     const c1 = hslHex(hue, 64, 58);
@@ -1806,89 +1840,140 @@ function hslHex(h, s, l){
       $('#chip3').textContent = font.n;
       drawMark(rnd, c1, c2);
       card.classList.remove('flip');
-      AUDIO.pop(3);
-    }, 180);
+      if(S.chapter === 4) AUDIO.pop(3);
+    }, 160);
   }
 
-  let deb = null, inited = false;
-  $('#brand-in').addEventListener('input', () => { clearTimeout(deb); deb = setTimeout(gen, 350); });
-  $('#brand-again').addEventListener('click', () => { salt++; AUDIO.click(); gen(); });
-  DEMO.brandInit = () => { if(!inited){ inited = true; gen(); } };
+  /* scroll-driven: the studio names & re-brands a series of companies as you scroll.
+     Each name hashes to one deterministic identity, so scrolling back rewinds it. */
+  const NAMES_B = ['ORBIT', 'EMBER', 'JUNIPER', 'HARBOR', 'LUMEN', 'NOVA', 'CEDAR', 'ATLAS'];
+  const nameEl = $('#brandgen-name'), bcaret = $('#brandgen-caret');
+  let curIdx = -1;
+  DEMO.brandSet = function(p){
+    const fp = clamp(p, 0, .9999) * NAMES_B.length;
+    const idx = Math.floor(fp), local = fp - idx, name = NAMES_B[idx];
+    const nc = Math.round(clamp(local / .34, 0, 1) * name.length);
+    nameEl.textContent = name.slice(0, nc);
+    bcaret.classList.toggle('on', nc < name.length);
+    if(idx !== curIdx){ curIdx = idx; genFor(name); }
+  };
 })();
 
-/* ── act 5 · word of mouth, simulated ── */
+/* ── act 5 · growth — word of mouth + revenue + social buzz ──
+   Everything below is a PURE FUNCTION of scroll progress P, so the whole
+   thing plays forward and reverses cleanly when you scroll back up. */
 (function(){
   const cv = $('#net'), cx = cv.getContext('2d');
-  let Wp = 0, Hp = 0, DPR2 = Math.min(devicePixelRatio || 1, 2);
+  const spark = $('#g-spark'), sx = spark.getContext('2d');
+  let Wp = 0, Hp = 0, SWp = 0, SHp = 0, DPR2 = Math.min(devicePixelRatio || 1, 2);
   function size(){
     const r = cv.getBoundingClientRect();
-    if(!r.width) return;
-    Wp = r.width; Hp = r.height;
-    cv.width = Wp * DPR2; cv.height = Hp * DPR2;
-    cx.setTransform(DPR2, 0, 0, DPR2, 0, 0);
+    if(r.width){ Wp = r.width; Hp = r.height; cv.width = Wp*DPR2; cv.height = Hp*DPR2; cx.setTransform(DPR2,0,0,DPR2,0,0); }
+    const s = spark.getBoundingClientRect();
+    if(s.width){ SWp = s.width; SHp = s.height; spark.width = SWp*DPR2; spark.height = SHp*DPR2; sx.setTransform(DPR2,0,0,DPR2,0,0); }
   }
   addEventListener('resize', size);
-  const nodes = [{ x: .18, y: .55, r: 7, b: 0 }];
-  let target = 1, t = 0;
-  const MAXN = MOBILE ? 80 : 140;
 
-  DEMO.growthSet = p => { target = 1 + Math.floor(Math.pow(p, 1.6) * MAXN); };
-
-  function spawn(nearIdx){
-    if(nodes.length >= MAXN * 1.4) return;
-    const p = nodes[nearIdx != null ? nearIdx : Math.floor(Math.pow(Math.random(), .5) * nodes.length)];
-    const a = Math.random() * Math.PI * 2, d = .05 + Math.random() * .14;
-    nodes.push({
-      x: clamp(p.x + Math.cos(a) * d, .04, .96),
-      y: clamp(p.y + Math.sin(a) * d * 1.4, .07, .93),
-      r: Math.max(1.6, p.r * .82), b: t, parent: nodes.indexOf(p)
+  /* a deterministic, seeded spreading tree — generated once. We only ever
+     DRAW the first f(P) of these, so scrolling back literally un-spreads it. */
+  const MAXN = MOBILE ? 90 : 150;
+  const rnd = mulberry32(20260611);
+  const NODES = [{ x:.15, y:.5, r:7, parent:-1 }];
+  while(NODES.length < MAXN){
+    const pIdx = Math.floor(Math.pow(rnd(), .55) * NODES.length);
+    const par = NODES[pIdx];
+    const a = rnd()*Math.PI*2, d = .045 + rnd()*.12;
+    NODES.push({
+      x: clamp(par.x + Math.cos(a)*d + .015, .04, .97),
+      y: clamp(par.y + Math.sin(a)*d*1.5, .07, .93),
+      r: Math.max(1.7, par.r*.85), parent: pIdx
     });
   }
-  cv.addEventListener('pointerdown', e => {
-    const r = cv.getBoundingClientRect();
-    const px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-    let best = 0, bd = 9;
-    nodes.forEach((n, i) => { const d = Math.hypot(n.x - px, n.y - py); if(d < bd){ bd = d; best = i; } });
-    for(let k = 0; k < 6; k++) spawn(best);
-    AUDIO.pop(4);
-  });
 
-  const reachEl = $('#reachnum');
+  let P = 0;
+  DEMO.growthSet = p => { P = clamp(p, 0, 1); };
+
+  /* social buzz bubbles — ambient flourish emitted while spreading forward */
+  const BUZZ = ['+1 ♥','↗ shared','+1 follow','saved ★','reposted','+1 ♥','↗','+1 ♥','viral ↗'];
+  const buzzWrap = $('#buzz'), bubbles = [];
+  function emitBuzz(){
+    if(bubbles.length > (MOBILE?9:16)) return;
+    const el = document.createElement('div');
+    el.className = 'bz';
+    el.textContent = BUZZ[(rnd()*BUZZ.length)|0];
+    el.style.left = (10 + rnd()*78) + '%';
+    el.style.bottom = (6 + rnd()*34) + '%';
+    buzzWrap.appendChild(el);
+    bubbles.push({ el, t:0, life: 80 + rnd()*45, drift: rnd()*44-22 });
+  }
+
+  const reachEl=$('#reachnum'), revEl=$('#g-rev'), folEl=$('#g-fol'), engEl=$('#g-eng'),
+        revSub=$('#g-revsub'), folSub=$('#g-folsub');
+  const fmt = n => Math.round(n).toLocaleString('en-US');
+  const STAGES = ['launch','traction','word of mouth','going viral'];
+
   let netVis = false;
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(en => { netVis = en[0].isIntersecting; }).observe(cv);
-  } else netVis = true;
+  if('IntersectionObserver' in window){ new IntersectionObserver(en => { netVis = en[0].isIntersecting; }).observe($('#growthstage')); }
+  else netVis = true;
+
+  let t = 0, shownPrev = 1;
   function loop(){
     requestAnimationFrame(loop);
-    if(document.hidden || !netVis) return;
-    if(!Wp) size();
+    if(document.hidden || !netVis){ shownPrev = 1; return; }
+    if(!Wp || !SWp) size();
+    if(!Wp) return;
     t++;
-    if(nodes.length < target) { spawn(); if(nodes.length < target) spawn(); if(S.chapter === 5 && t % 9 === 0) AUDIO.tick(); }
-    cx.clearRect(0, 0, Wp, Hp);
-    /* edges */
-    cx.strokeStyle = 'rgba(82,227,146,.16)';
-    cx.lineWidth = 1;
-    cx.beginPath();
-    nodes.forEach(n => {
-      if(n.parent != null){
-        const p = nodes[n.parent];
-        cx.moveTo(p.x * Wp, p.y * Hp); cx.lineTo(n.x * Wp, n.y * Hp);
-      }
-    });
+
+    const shown = 1 + Math.floor(Math.pow(P, 1.35) * (MAXN - 1));
+
+    /* ---- the network ---- */
+    cx.clearRect(0,0,Wp,Hp);
+    cx.strokeStyle = 'rgba(82,227,146,.16)'; cx.lineWidth = 1; cx.beginPath();
+    for(let i=1;i<shown;i++){ const n=NODES[i], pa=NODES[n.parent]; cx.moveTo(pa.x*Wp,pa.y*Hp); cx.lineTo(n.x*Wp,n.y*Hp); }
     cx.stroke();
-    /* nodes */
-    nodes.forEach((n, i) => {
-      const age = clamp((t - n.b) / 30, 0, 1);
-      const wob = Math.sin(t * .03 + i) * 1.2;
-      const R = Math.max(.2, (n.r + (i === 0 ? 2 : 0)) * age + wob * .2);
-      const x = n.x * Wp, y = n.y * Hp;
-      cx.fillStyle = 'rgba(82,227,146,.13)';
-      cx.beginPath(); cx.arc(x, y, R * 2.6, 0, 6.29); cx.fill();
-      cx.fillStyle = i === 0 ? '#bfffd9' : 'rgba(140,255,180,.92)';
-      cx.beginPath(); cx.arc(x, y, R, 0, 6.29); cx.fill();
-    });
-    const reach = Math.floor(Math.pow(nodes.length, 2.18) * 1.7);
-    reachEl.textContent = reach.toLocaleString('en-US');
+    for(let i=0;i<shown;i++){ const n=NODES[i];
+      const edge = clamp((shown - i)/12, 0, 1);              /* frontier nodes fade in */
+      const R = Math.max(.4, (n.r + (i===0?2.4:0))*edge + Math.sin(t*.03+i)*.22);
+      const x=n.x*Wp, y=n.y*Hp;
+      cx.fillStyle='rgba(82,227,146,.12)'; cx.beginPath(); cx.arc(x,y,R*2.7,0,6.29); cx.fill();
+      cx.fillStyle= i===0 ? '#bfffd9' : 'rgba(140,255,180,.92)'; cx.beginPath(); cx.arc(x,y,R,0,6.29); cx.fill();
+    }
+
+    /* ---- metrics: pure functions of P ---- */
+    reachEl.textContent = fmt(Math.pow(shown, 2.16) * 1.7);
+    revEl.textContent   = '$' + fmt(Math.pow(P, 2.0) * 248000);
+    revSub.textContent  = STAGES[Math.min(3, Math.floor(P*3.999))];
+    folEl.textContent   = fmt(Math.pow(P, 1.7) * 128000);
+    folSub.textContent  = '+' + fmt(Math.pow(P, 2.4) * 4200) + ' / day';
+    engEl.textContent   = fmt(Math.pow(P, 1.9) * 940000);
+
+    /* ---- revenue sparkline, drawn up to P ---- */
+    if(SWp){
+      sx.clearRect(0,0,SWp,SHp);
+      const curve = fx => SHp - (Math.pow(fx,2.0)*SHp*.9) - 2 + Math.sin(fx*16)*1.1;
+      const steps = 48, lastX = Math.min(P,1)*SWp;
+      sx.beginPath(); sx.moveTo(0, curve(0));
+      for(let i=1;i<=steps;i++){ const fx=i/steps; if(fx>P) break; sx.lineTo(fx*SWp, curve(fx)); }
+      sx.lineTo(lastX, SHp); sx.lineTo(0, SHp); sx.closePath();
+      const g = sx.createLinearGradient(0,0,0,SHp); g.addColorStop(0,'rgba(82,227,146,.5)'); g.addColorStop(1,'rgba(82,227,146,0)');
+      sx.fillStyle=g; sx.fill();
+      sx.strokeStyle='rgba(150,255,188,.95)'; sx.lineWidth=1.6;
+      sx.beginPath(); sx.moveTo(0, curve(0));
+      for(let i=1;i<=steps;i++){ const fx=i/steps; if(fx>P) break; sx.lineTo(fx*SWp, curve(fx)); }
+      sx.stroke();
+    }
+
+    /* ---- buzz only while spreading forward (high P) ---- */
+    if(P > .26 && shown > shownPrev){
+      if(((shown - shownPrev) + (t & 1)) >= (MOBILE?3:2)){ emitBuzz(); if(S.chapter===5 && t%5===0) AUDIO.tick(); }
+    }
+    shownPrev = shown;
+    for(let i=bubbles.length-1;i>=0;i--){ const b=bubbles[i]; b.t++;
+      const f=b.t/b.life;
+      b.el.style.opacity = (f<.15 ? f/.15 : f>.7 ? (1-f)/.3 : 1) * .9;
+      b.el.style.transform = 'translate('+(b.drift*f)+'px,'+(-66*f)+'px)';
+      if(b.t>=b.life){ b.el.remove(); bubbles.splice(i,1); }
+    }
   }
   loop();
 })();
@@ -1903,8 +1988,8 @@ function hslHex(h, s, l){
     { k: /\b(market|marketing|customer|customers|grow|growth|social|instagram|tiktok|ads|launch|audience|followers)\b/, v: 'a launch & growth engine' }
   ];
   const NAMES = ['EMBER', 'ATLAS', 'ORBIT', 'JUNIPER', 'SIGNAL', 'MAPLE', 'NOVA', 'HARBOR', 'LUMEN', 'CEDAR', 'COMET', 'FABLE'];
-  const input = $('#idea-in'), bp = $('#blueprint'), actions = $('#bp-actions'), status = $('#console-status');
-  let busy = false;
+  const bp = $('#blueprint'), actions = $('#bp-actions'), status = $('#console-status');
+  const ideaEl = $('#idea-text'), icaret = $('#idea-caret');
 
   function plan(idea){
     const low = ' ' + idea.toLowerCase() + ' ';
@@ -1919,59 +2004,44 @@ function hslHex(h, s, l){
     };
   }
 
-  function run(){
-    const idea = input.value.trim();
-    if(!idea){ input.focus(); toast('one sentence — that’s how everything here started'); return; }
-    if(busy) return;
-    busy = true;
-    S.behavior.ideas++;
-    AUDIO.riser();
-    if(PART.ready) PART.burst(.5, 1.4);
-    status.textContent = 'reading…';
-    bp.classList.add('show'); actions.classList.remove('show'); actions.style.display = 'none';
-    bp.innerHTML = '';
-    const secs = Math.round((performance.now() - S.behavior.t0) / 1000);
-    const P = plan(idea);
-    const quoted = idea.length > 90 ? idea.slice(0, 87) + '…' : idea;
-    const LINES2 = [
-      `<span class="hl">BLUEPRINT №${P.id}</span> — generated <b>${secs}s</b> into your visit`,
-      `read         <b>“${quoted.replace(/</g, '&lt;')}”</b>`,
-      `we’d build   <b>${P.builds.join('</b> + <b>')}</b>`,
-      `phase 01     <b>SHAPE</b> — a clickable prototype you can react to <span class="hl">wk 1–2</span>`,
-      `phase 02     <b>BUILD</b> — working product, real data, real users <span class="hl">wk 3–6</span>`,
-      `phase 03     <b>LAUNCH</b> — ship it, measure it, make it spread <span class="hl">wk 7+</span>`,
-      `team         design × engineering × intelligence`,
-      `first demo   in your hands ~2 weeks after kickoff`,
-      `status       <span class="ok">WAITING FOR A HUMAN — that’s the button below</span>`
-    ];
-    let i = 0;
-    (function next(){
-      if(i < LINES2.length){
-        const d = document.createElement('div');
-        d.innerHTML = LINES2[i++];
-        bp.appendChild(d);
-        AUDIO.tick(); if(i === 3) status.textContent = 'sketching…';
-        setTimeout(next, RM ? 40 : 230);
-      } else {
-        status.textContent = 'done — humans next';
-        actions.style.display = 'flex'; actions.classList.add('show');
-        AUDIO.chime();
-        if(PART.ready) PART.burst(.35, 1.2);
-        const body = `Hi Cascade Alliance,%0A%0AYour studio engine sketched this while I was on the site:%0A%0A${encodeURIComponent(P.code)}%0AIdea: ${encodeURIComponent(idea)}%0ABuild: ${encodeURIComponent(P.builds.join(' + '))}%0A%0ALet's talk.%0A`;
-        $('#bp-send').href = `mailto:contact@cascade-alliance.com?subject=${encodeURIComponent(P.code + ' — make it real')}&body=${body}`;
-        $('#bp-copy').onclick = () => {
-          const txt = `${P.code}\nIdea: ${idea}\nBuild: ${P.builds.join(' + ')}\nvia cascade-alliance.com`;
-          (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject())
-            .then(() => toast('blueprint copied'))
-            .catch(() => toast('copy not available here — screenshot works too'));
-          AUDIO.click();
-        };
-        busy = false;
-      }
-    })();
-  }
-  $('#idea-go').addEventListener('click', run);
-  input.addEventListener('keydown', e => { if(e.key === 'Enter'){ run(); e.preventDefault(); } });
+  const IDEA = 'people should be able to book my barbershop from their phone — and never miss an appointment again';
+  const P0 = plan(IDEA);
+  const LINES2 = [
+    `<span class="hl">BLUEPRINT №${P0.id}</span> — sketched live, as you read`,
+    `read         <b>“${IDEA}”</b>`,
+    `we’d build   <b>${P0.builds.join('</b> + <b>')}</b>`,
+    `phase 01     <b>SHAPE</b> — a clickable prototype you can react to <span class="hl">wk 1–2</span>`,
+    `phase 02     <b>BUILD</b> — working product, real data, real users <span class="hl">wk 3–6</span>`,
+    `phase 03     <b>LAUNCH</b> — ship it, measure it, make it spread <span class="hl">wk 7+</span>`,
+    `team         design × engineering × intelligence`,
+    `first demo   in your hands ~2 weeks after kickoff`,
+    `status       <span class="ok">WAITING FOR A HUMAN — that’s the button below</span>`
+  ];
+  bp.classList.add('show');
+  bp.innerHTML = LINES2.map(l => '<div class="bp-line">' + l + '</div>').join('');
+  const lineEls = $$('#blueprint .bp-line');
+  lineEls.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(7px)'; el.style.transition = 'opacity .26s var(--ease), transform .26s var(--ease)'; });
+  $('#bp-send').href = 'mailto:contact@cascade-alliance.com?subject=' + encodeURIComponent(P0.code + ' — make it real') +
+    '&body=' + encodeURIComponent('Hi Cascade Alliance,\n\nYour studio engine sketched this on the site:\n\n' + P0.code + '\nBuild: ' + P0.builds.join(' + ') + '\n\nLet’s talk.\n');
+
+  /* scroll-driven: the sentence types itself, then the blueprint draws line by line */
+  const seg = (p, a, b) => clamp((p - a) / (b - a), 0, 1);
+  let shownLines = -1, lastTickC = 0;
+  DEMO.consoleSet = function(p){
+    const s1 = seg(p, 0, .3);
+    ideaEl.textContent = IDEA.slice(0, Math.round(s1 * IDEA.length));
+    icaret.classList.toggle('on', s1 > 0 && s1 < 1);
+    const n = Math.round(seg(p, .33, .9) * LINES2.length);
+    if(n !== shownLines){
+      lineEls.forEach((el, i) => { const on = i < n; el.style.opacity = on ? '1' : '0'; el.style.transform = on ? 'none' : 'translateY(7px)'; });
+      if(S.chapter === 7 && n > shownLines && performance.now() - lastTickC > 70){ AUDIO.tick(); lastTickC = performance.now(); }
+      shownLines = n;
+    }
+    status.textContent = s1 < 1 ? 'reading…' : n < LINES2.length ? 'sketching…' : 'done — humans next';
+    const cta = p > .9;
+    actions.classList.toggle('show', cta);
+    actions.style.display = cta ? 'flex' : 'none';
+  };
 })();
 
 /* ── the plain version ── */
