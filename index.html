@@ -168,9 +168,15 @@ h2.big em{font-style:normal;color:var(--tint);transition:color .8s}
 #scr-head{padding:18px 20px 8px}
 #scr-head .hi{font-size:11px;color:var(--dim);font-family:var(--mono);letter-spacing:.12em}
 #scr-head .nm{font-size:21px;font-weight:800;letter-spacing:-.02em;margin-top:4px}
-#scr-card{margin:10px 16px;border-radius:18px;padding:16px;background:linear-gradient(135deg,var(--tint),rgba(255,255,255,.12));color:#04060c}
-#scr-card .lab{font-family:var(--mono);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;opacity:.7}
-#scr-card .val{font-size:22px;font-weight:800;margin-top:3px;letter-spacing:-.02em}
+#scr-card{margin:12px 16px 6px;border-radius:20px;padding:15px 17px;color:#06100c;
+  background:linear-gradient(135deg,var(--tint),rgba(255,255,255,.4));
+  display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 12px 26px -14px var(--tint)}
+#scr-card .lab{font-family:var(--mono);font-size:8px;letter-spacing:.24em;text-transform:uppercase;opacity:.62}
+#scr-card .val{font-size:18px;font-weight:800;margin-top:3px;letter-spacing:-.02em;line-height:1.12}
+#scr-card .sub3{font-size:10px;opacity:.6;margin-top:4px}
+#scr-card .cup{position:relative;width:36px;height:32px;flex:none;opacity:.88}
+#scr-card .cup::before{content:"";position:absolute;left:2px;top:3px;width:22px;height:22px;background:#06100c;border-radius:3px 3px 9px 9px}
+#scr-card .cup::after{content:"";position:absolute;left:24px;top:7px;width:9px;height:11px;border:3px solid #06100c;border-left:none;border-radius:0 8px 8px 0}
 #stampzone{margin:6px 16px;padding:14px 16px 16px;border-radius:18px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.07)}
 #stampzone .lab{font-family:var(--mono);font-size:8.5px;letter-spacing:.2em;color:var(--dim);text-transform:uppercase;display:flex;justify-content:space-between}
 #stamps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}
@@ -521,9 +527,13 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   #scr-head{padding:7px 12px 3px}
   #scr-head .hi{font-size:8px}
   #scr-head .nm{font-size:14px}
-  #scr-card{margin:5px 10px;padding:8px 11px;border-radius:13px}
+  #scr-card{margin:5px 10px;padding:9px 12px;border-radius:14px}
   #scr-card .lab{font-size:7px}
   #scr-card .val{font-size:14px}
+  #scr-card .sub3{display:none}
+  #scr-card .cup{width:26px;height:23px}
+  #scr-card .cup::before{width:17px;height:17px;left:1px;top:2px}
+  #scr-card .cup::after{left:18px;top:6px;width:7px;height:9px;border-width:2.5px}
   #stampzone{margin:4px 10px;padding:8px 10px 9px;border-radius:13px}
   #stampzone .lab{font-size:7px}
   #stamps{grid-template-columns:repeat(8,1fr);gap:4px;margin-top:7px}
@@ -577,7 +587,6 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
 <nav class="chrome" id="ui-right">
   <button class="uibtn" id="btn-lang" aria-label="日本語に切り替え / switch language">日本語</button>
   <button class="uibtn" id="btn-sound" aria-pressed="true">sound on</button>
-  <button class="uibtn" id="btn-company">company</button>
   <button class="uibtn" id="btn-work">work</button>
   <button class="uibtn" id="btn-journal">journal</button>
   <button class="uibtn" id="btn-legal">legal</button>
@@ -620,8 +629,8 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
         <div id="livebadge">live</div>
         <div id="screen">
           <div class="pp" id="scr-status"><span>9:41</span><span>●●●●</span></div>
-          <div class="pp" id="scr-head"><div class="hi">GOOD MORNING</div><div class="nm">Punch · Coffee Club</div></div>
-          <div class="pp" id="scr-card"><div class="lab">your balance</div><div class="val">3 free drinks</div></div>
+          <div class="pp" id="scr-head"><div class="hi">good morning</div><div class="nm">Punch · Coffee Club</div></div>
+          <div class="pp" id="scr-card"><div class="cc-txt"><div class="lab">your reward</div><div class="val">Free flat white</div><div class="sub3">collect 8 stamps below</div></div><span class="cup" aria-hidden="true"></span></div>
           <div class="pp" id="stampzone">
             <div class="lab"><span>loyalty card</span><span id="stampcount">0 / 8</span></div>
             <div id="stamps"></div>
@@ -654,9 +663,9 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
           <div class="rb" id="bk-name">Daily Bread</div>
           <div class="rb" id="bk-sub">Sourdough, every morning. Corner of 5th &amp; Pine.</div>
           <div id="bk-menu">
-            <div class="rb bcard">Sourdough loaf<span class="bprice">$7</span></div>
-            <div class="rb bcard">Cardamom bun<span class="bprice">$4</span></div>
-            <div class="rb bcard">Flat white<span class="bprice">$4.5</span></div>
+            <div class="rb bcard">Sourdough loaf<span class="bprice">€7</span></div>
+            <div class="rb bcard">Cardamom bun<span class="bprice">€4</span></div>
+            <div class="rb bcard">Flat white<span class="bprice">€4.5</span></div>
           </div>
           <button class="rb" id="bk-cta">Order for pickup</button>
         </div></div>
@@ -738,9 +747,9 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
           <canvas id="g-spark" class="g-spark"></canvas>
         </div>
         <div class="g-card">
-          <div class="g-lab">followers</div>
+          <div class="g-lab">content views</div>
           <div class="g-val" id="g-fol">0</div>
-          <div class="g-sub" id="g-folsub">+0 / day</div>
+          <div class="g-sub" id="g-folsub">this month</div>
         </div>
         <div class="g-card">
           <div class="g-lab">engagements</div>
@@ -878,48 +887,6 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
       </div>
     </div>
     <div class="ov-sec"><button class="pill ghost" id="ov-return" data-close>↩ return to the experience</button></div>
-  </div>
-</div>
-
-<!-- ═══════════ COMPANY ═══════════ -->
-<div id="overlay-company" class="ovl" role="dialog" aria-modal="true" aria-label="Company information">
-  <div class="ovl-inner">
-    <button class="ovl-close">close × (esc)</button>
-    <h3>Cascade Alliance</h3>
-    <div class="sub">company information</div>
-    <div class="ov-sec">
-      <h5>what we believe</h5>
-      <p class="who">Most small and medium businesses get quoted out of the software they actually need — the real app, the website that converts, a social presence that compounds. We exist to close that gap. Newer tools and senior, experienced hands let us build to a standard that beats the expensive shops, and price it where a small business can say yes. Premium work, market-breaking price — on purpose.</p>
-    </div>
-    <div class="ov-sec">
-      <h5>what we do</h5>
-      <div class="ov-grid">
-        <div class="ov-item"><b>App development</b><span>iOS &amp; Android products, from first sketch to the app stores.</span></div>
-        <div class="ov-item"><b>Website development</b><span>Fast, beautiful sites built to convert and be found.</span></div>
-        <div class="ov-item"><b>AI consulting &amp; integration</b><span>Copilots, automation and decision tools that pay off.</span></div>
-        <div class="ov-item"><b>Brand development</b><span>Naming, logos and identity systems.</span></div>
-        <div class="ov-item"><b>Marketing support</b><span>Launches, campaigns and content that stick.</span></div>
-        <div class="ov-item"><b>Social media support</b><span>Channel systems that keep working after we leave.</span></div>
-      </div>
-    </div>
-    <div class="ov-sec">
-      <h5>the company</h5>
-      <div class="ov-legal">
-        <b>Cascade Alliance sp. z o.o.</b><br>
-        Founded &amp; led by Sho Ito<br>
-        Registered office — ul. Stefana Batorego 18/108, 02-591 Warsaw, Poland<br>
-        KRS <b>0001170168</b> &nbsp;·&nbsp; VAT (EU) <b>PL7011257404</b><br>
-        Worldwide, remote
-      </div>
-    </div>
-    <div class="ov-sec">
-      <h5>contact</h5>
-      <div class="ov-contactrow">
-        <a class="pill hot" href="mailto:contact@cascade-alliance.com?subject=Hello%20Cascade%20Alliance">contact@cascade-alliance.com</a>
-        <span class="note">humans reply within 24 hours</span>
-      </div>
-    </div>
-    <div class="ov-sec"><button class="pill ghost" data-close>↩ return to the experience</button></div>
   </div>
 </div>
 
@@ -2137,9 +2104,9 @@ $('#wordmark').addEventListener('click', () => { location.hash = ''; scrollTo({ 
     { t: '<p>Sourdough, every morning — 5th & Pine.</p>', s: 'sub' },
     { t: '' },
     { t: '<div class="menu">' },
-    { t: '  <div class="card">Sourdough loaf · $7</div>', s: 'c1' },
-    { t: '  <div class="card">Cardamom bun · $4</div>', s: 'c2' },
-    { t: '  <div class="card">Flat white · $4.5</div>', s: 'c3' },
+    { t: '  <div class="card">Sourdough loaf · €7</div>', s: 'c1' },
+    { t: '  <div class="card">Cardamom bun · €4</div>', s: 'c2' },
+    { t: '  <div class="card">Flat white · €4.5</div>', s: 'c3' },
     { t: '</div>' },
     { t: '' },
     { t: '<button class="cta">Order for pickup</button>', s: 'cta' },
@@ -2294,115 +2261,94 @@ function hslHex(h, s, l){
 
 /* ── act 4 · the identity machine ── */
 (function(){
-  const TAGS = ['for people who notice', 'made properly', 'small team, sharp edges', 'est. today', 'quietly excellent', 'the neighborhood favorite', 'built to last', 'no nonsense since now'];
   const FONTS = [
-    { n: 'grotesk · bold',  f: '-apple-system, "Helvetica Neue", Arial, sans-serif', w: 800, sp: '-0.02em' },
-    { n: 'serif · classic', f: 'Georgia, "Times New Roman", serif',                  w: 700, sp: '0' },
-    { n: 'mono · technical',f: 'ui-monospace, Menlo, monospace',                     w: 700, sp: '0.04em' },
-    { n: 'humanist · warm', f: '"Avenir Next", "Trebuchet MS", Verdana, sans-serif', w: 700, sp: '0.01em' }
+    { n:'grotesk',  f:'-apple-system, "Helvetica Neue", Arial, sans-serif', w:800, sp:'-0.02em' },
+    { n:'serif',    f:'Georgia, "Times New Roman", serif',                  w:700, sp:'0' },
+    { n:'mono',     f:'ui-monospace, Menlo, Consolas, monospace',           w:700, sp:'0.04em' },
+    { n:'humanist', f:'"Avenir Next", "Trebuchet MS", Verdana, sans-serif', w:700, sp:'0.01em' }
+  ];
+  /* a deliberately varied roster — NOT all tech. Each archetype owns its palette,
+     typeface, mark and voice, so every re-brand reads as a different kind of company. */
+  const BRANDS = [
+    { name:'MAISON LÉRO', cat:'fashion',    font:1, c1:'#141414', c2:'#b89456', mark:'monogram', tag:'quietly expensive',     tag_ja:'語らずに、上質。' },
+    { name:'Verda',       cat:'skincare',   font:3, c1:'#3f6b4a', c2:'#cdb98a', mark:'leaf',     tag:'honest, plant-based',   tag_ja:'植物から、まっすぐに。' },
+    { name:'Salt & Ember',cat:'restaurant', font:1, c1:'#8a3322', c2:'#e0a23e', mark:'flame',    tag:'wood-fired, every day', tag_ja:'毎日、薪の火で。' },
+    { name:'ORBIT',       cat:'software',   font:0, c1:'#2f6df0', c2:'#5fe0c2', mark:'orbit',    tag:'ship on Friday',        tag_ja:'金曜にはリリース。' },
+    { name:'Lull',        cat:'wellness',   font:3, c1:'#5b62a8', c2:'#cabdf2', mark:'wave',     tag:'a softer evening',      tag_ja:'夜を、やわらかく。' },
+    { name:'HARBOR & CO', cat:'law',        font:1, c1:'#22354f', c2:'#9bb0c6', mark:'monogram', tag:'counsel that holds',    tag_ja:'揺るがない助言を。' },
+    { name:'PULSE',       cat:'fitness',    font:0, c1:'#17181d', c2:'#4be08a', mark:'pulse',    tag:'show up daily',         tag_ja:'毎日、ここに来る。' },
+    { name:'Marigold',    cat:'florist',    font:1, c1:'#b23a72', c2:'#f0b84a', mark:'bloom',    tag:'cut this morning',      tag_ja:'今朝、摘みました。' }
   ];
   const mark = $('#mark'), mx = mark.getContext('2d');
-  let salt = 0;
 
-  function drawMark(rnd, c1, c2){
-    const W = 240;
-    mx.clearRect(0, 0, W, W);
-    mx.lineCap = 'round';
-    const type = ['orbit', 'knot', 'stack', 'pixel', 'wave'][Math.floor(rnd() * 5)];
-    if(type === 'orbit'){
-      mx.strokeStyle = c1; mx.lineWidth = 17;
-      mx.beginPath(); mx.arc(120, 120, 74, rnd() * 6.28, rnd() * 3 + 4.6); mx.stroke();
-      mx.fillStyle = c2;
-      const a = rnd() * 6.28;
-      mx.beginPath(); mx.arc(120 + Math.cos(a) * 74, 120 + Math.sin(a) * 74, 19, 0, 6.29); mx.fill();
-    } else if(type === 'knot'){
-      mx.lineWidth = 19;
-      mx.strokeStyle = c1;
-      mx.beginPath(); mx.arc(95, 120, 52, .6, 4.5); mx.stroke();
-      mx.strokeStyle = c2;
-      mx.beginPath(); mx.arc(146, 120, 52, 3.7, 1.4 + 6.28); mx.stroke();
-    } else if(type === 'stack'){
-      const tilt = (rnd() - .5) * .35;
-      mx.save(); mx.translate(120, 120); mx.rotate(tilt);
-      [[-52, c1, 150], [0, c2, 108], [52, c1, 150]].forEach(([y, c, w]) => {
-        mx.fillStyle = c;
-        const r = 16;
-        mx.beginPath();
-        mx.moveTo(-w/2 + r, y - 16); mx.arcTo(w/2, y - 16, w/2, y + 16, r);
-        mx.arcTo(w/2, y + 16, -w/2, y + 16, r); mx.arcTo(-w/2, y + 16, -w/2, y - 16, r);
-        mx.arcTo(-w/2, y - 16, w/2, y - 16, r); mx.fill();
-      });
-      mx.restore();
-    } else if(type === 'pixel'){
-      const cell = 44, off = (240 - cell * 4) / 2;
-      const acc = [Math.floor(rnd() * 4), Math.floor(rnd() * 4)];
-      for(let yy = 0; yy < 4; yy++) for(let xx = 0; xx < 2; xx++){
-        if(rnd() > .45){
-          const isAcc = (xx === acc[0] && yy === acc[1]) || (3 - xx === acc[0] && yy === acc[1]);
-          mx.fillStyle = isAcc ? c2 : c1;
-          mx.fillRect(off + xx * cell + 3, off + yy * cell + 3, cell - 6, cell - 6);
-          mx.fillRect(off + (3 - xx) * cell + 3, off + yy * cell + 3, cell - 6, cell - 6);
-        }
-      }
-    } else { /* wave */
-      mx.save();
-      mx.beginPath(); mx.arc(120, 120, 88, 0, 6.29); mx.clip();
-      mx.strokeStyle = c1; mx.lineWidth = 15;
-      const ph = rnd() * 6.28;
-      for(let k = 0; k < 3; k++){
-        mx.beginPath();
-        for(let x = 10; x <= 230; x += 4){
-          const y = 120 + (k - 1) * 42 + Math.sin(x / 26 + ph + k) * 17;
-          x === 10 ? mx.moveTo(x, y) : mx.lineTo(x, y);
-        }
-        mx.globalAlpha = k === 1 ? 1 : .5;
-        mx.strokeStyle = k === 1 ? c2 : c1;
-        mx.stroke();
-      }
-      mx.restore();
+  function drawMark(type, rnd, c1, c2, initial){
+    mx.clearRect(0, 0, 240, 240); mx.lineCap='round'; mx.lineJoin='round'; mx.globalAlpha=1;
+    if(type === 'monogram'){
+      mx.fillStyle=c1; rr(mx,40,40,160,160,42); mx.fill();
+      mx.fillStyle=c2; mx.font='700 122px Georgia,"Times New Roman",serif'; mx.textAlign='center'; mx.textBaseline='middle';
+      mx.fillText(initial, 120, 132);
+    } else if(type === 'leaf'){
+      mx.fillStyle=c1; mx.beginPath(); mx.moveTo(120,38);
+      mx.bezierCurveTo(188,92,188,172,120,204); mx.bezierCurveTo(52,172,52,92,120,38); mx.closePath(); mx.fill();
+      mx.strokeStyle=c2; mx.lineWidth=8; mx.beginPath(); mx.moveTo(120,58); mx.lineTo(120,192); mx.stroke();
+      mx.lineWidth=5; mx.beginPath(); mx.moveTo(120,112); mx.lineTo(152,92); mx.moveTo(120,142); mx.lineTo(90,122); mx.stroke();
+    } else if(type === 'flame'){
+      mx.fillStyle=c1; mx.beginPath(); mx.moveTo(120,26);
+      mx.bezierCurveTo(182,92,168,158,120,210); mx.bezierCurveTo(70,158,66,98,120,26); mx.closePath(); mx.fill();
+      mx.fillStyle=c2; mx.beginPath(); mx.moveTo(120,98);
+      mx.bezierCurveTo(150,128,143,166,120,200); mx.bezierCurveTo(96,166,93,126,120,98); mx.closePath(); mx.fill();
+    } else if(type === 'orbit'){
+      mx.strokeStyle=c1; mx.lineWidth=16; mx.beginPath(); mx.arc(120,120,72,0.2,5.1); mx.stroke();
+      const a=rnd()*6.28; mx.fillStyle=c2; mx.beginPath(); mx.arc(120+Math.cos(a)*72,120+Math.sin(a)*72,20,0,6.29); mx.fill();
+      mx.fillStyle=c1; mx.beginPath(); mx.arc(120,120,15,0,6.29); mx.fill();
+    } else if(type === 'wave'){
+      mx.save(); mx.beginPath(); mx.arc(120,120,86,0,6.29); mx.clip();
+      for(let k=0;k<3;k++){ mx.beginPath(); for(let x=6;x<=234;x+=4){ const y=120+(k-1)*40+Math.sin(x/26+k)*18; x===6?mx.moveTo(x,y):mx.lineTo(x,y); }
+        mx.strokeStyle=k===1?c2:c1; mx.globalAlpha=k===1?1:.55; mx.lineWidth=14; mx.stroke(); }
+      mx.restore(); mx.globalAlpha=1;
+    } else if(type === 'pulse'){
+      mx.strokeStyle=c1; mx.lineWidth=15; mx.beginPath();
+      mx.moveTo(26,124); mx.lineTo(84,124); mx.lineTo(104,70); mx.lineTo(130,180); mx.lineTo(150,124); mx.lineTo(214,124); mx.stroke();
+      mx.fillStyle=c2; mx.beginPath(); mx.arc(214,124,12,0,6.29); mx.fill();
+    } else { /* bloom */
+      mx.save(); mx.translate(120,120);
+      for(let i=0;i<6;i++){ mx.rotate(Math.PI/3); mx.fillStyle=i%2?c2:c1; mx.globalAlpha=.82; mx.beginPath(); mx.ellipse(0,-50,28,56,0,0,6.29); mx.fill(); }
+      mx.restore(); mx.globalAlpha=1; mx.fillStyle=c2; mx.beginPath(); mx.arc(120,120,22,0,6.29); mx.fill();
     }
   }
 
-  function genFor(name){
-    const h = hashStr(name.toLowerCase());
-    const rnd = mulberry32(h);
-    const hue = h % 360;
-    const c1 = hslHex(hue, 64, 58);
-    const c2 = hslHex((hue + 130 + Math.floor(rnd() * 140)) % 360, 70, 56);
-    const font = FONTS[Math.floor(rnd() * FONTS.length)];
+  function genFor(brand){
+    const font = FONTS[brand.font], rnd = mulberry32(hashStr(brand.name));
     const card = $('#brandcard');
     card.classList.add('flip');
     setTimeout(() => {
       const nm = $('#bc-name');
-      nm.textContent = name;
-      nm.style.fontFamily = font.f; nm.style.fontWeight = font.w; nm.style.letterSpacing = font.sp;
-      const BT = window.I18N_DYN[window.LANG].brandTags; $('#bc-tag').textContent = BT[Math.floor(rnd() * BT.length)];
+      nm.textContent = brand.name;
+      nm.style.fontFamily=font.f; nm.style.fontWeight=font.w; nm.style.letterSpacing=font.sp;
+      $('#bc-tag').textContent = (window.LANG === 'ja') ? brand.tag_ja : brand.tag;
       $('#bc-tag').style.fontFamily = font.f;
-      const ch1 = $('#chip1'), ch2 = $('#chip2');
-      ch1.textContent = c1.toUpperCase(); ch1.style.background = c1;
-      ch1.style.color = hue % 360 > 40 && hue % 360 < 190 ? '#08090d' : '#fff';
-      ch2.textContent = c2.toUpperCase(); ch2.style.background = c2; ch2.style.color = '#08090d';
-      $('#chip3').textContent = font.n;
-      drawMark(rnd, c1, c2);
+      const ch1=$('#chip1'), ch2=$('#chip2');
+      ch1.textContent=brand.c1.toUpperCase(); ch1.style.background=brand.c1; ch1.style.color='#fff';
+      ch2.textContent=brand.c2.toUpperCase(); ch2.style.background=brand.c2; ch2.style.color='#08090d';
+      $('#chip3').textContent = brand.cat + ' · ' + font.n;
+      drawMark(brand.mark, rnd, brand.c1, brand.c2, brand.name[0]);
       card.classList.remove('flip');
       if(S.chapter === 4) AUDIO.pop(3);
     }, 160);
   }
 
-  /* scroll-driven: the studio names & re-brands a series of companies as you scroll.
-     Each name hashes to one deterministic identity, so scrolling back rewinds it. */
-  const NAMES_B = ['ORBIT', 'EMBER', 'JUNIPER', 'HARBOR', 'LUMEN', 'NOVA', 'CEDAR', 'ATLAS'];
+  /* scroll-driven: the studio brands a different kind of company every step. */
   const nameEl = $('#brandgen-name'), bcaret = $('#brandgen-caret');
   let curIdx = -1;
   DEMO.brandSet = function(p){
-    const fp = clamp(p, 0, .9999) * NAMES_B.length;
-    const idx = Math.floor(fp), local = fp - idx, name = NAMES_B[idx];
-    const nc = Math.round(clamp(local / .34, 0, 1) * name.length);
-    nameEl.textContent = name.slice(0, nc);
-    bcaret.classList.toggle('on', nc < name.length);
-    if(idx !== curIdx){ curIdx = idx; genFor(name); }
+    const fp = clamp(p, 0, .9999) * BRANDS.length;
+    const idx = Math.floor(fp), local = fp - idx, brand = BRANDS[idx];
+    const nc = Math.round(clamp(local / .34, 0, 1) * brand.name.length);
+    nameEl.textContent = brand.name.slice(0, nc);
+    bcaret.classList.toggle('on', nc < brand.name.length);
+    if(idx !== curIdx){ curIdx = idx; genFor(brand); }
   };
-  window.__reloc.push(() => { if(curIdx >= 0) genFor(NAMES_B[curIdx]); });
+  window.__reloc.push(() => { if(curIdx >= 0) genFor(BRANDS[curIdx]); });
 })();
 
 /* ── act 5 · growth — word of mouth + revenue + social buzz ──
@@ -2485,13 +2431,15 @@ function hslHex(h, s, l){
       cx.fillStyle= i===0 ? '#bfffd9' : 'rgba(140,255,180,.92)'; cx.beginPath(); cx.arc(x,y,R,0,6.29); cx.fill();
     }
 
-    /* ---- metrics: pure functions of P ---- */
-    reachEl.textContent = fmt(Math.pow(shown, 2.16) * 1.7);
-    revEl.textContent   = '$' + fmt(Math.pow(P, 2.0) * 248000);
+    /* ---- metrics: ONE coherent funnel, all derived from reach ----
+       views > reach (people see content more than once) > engagements (a fraction interact);
+       revenue tracks reach. So the numbers can never contradict each other. */
+    const reach = Math.pow(shown, 2.16) * 1.7;        /* unique people reached — the spreading network */
+    reachEl.textContent = fmt(reach);
+    revEl.textContent   = '$' + fmt(reach * 0.085);   /* monthly revenue earned, scales with reach */
     revSub.textContent  = window.I18N_DYN[window.LANG].gStages[Math.min(3, Math.floor(P*3.999))];
-    folEl.textContent   = fmt(Math.pow(P, 1.7) * 128000);
-    folSub.textContent  = window.I18N_DYN[window.LANG].gPerDay(fmt(Math.pow(P, 2.4) * 4200));
-    engEl.textContent   = fmt(Math.pow(P, 1.9) * 940000);
+    folEl.textContent   = fmt(reach * 2.9);           /* content views — always more than reach */
+    engEl.textContent   = fmt(reach * 0.14);          /* engagements — always a fraction of reach */
 
     /* ---- revenue sparkline, drawn up to P ---- */
     if(SWp){
@@ -2647,7 +2595,7 @@ function hslHex(h, s, l){
   const overlays = $$('.ovl');
   const closeAll = () => overlays.forEach(o => o.classList.remove('open'));
   const openOv = id => { const o = $(id); if(!o) return; closeAll(); o.classList.add('open'); AUDIO.click(); };
-  const TRIG = { '#btn-plain':'#overlay', '#btn-plain2':'#overlay', '#btn-company':'#overlay-company', '#btn-journal':'#overlay-journal', '#btn-work':'#overlay-work', '#btn-legal':'#overlay-legal', '#btn-contact':'#overlay-contact' };
+  const TRIG = { '#btn-plain':'#overlay', '#btn-plain2':'#overlay', '#btn-journal':'#overlay-journal', '#btn-work':'#overlay-work', '#btn-legal':'#overlay-legal', '#btn-contact':'#overlay-contact' };
   Object.keys(TRIG).forEach(btn => { const b = $(btn); if(b) b.addEventListener('click', () => openOv(TRIG[btn])); });
   $$('[data-open]').forEach(b => b.addEventListener('click', e => { e.preventDefault(); openOv(b.dataset.open); }));
   $$('.ovl-close, [data-close]').forEach(b => b.addEventListener('click', closeAll));
@@ -2690,7 +2638,6 @@ function hslHex(h, s, l){
     else if(e.key === 'm' || e.key === 'M') $('#btn-sound').click();
     else if(e.key === 'p' || e.key === 'P') $('#overlay').classList.contains('open') ? closeAll() : openOv('#overlay');
     else if(e.key === 'j' || e.key === 'J') $('#overlay-journal').classList.contains('open') ? closeAll() : openOv('#overlay-journal');
-    else if(e.key === 'c' || e.key === 'C') $('#overlay-company').classList.contains('open') ? closeAll() : openOv('#overlay-company');
   });
 
   /* contact form → FormSubmit (AJAX) → contact@cascade-alliance.com → info@ */
@@ -2730,7 +2677,7 @@ function hslHex(h, s, l){
 
 /* selector → Japanese (innerHTML). Each selector's English is cached on load. */
 const I18N_S = {
-  '#btn-company':'会社情報', '#btn-journal':'ジャーナル', '#btn-contact':'お問い合わせ',
+  '#btn-journal':'ジャーナル', '#btn-contact':'お問い合わせ',
   '#btn-plain':'<span class="t-full">テキスト版</span><span class="t-min">テキスト</span>',
   '#spark-label':'アイデアを — 長押し',
   '#tagline .t1':'何もないところから、世に出る製品へ。',
@@ -2802,14 +2749,12 @@ const I18N_S = {
   '#endfoot':'contact@cascade-alliance.com · 世界中・リモート<br>© 2026 Cascade Alliance — このサイトは空のファイル1枚から始まりました。テンプレートは一切使っていません。',
   /* overlays — titles/subs */
   '#overlay h3':'テキスト版。', '#overlay .sub':'急いでいる人へ — 会社のすべてを1画面で',
-  '#overlay-company .sub':'会社情報',
   '#overlay-journal #journal-list h3':'ジャーナル', '#journal-list .sub':'スタジオからのノート — つくる、値づける、届ける',
   '#overlay-contact h3':'プロジェクトを始める', '#overlay-contact .sub':'つくりたいものを教えてください — 24時間以内に担当者が返信します',
   '#journal-back':'← 記事一覧',
   /* overlays — the two services grids (identical in plain + company) */
   '.ov-grid':'<div class="ov-item"><b>アプリ開発</b><span>iOS・Android アプリを、最初のスケッチからストア公開まで。</span></div><div class="ov-item"><b>ウェブ制作</b><span>速く美しく、成果につながり、検索で見つかるサイト。</span></div><div class="ov-item"><b>AIコンサル＆実装</b><span>本当に効くコパイロット・自動化・意思決定ツール。</span></div><div class="ov-item"><b>ブランド開発</b><span>ネーミング、ロゴ、アイデンティティ設計。</span></div><div class="ov-item"><b>マーケティング支援</b><span>記憶に残るローンチ・キャンペーン・コンテンツ。</span></div><div class="ov-item"><b>SNS運用支援</b><span>離れた後も回り続けるチャンネルの仕組み。</span></div>',
   '#overlay .who':'Cascade Alliance は、中小企業のためのシニア・プロダクトスタジオです。デジタルなプロダクトと仕組みを、つくり、世に出し、磨き、伸ばす — 「得意です」と言う代わりに、このサイトそのものを証明として作りました。あなたが見たすべて（自ら組み上がるアプリ、コードから生まれるサイト、ページ内のAI、ライブで動くブランド生成）は、語ったのではなく、実演したものです。',
-  '#overlay-company .who':'多くの中小企業は、本当に必要なソフトウェア — ちゃんとしたアプリ、成果につながるサイト、積み上がるSNS — を、見積もりを前に諦めています。私たちはその差を埋めるために存在します。新しいツールと、経験を積んだシニアの手で、高価格帯のスタジオを超える品質をつくり、中小企業が「やろう」と言える価格で届ける。高級な仕事を、市場を壊す価格で — 意図して、です。',
   '#contact-form .note':'または <a href="mailto:contact@cascade-alliance.com">contact@cascade-alliance.com</a> まで直接どうぞ · 世界中・リモート',
   '#cf-send':'送信する',
   /* journal posts (full) */
