@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>
+/* Re-entry guard — must run before the browser restores scroll.
+   Without this, reloading mid-page restores the old scroll position and
+   strands the visitor inside a pinned section (e.g. ACT 03): the intro never
+   runs and scrolling stays frozen. Forcing manual restoration makes every
+   load/reload start cleanly at the hero. */
+if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+addEventListener('pageshow', function(){ try { window.scrollTo(0, 0); } catch (e) {} });
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cascade Alliance — we build things out of nothing</title>
 <meta name="description" content="Cascade Alliance is a product studio for small and medium businesses. Apps, websites, AI, brand, growth — demonstrated live, in front of you, right now.">
@@ -2949,6 +2958,7 @@ function setLang(lang){
 $('#btn-lang').addEventListener('click', () => { AUDIO.click(); setLang(window.LANG==='ja'?'en':'ja'); });
 
 /* ── lights on ── */
+window.scrollTo(0, 0);            /* re-entry guard: always begin at the hero */
 i18nCache();
 try{ setLang(localStorage.getItem('ca-lang') === 'ja' ? 'ja' : 'en'); }catch(e){}
 buildDots();
