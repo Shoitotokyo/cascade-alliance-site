@@ -11,7 +11,7 @@
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 addEventListener('pageshow', function(){ try { window.scrollTo(0, 0); } catch (e) {} });
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Cascade Alliance — your vision, built absurdly fast at an honest price</title>
 <meta name="description" content="Cascade Alliance builds the apps, websites, AI systems and brands people thought they couldn't afford — top-studio quality, shipped in weeks, priced so you can finally say yes. Don't read about it. Experience it.">
 <meta property="og:title" content="Cascade Alliance — your vision, built absurdly fast at an honest price">
@@ -48,6 +48,7 @@ body.locked{overflow:hidden;height:100vh}
 ::selection{background:var(--tint);color:#04050a}
 a{color:inherit}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a,button,input,select,textarea,.jcard,.pill,.uibtn,.dot{touch-action:manipulation}
 input,textarea{font:inherit;color:inherit}
 :focus-visible{outline:1px dashed var(--tint);outline-offset:3px}
 
@@ -568,12 +569,14 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   #ui-right{right:12px;gap:9px;flex-wrap:wrap;justify-content:flex-end}
   .uibtn{font-size:8px;letter-spacing:.05em;padding:5px 0}
   .t-full{display:none}.t-min{display:inline}
-  /* growth metrics — keep 3-up but tighter so $ figures don't clip */
-  #g-metrics{gap:8px}
-  .g-card{padding:11px;min-height:72px}
-  .g-val{font-size:15px}
-  .g-lab,.g-sub{font-size:7.5px;letter-spacing:.1em}
-  .g-spark{height:38px}
+  /* growth metrics — keep 3-up; numbers must never escape their cards */
+  #g-metrics{gap:7px}
+  .g-card{padding:9px 8px;min-height:58px}
+  .g-val{font-size:clamp(11.5px,3.4vw,14px);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .g-lab{font-size:6.6px;letter-spacing:.08em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .g-sub{font-size:6.4px;letter-spacing:.05em;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .g-spark{height:30px}
+  .bz{font-size:11px}
   #net{height:30vh;height:30svh}
   /* value (the price disruption) section */
   #buildwrap{height:min(30vh,230px)}
@@ -617,11 +620,27 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   /* act 2 — shorter code/render panes */
   #codepane pre{height:21vh;height:21svh}
   #renderpane .canvas{height:22vh;height:22svh}
-  /* act 3 — ai compact */
-  .lane{padding:11px 12px}
-  .msg{font-size:10.5px}
-  #ai-chart{height:64px}
-  .ak-val{font-size:17px}
+  /* act 3 — ai compact: everything above the fold */
+  #ch-ai .lede{font-size:11.5px;line-height:1.45}
+  #aiops{gap:8px}
+  #ai-lanes{gap:8px}
+  .lane{padding:10px 11px}
+  .lane-h{font-size:7px;margin-bottom:6px}
+  #chatflow{gap:4px}
+  .msg{font-size:10px;padding:5px 8px}
+  .msg b{font-size:6.5px;margin-bottom:2px}
+  .hstamp{font-size:7px}
+  .akpi{padding:8px 10px}
+  .ak-lab{font-size:7px;letter-spacing:.14em}
+  .ak-val{font-size:15px;margin-top:4px}
+  .ak-sub{display:none}
+  #opsrows{gap:6px}
+  .oprow{font-size:8.5px}
+  .oprow .opbar{width:42px}
+  .oprow b{font-size:7px}
+  #ai-chartwrap{margin-top:8px;padding-top:6px}
+  #ai-chart{height:46px}
+  .ai-leg{top:9px;font-size:6.5px;gap:7px}
   /* act 5 — growth network shorter */
   #net{height:25vh;height:25svh}
   /* act 6 — yards a touch shorter */
@@ -644,8 +663,10 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   #chatflow{gap:5px}
   .msg{padding:6px 9px}
   #lane-ops #ai-chartwrap{margin-top:8px;padding-top:7px}
-  /* ACT6 value — keep both yards visible */
-  #buildwrap{height:24vh}
+  /* ACT6 value — both yards, with breathing room */
+  #buildwrap{height:min(29vh,225px)}
+  .bc-clock{bottom:auto;top:26px;font-size:6.5px;padding:2px 5px}
+  .bc-tag{max-width:44%}
   /* Final console — tighter blueprint */
   #blueprint{font-size:9px;line-height:1.58}
   #idea-line{font-size:12px}
@@ -659,6 +680,15 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   .lede{font-size:12px;line-height:1.48}
   h2.big{font-size:clamp(22px,6.2vw,30px)}
   #codepane pre{height:18vh;height:18svh}   /* render pane stays tall enough for the full storefront */
+}
+@media (max-width:760px){
+  #endstage{gap:15px;padding:0 14px}
+  #endstage .pill{padding:11px 18px;font-size:10px}
+  #endfoot{font-size:8.5px;letter-spacing:.14em;line-height:2.1;max-width:88vw;
+    text-shadow:0 1px 14px rgba(4,5,8,.95),0 0 30px rgba(4,5,8,.7)}
+}
+@media (max-width:880px){
+  .cf-field input,.cf-field textarea,.cf-field select{font-size:16px}
 }
 @media (max-width:380px){
   #wordmark{font-size:9px;letter-spacing:.06em}
@@ -2652,8 +2682,8 @@ function hslHex(h, s, l){
     const txt = BZ[buzzIdx++ % BZ.length];               /* sequential — they appear one after another */
     el.textContent = txt;
     if(/[$¥€]/.test(txt)) el.classList.add('money');
-    el.style.left = (8 + rnd()*70) + '%';
-    el.style.bottom = (8 + rnd()*30) + '%';
+    el.style.left = MOBILE ? (10 + rnd()*56) + '%' : (8 + rnd()*70) + '%';
+    el.style.bottom = MOBILE ? (5 + rnd()*16) + '%' : (8 + rnd()*30) + '%';
     buzzWrap.appendChild(el);
     bubbles.push({ el, t:0, life: 150 + rnd()*70, drift: rnd()*36-18 });
   }
@@ -2745,7 +2775,7 @@ function hslHex(h, s, l){
     for(let i=bubbles.length-1;i>=0;i--){ const b=bubbles[i]; b.t++;
       const f=b.t/b.life;
       b.el.style.opacity = (f<.12 ? f/.12 : f>.72 ? (1-f)/.28 : 1) * .95;
-      b.el.style.transform = 'translate('+(b.drift*f)+'px,'+(-96*f)+'px) scale('+(.92+f*.14)+')';
+      b.el.style.transform = 'translate('+(b.drift*f)+'px,'+(-(MOBILE?54:96)*f)+'px) scale('+(.92+f*.14)+')';
       if(b.t>=b.life){ b.el.remove(); bubbles.splice(i,1); }
     }
   }
@@ -2796,7 +2826,7 @@ function hslHex(h, s, l){
      carrying a beam, walking, stuck in a meeting, on the phone, scratching. */
   function person(x, y, col, o){
     o = o || {};
-    const s = o.s || 1;
+    const s = (o.s || 1) * (Wp < 560 ? .72 : 1);
     const hip = y - 7 * s, sh = y - 11.4 * s, head = y - 13.8 * s;
     cx.strokeStyle = col; cx.fillStyle = col; cx.lineWidth = 1.8 * s; cx.lineCap = 'round'; cx.lineJoin = 'round';
     /* legs — scissor while walking, planted while standing */
