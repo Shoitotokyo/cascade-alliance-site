@@ -697,6 +697,50 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   .g-val{font-size:13px}
   h2.big{font-size:clamp(26px,8vw,40px)}
 }
+/* ===== mobile fit pass — 2026-06-12 — keep every pinned chapter on one screen ===== */
+@media (max-width:760px){
+  .stage{gap:12px}
+  h2.big{font-size:clamp(20px,5.6vw,28px);line-height:1.06}
+  .lede{font-size:11px;line-height:1.4;margin-top:8px}
+  .kicker{margin-bottom:8px}
+
+  /* ACT3 · AI — KPIs + two stacked lanes were spilling off the bottom */
+  #aiops{gap:7px}
+  #ai-kpis{gap:6px}
+  .akpi{padding:7px 9px}
+  .ak-val{font-size:13px;margin-top:1px}
+  #ai-lanes{gap:7px}
+  .lane{padding:8px 10px}
+  .lane-h{font-size:6.6px;margin-bottom:5px}
+  #chatflow{gap:3px}
+  .msg{font-size:9.5px;padding:4px 7px;line-height:1.4}
+  .msg b{font-size:6px}
+  #opsrows{gap:4px}
+  .oprow{font-size:7.6px}
+  .oprow .opbar{width:34px}
+  #ai-chartwrap{display:none}        /* secondary chart — the KPIs already carry the numbers */
+
+  /* ACT6 · value (price disruption) — long lede + build canvas were overrunning */
+  #ch-value .lede{font-size:10.5px;line-height:1.3}
+  #valuestage{gap:7px}
+  #buildwrap{height:min(18svh,132px)}
+  #value-compare{gap:6px}
+  .vcol{padding:7px 11px}
+  .vrow{font-size:10px;padding:2px 0}
+  .vchips .chip{font-size:8px;padding:5px 10px}
+
+  /* ACT2 · web — shorter code/render panes so the storefront + caption fit */
+  #renderpane .canvas{height:23svh}
+  #codepane pre{height:14svh}
+
+  /* ACT5 · growth — keep the network + buzz strictly inside their card */
+  #netwrap{overflow:hidden}
+  #net{height:22svh}
+  #g-metrics{gap:6px}
+
+  /* ACT1 · phone — cap the device so it + the copy fit together */
+  #phone{width:clamp(138px, min(46vw, calc((100svh - 300px)*.46)), 184px)}
+}
 </style>
 </head>
 <body class="locked">
