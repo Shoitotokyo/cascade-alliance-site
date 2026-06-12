@@ -697,46 +697,63 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   .g-val{font-size:13px}
   h2.big{font-size:clamp(26px,8vw,40px)}
 }
-/* ===== mobile fit pass — 2026-06-12 — keep every pinned chapter on one screen ===== */
+/* ===== mobile layout — 2026-06-12 (v2) — full diagrams, scaled down (nothing dropped), centred ===== */
 @media (max-width:760px){
-  .stage{gap:12px}
+  /* centre each chapter in the viewport, clear of the top chrome */
+  .pinwrap{place-items:center;align-content:center;
+    padding:max(50px,env(safe-area-inset-top)) 14px 16px}
+  .stage{align-content:center;gap:14px}
   h2.big{font-size:clamp(20px,5.6vw,28px);line-height:1.06}
   .lede{font-size:11px;line-height:1.4;margin-top:8px}
   .kicker{margin-bottom:8px}
 
-  /* ACT3 · AI — KPIs + two stacked lanes were spilling off the bottom */
+  /* ACT3 · AI — keep the DESKTOP two-lane diagram + chart, just scaled down (nothing hidden) */
   #aiops{gap:7px}
-  #ai-kpis{gap:6px}
-  .akpi{padding:7px 9px}
-  .ak-val{font-size:13px;margin-top:1px}
-  #ai-lanes{gap:7px}
-  .lane{padding:8px 10px}
-  .lane-h{font-size:6.6px;margin-bottom:5px}
+  #ai-kpis{gap:5px}
+  .akpi{padding:6px 7px}
+  .ak-lab{font-size:6px}
+  .ak-val{font-size:12px;margin-top:1px}
+  .ak-sub{display:none}
+  #ai-lanes{grid-template-columns:1.06fr 1fr;gap:6px}     /* two lanes side-by-side, like desktop */
+  .lane{padding:7px 7px}
+  .lane-h{font-size:6px;margin-bottom:4px;letter-spacing:.08em}
   #chatflow{gap:3px}
-  .msg{font-size:9.5px;padding:4px 7px;line-height:1.4}
-  .msg b{font-size:6px}
-  #opsrows{gap:4px}
-  .oprow{font-size:7.6px}
-  .oprow .opbar{width:34px}
-  #ai-chartwrap{display:none}        /* secondary chart — the KPIs already carry the numbers */
+  .msg{font-size:8px;padding:3px 5px;line-height:1.32}
+  .msg b{font-size:5.5px;margin-bottom:1px}
+  .hstamp{font-size:5.5px}
+  #opsrows{gap:3px}
+  .oprow{font-size:6.2px}
+  .oprow .opbar{width:20px}
+  .oprow b{font-size:6px}
+  #ai-chartwrap{display:block;margin-top:7px;padding-top:7px}   /* keep the cost-vs-revenue chart */
+  #ai-chart{height:46px}
+  .ai-leg{font-size:5.5px;gap:5px;top:8px}
 
-  /* ACT6 · value (price disruption) — long lede + build canvas were overrunning */
-  #ch-value .lede{font-size:10.5px;line-height:1.3}
-  #valuestage{gap:7px}
-  #buildwrap{height:min(18svh,132px)}
-  #value-compare{gap:6px}
-  .vcol{padding:7px 11px}
-  .vrow{font-size:10px;padding:2px 0}
-  .vchips .chip{font-size:8px;padding:5px 10px}
+  /* ACT2 · web — show the WHOLE storefront: the render pane gets the room, code stays a strip */
+  #webstage{gap:10px}
+  #codepane pre{height:8svh;min-height:62px}
+  #renderpane .canvas{height:min(44svh,318px)}
 
-  /* ACT2 · web — shorter code/render panes so the storefront + caption fit */
-  #renderpane .canvas{height:23svh}
-  #codepane pre{height:14svh}
+  /* ACT4 · brand */
+  #brandos{grid-template-columns:repeat(3,1fr);gap:7px}
+  #brandgen-name{font-size:18px}
 
-  /* ACT5 · growth — keep the network + buzz strictly inside their card */
+  /* ACT5 · growth — full network, kept inside its card */
   #netwrap{overflow:hidden}
-  #net{height:22svh}
+  #net{height:min(26svh,196px)}
   #g-metrics{gap:6px}
+
+  /* ACT6 · value — full build-yard; the canvas is nudged down so the 'delivered' flag sits clear above it */
+  #ch-value .lede{font-size:10px;line-height:1.3}
+  #valuestage{gap:7px}
+  #buildwrap{height:min(27svh,178px)}
+  #ch-value #build-canvas{height:calc(100% - 24px);margin-top:24px}
+  #ch-value .bc-flag{top:5px}
+  #value-compare{gap:6px}
+  .vcol{padding:7px 10px}
+  .vrow{font-size:9.5px;padding:2px 0}
+  .vchips{gap:6px}
+  .vchips .chip{font-size:7.5px;padding:4px 9px}
 
   /* ACT1 · phone — cap the device so it + the copy fit together */
   #phone{width:clamp(138px, min(46vw, calc((100svh - 300px)*.46)), 184px)}
