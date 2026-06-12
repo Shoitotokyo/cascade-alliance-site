@@ -729,10 +729,15 @@ body.no3d #gl::after{content:"";position:absolute;inset:0;
   #ai-chart{height:46px}
   .ai-leg{font-size:5.5px;gap:5px;top:8px}
 
-  /* ACT2 · web — show the WHOLE storefront: the render pane gets the room, code stays a strip */
+  /* ACT2 · web — the site window keeps the assets' true aspect ratio (1280×756):
+     nothing gets cropped, and the height saved goes back to the code pane */
   #webstage{gap:10px}
-  #codepane pre{height:8svh;min-height:62px}
-  #renderpane .canvas{height:min(44svh,318px)}
+  #codepane pre{height:24svh;min-height:150px}
+  #renderpane .canvas{height:auto;aspect-ratio:1693/1000}
+  #fec-lbl{padding:1.6cqw 3cqw 1.2cqw}
+  #fec-lbl span{font-size:2.2cqw}
+  #fec-rail{padding:0 3cqw 1.4cqw}
+  .fec-p{aspect-ratio:1/1;object-fit:cover}
 
   /* ACT4 · brand */
   #brandos{grid-template-columns:repeat(3,1fr);gap:7px}
@@ -2645,8 +2650,8 @@ $('#wordmark').addEventListener('click', () => { location.hash = ''; scrollTo({ 
           cxx.stroke();
           if(cp > 0){ cxx.fillStyle = col; cxx.beginPath(); cxx.arc(X(cp), Y(fn(cp)), 3, 0, 6.29); cxx.fill(); }
         };
-        draw(f => .68 - Math.pow(f, 1.15) * .50 + Math.sin(f * 9) * .015, '#ff8da0');          /* cost falls   */
-        draw(f => .26 + Math.pow(f, 1.35) * .58 + Math.sin(f * 7 + 2) * .015, '#9dffb0');      /* revenue rises */
+        draw(f => .97 - Math.pow(f, .5) * .92 + Math.sin(f * 9) * .012, '#ff8da0');           /* cost plunges, top → floor   */
+        draw(f => .08 + Math.pow(f, 1.15) * .50 + Math.sin(f * 7 + 2) * .012, '#9dffb0');      /* revenue climbs, gently      */
       }
     }
     if(S.chapter === 3 && typing && performance.now() - lastTick3 > 60){ AUDIO.tick(); lastTick3 = performance.now(); }
